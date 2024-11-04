@@ -24,7 +24,7 @@ The following diagram is our demos basic domain with its various bounded context
   4. Shipping
   5. Receiving
 
-![Alt text](contextmap-agentic-demo.png "Context map image for demo")
+
 
 This is a very general domain model with its related contexts. The U/D denotes an upstream/downstream relationship between contexts. PL denotes a Published Language as in Sales Force API. CS denotes Customer Supplier relationship and of course there is a Partnership relationship between Accounting and Inventory. The XRay system denotes a Big Ball of Mudd or a legacy system. So we have many of the hybrid conditions found in most enterprises.
 
