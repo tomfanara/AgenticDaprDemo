@@ -5,6 +5,12 @@ A demo application employing domain driven design, Dapr (Distributed Application
 
 This demo will serve as a means to develop and perhaps improve Dapr building blocks. Agentic architectures are still in early stages but natural language based development is growing at an incredible rate. Upon its completion it can be used to show case Dapr integration in agentic architectures!
 
+The following Dapr building blocks will be included in the demo
+      - Configuration
+      - Output Bindings
+      - Workflows
+      - 
+
 We will omit gateways, authentication and middleware to keep focus on the above purpose.
 
 # Table of Contents
@@ -53,6 +59,7 @@ We will omit gateways, authentication and middleware to keep focus on the above 
 
 ## 4. Project Description:
 ### Introduction
+#### Domain Model
 In order for microagents of an agentic architecture to work in context they should follow domain driven design principals.
 They should follow all the domain contextual relationships and live within the boundaries of their respective bounded context. 
 
@@ -72,6 +79,10 @@ In agentic AI architectures an orchestrator is needed utilizing a saga or orches
 The orchestrator is the central manager of the agentic chat and coordinates messaging between microagents. A microagent follows the microservices pattern of a ganular application that centers around a specific domain model.
 
 More can be elaborated on best practices design for microagents but its recommended that a vertical slice architecture as used inmicroservices will suffice for now. A microagent can be a feature of a microservice as to not over granularize as a separate service.
+
+### Architecture
+
+The following diagrams depict the overall architectural elements and information flow.
 
 # 5. Installation
       - required software
