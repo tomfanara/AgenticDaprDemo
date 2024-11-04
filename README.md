@@ -48,7 +48,7 @@ We will omit gateways, authentication and middleware to keep focus on the above 
 
 ## 3. References:
 - Domain Driven Design
-- Distributed Aplication Runtime (Dapr)
+- Distributed Application Runtime (Dapr)
 - Agentic Architecture and related patterns
 - Semantic Kernel
 - Andrew Ng - Agentic Design Patterns
@@ -63,7 +63,7 @@ We will omit gateways, authentication and middleware to keep focus on the above 
 In order for microagents of an agentic architecture to work in context they should follow domain driven design principals.
 They should follow all the domain contextual relationships and live within the boundaries of their respective bounded context. 
 
-The following diagram is our demos basic domain with its various bounded context. We will keep it simple with only 3 contexts and a basic ubiquitous language.
+The following diagram is our demo basic domain with its various bounded context. We will keep it simple with only 3 contexts and a basic ubiquitous language.
 
   1. Accounting - accounts receivables and payables
   2. Sales - widgets in the pipleine
