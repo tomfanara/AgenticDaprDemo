@@ -1,7 +1,29 @@
 # Agentic Dapr Demo Application
-A demo application employing domain driven design, Dapr (Distributed Application Runtime) and an Agentic architecture with microagents. The system will use Dapr Workflows as the orchestrator in the agentic patterns. Each microagent will have semantic memory, plugins, planners, personas (Khloe, Jenny and Carlos) and memories. The microagents will assist the human chat by responding to prompts with both user and system prompts. The microagents will be feature extensions of microservices with in a bounded context. The bounded context will set the boundaries of the microagents funtionality. 
+A demo application employing domain driven design, Dapr (Distributed Application Runtime) and an Agentic architecture with microagents. The system will use Dapr Workflows as the orchestrator in the agentic patterns. Each microagent will have semantic memory, plugins, planners, personas (Khloe, Jenny and Carlos) and memories. The microagents will assist the human chat by responding to prompts with both user and system prompts. The microagents will be feature extensions of microservices with in a bounded context. The bounded context will limit the behavior of the microagents funtionality. 
 
-## Knowledge References:
+## Purpose 
+
+This demo will serve as a means to develop and perhaps improve Dapr building blocks. Agentic architectures are still in early stages but natural language based development is growing at an incredible rate. Upon its completion it can be used to show case Dapr integration in agentic architectures!
+
+We will omit gateways, authentication and middleware to keep focus on the above purpose.
+
+# Table of Contents
+
+1. References
+2. Introduction
+3. Installation
+      - required software
+4. Usage
+      - running the demo app
+      - prompting the app
+5. Contributing
+6. License
+7. Contact Information
+8. FAQ
+9. Credit
+10. Changelog
+
+## References:
 - Domain Driven Design
 - Distributed Aplication Runtime (Dapr)
 - Agentic Architecture and related patterns
@@ -12,7 +34,7 @@ A demo application employing domain driven design, Dapr (Distributed Application
     - Planner pattern
     - Multi Agent pattern
 
-## Intro:
+## Introduction:
 In order for microagents of an agentic architecture to work in context they should follow domain driven design principals.
 They should follow all the domain contextual relationships and live within the boundaries of their respective bounded context. 
 
@@ -28,7 +50,7 @@ The following diagram is our demos basic domain with its various bounded context
 
 This is a very general domain model with its related contexts. The U/D denotes an upstream/downstream relationship between contexts. PL denotes a Published Language as in Sales Force API. CS denotes Customer Supplier relationship and of course there is a Partnership relationship between Accounting and Inventory. The XRay icon denotes a Big Ball of Mudd or a legacy Inventory system. So we have many of the hybrid conditions found in most enterprises.
 
-In agentic AI architectures an orchestrator is needed utilizing a saga or orchestrator design pattern. (verus choreopgrapher however both should be considered)
+In agentic AI architectures an orchestrator is needed utilizing a saga or orchestrator design pattern. (verus choreographer however both should be considered)
 The orchestrator is the central manager of the agentic chat and coordinates messaging between microagents. A microagent follows the microservices pattern of a ganular application that centers around a specific domain model.
 
-More can be elaborated on best practices design for microagents but its recommended that a vertical slice architecture as used inmicroservices will suffice for now. A microagent could be a feature onto a microservice as well in order not to over ganularize domain expertise and functionality.
+More can be elaborated on best practices design for microagents but its recommended that a vertical slice architecture as used inmicroservices will suffice for now. A microagent can be a feature of a microservice as to not over granularize as a separate service.
