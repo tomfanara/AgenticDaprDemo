@@ -80,7 +80,7 @@ The orchestrator is the central manager of the agentic chat and coordinates mess
 
 More can be elaborated on best practices design for microagents but its recommended that a vertical slice architecture as used inmicroservices will suffice for now. A microagent can be a feature of a microservice as to not over granularize as a separate service.
 
-### Architecture
+### Agentic Architecture
 
 The following diagrams depict the overall architectural elements and information flow.
 
