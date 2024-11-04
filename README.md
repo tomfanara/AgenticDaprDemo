@@ -1,11 +1,11 @@
 # Agentic Dapr Demo Application
-A demo application employing domain driven design, Dapr (Distributed Application Runtime) and an Agentic architecture with microagents.
+A demo application employing domain driven design, Dapr (Distributed Application Runtime) and an Agentic architecture with microagents. The system will use Dapr Workflows as the orchestrator in the agentic patterns. Each microagent will have semantic memory, plugins, planners, personas (Khloe, Jenny and Carlos) and memories. The microagents will assist the human chat by responding to prompts with both user and system prompts. The microagents will be feature extensions of microservices with in a bounded context. The bounded context will set the boundaries of the microagents funtionality. 
 
 Knowledge References:
-Domain Driven Design
-Distributed Aplication Runtime (Dapr)
-Agentic Architecture and related patterns
-Semantic Kernel
+- Domain Driven Design
+- Distributed Aplication Runtime (Dapr)
+- Agentic Architecture and related patterns
+- Semantic Kernel
 
 
 Intro:
