@@ -22,6 +22,8 @@ The following diagram is our demos basic domain with its various bounded context
   2. Inventory
   3. Sales
 
+![Alt text](contextmap-agentic-demo.png "Context map image for demo")
+
 In agentic AI architectures an orchestrator is needed utilizing a saga or orchestrator design pattern. (verus choreopgrapher however both should be considered)
 The orchestrator is the central manager of the agentic chat and coordinates messaging between microagents. A microagent follows the microservices pattern of a ganular application that centers around a specific domain model.
 
