@@ -19,8 +19,10 @@ They should follow all the domain contextual relationships and live within the b
 The following diagram is our demos basic domain with its various bounded context. We will keep it simple with only 3 contexts and a basic ubiquitous language.
 
   1. Accounting
-  2. Inventory
-  3. Sales
+  2. Sales
+  3. Inventory
+  4. Shipping
+  5. Receiving
 
 ![Alt text](contextmap-agentic-demo.png "Context map image for demo")
 
