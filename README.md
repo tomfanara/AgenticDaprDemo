@@ -9,7 +9,7 @@ The following Dapr building blocks will be included in the demo
       - Configuration
       - Output Bindings
       - Workflows
-      - 
+      - State stores
 
 We will omit gateways, authentication and middleware to keep focus on the above purpose.
 
@@ -65,11 +65,11 @@ They should follow all the domain contextual relationships and live within the b
 
 The following diagram is our demo basic domain with its various bounded context. We will keep it simple with only 3 contexts and a basic ubiquitous language.
 
-  1. Accounting - accounts receivables and payables
-  2. Sales - widgets in the pipleine
-  3. Inventory - widgets in inventory
-  4. Shipping - widgets in shipment
-  5. Receiving - widgets on order
+  1. Accounting - Accounts receivables and payables. They are the manager of all operations. Use a SQL database for receivables and payables.
+  2. Sales - Widgets in the sales pipleine. Uses Saleforce API and a NoSQL database for data storing orders.
+  3. Inventory - Widgets in inventory. Use SQL database for storage
+  4. Shipping - Widgets in shipment. Use a SQL database for data storage of shipped widgets.
+  5. Receiving - Widgets on order. Use a document corpus for storing received widget stock.
 
 ![Alt text](contextmap-agentic-demo.png "Context map image for demo")
 
