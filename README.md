@@ -65,11 +65,11 @@ They should follow all the domain contextual relationships and live within the b
 
 The following diagram is our demo basic domain with its various bounded context. We will keep it simple with only 3 contexts and a basic ubiquitous language.
 
-  1. Accounting - Accounts receivables and payables. They are the manager of all operations. Use a SQL database for receivables and payables.
-  2. Sales - Widgets in the sales pipleine. Uses Saleforce API and a NoSQL database for data storing orders.
-  3. Inventory - Widgets in inventory. Use SQL database for storage
-  4. Shipping - Widgets in shipment. Use a SQL database for data storage of shipped widgets.
-  5. Receiving - Widgets on order. Use a document corpus for storing received widget stock.
+  1. Accounting (Kloe) - Accounts receivables and payables. They are the manager of all operations. Use a SQL database for receivables and payables.
+  2. Sales (Carlos) - Widgets in the sales pipleine. Uses Saleforce API and a NoSQL database for data storing orders.
+  3. Inventory (Jenny) - Widgets in inventory. Use SQL database for storage
+  4. Shipping (Jenny) - Widgets in shipment. Use a SQL database for data storage of shipped widgets.
+  5. Receiving (Jenny) - Widgets on order. Use a document corpus for storing received widget stock.
 
 ![Alt text](contextmap-agentic-demo.png "Context map image for demo")
 
@@ -83,6 +83,8 @@ More can be elaborated on best practices design for microagents but its recommen
 ### Agentic Architecture
 
 The following diagrams depict the overall architectural elements and information flow.
+
+![Alt text](agentic-design-patterns.png "agentic design patterns image for demo")
 
 # 5. Installation
       - required software
