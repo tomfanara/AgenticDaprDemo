@@ -1,4 +1,4 @@
-# Agentic Dapr Demo Application
+# Agentic Dapr Demo Application (summary)
 A demo application employing domain driven design, Dapr (Distributed Application Runtime) and an Agentic architecture with microagents. The system will use Dapr Workflows as the orchestrator in the agentic patterns. Each microagent will have semantic memory, plugins, planners, personas (Khloe, Jenny and Carlos) and memories. The microagents will assist the human chat by responding to prompts with both user and system prompts. The microagents will be feature extensions of microservices with in a bounded context. The bounded context will limit the behavior of the microagents funtionality. 
 
 ## Purpose 
@@ -9,19 +9,35 @@ We will omit gateways, authentication and middleware to keep focus on the above 
 
 # Table of Contents
 
-1. References
-2. Introduction
-3. Installation
+1. Agentic Dapr Demo Application (summary)
+2. Purpose
+3. Project Description
+      - Introduction
+      - Domain model
+      - Agentic Architecture
+          - Dapr Building Blocks
+          - Workflows
+          - Output Bindings
+          - Configuation
+          - Vector Storage
+      - MicroAgents
+          - As a microservice feature
+          - Working with the subdomain model
+          - Memories
+          - Plugins
+          - Planners
+          - Personas        
+4. Installation
       - required software
-4. Usage
+5. Usage
       - running the demo app
       - prompting the app
-5. Contributing
-6. License
-7. Contact Information
-8. FAQ
-9. Credit
-10. Changelog
+6. Contributing
+7. License
+8. Contact Information
+9. FAQ
+10. Credit
+11. Changelog
 
 ## References:
 - Domain Driven Design
@@ -34,7 +50,8 @@ We will omit gateways, authentication and middleware to keep focus on the above 
     - Planner pattern
     - Multi Agent pattern
 
-## Introduction:
+## Project Description:
+### Introduction
 In order for microagents of an agentic architecture to work in context they should follow domain driven design principals.
 They should follow all the domain contextual relationships and live within the boundaries of their respective bounded context. 
 
