@@ -70,7 +70,6 @@ The following diagram is our demo basic domain with its various bounded context.
   3. Inventory (Jenny) - Widgets in inventory. Use SQL database for storage
   4. Shipping (Jenny) - Widgets in shipment. Use a SQL database for data storage of shipped widgets.
   5. Receiving (Jenny) - Widgets on order. Use a document corpus for storing received widget stock.
-
 ![Alt text](contextmap-agentic-demo.png "Context map image for demo")
 
 This is a very general domain model with its related contexts. The U/D denotes an upstream/downstream relationship between contexts. PL denotes a Published Language as in Sales Force API. CS denotes Customer Supplier relationship and of course there is a Partnership relationship between Accounting and Inventory. The XRay icon denotes a Big Ball of Mudd or a legacy Inventory system. So we have many of the hybrid conditions found in most enterprises.
@@ -82,9 +81,12 @@ More can be elaborated on best practices design for microagents but its recommen
 
 ### Agentic Architecture
 
-The following diagrams depict the overall architectural elements and information flow.
-
+The following diagrams depict the overall architectural elements and information flow. The first is a series of diagrams depicting the 4 main agentic patterns by Andrew Ng. The demo will be implementing all 4 to a limited extent.
 ![Alt text](agentic-design-patterns.png "agentic design patterns image for demo")
+- Reflection Pattern: 
+- Tool Use Pattern:
+- Planning Pattern:
+- Multi-Agent Pattern:
 
 # 5. Installation
       - required software
