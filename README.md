@@ -79,8 +79,7 @@ The orchestrator is the central manager of the agentic chat and coordinates mess
 
 More can be elaborated on best practices design for microagents but its recommended that a vertical slice architecture as used inmicroservices will suffice for now. A microagent can be a feature of a microservice as to not over granularize as a separate service.
 
-### Agentic Architecture
-
+### Agentic Design Patterns
 The following diagrams depict the overall architectural elements and information flow. The first is a series of diagrams depicting the 4 main agentic patterns by Andrew Ng. The demo will be implementing all 4 to a limited extent.
 ![Alt text](agentic-design-patterns.png "agentic design patterns image for demo")
 - Reflection Pattern: 
@@ -88,6 +87,10 @@ The following diagrams depict the overall architectural elements and information
 - Planning Pattern:
 - Multi-Agent Pattern:
 
+### Agentic Architecture with MicroAgents
+The following diagram illustrates the scope of the demo and overall architecture. It is not a production worthy system as gateways, authorization, encryption and real business domains are omitted for purposes of clarity.
+
+![Alt text](agentic-architecture.png "agentic architecture image for demo")
 # 5. Installation
       - required software
 # 6. Usage
