@@ -97,7 +97,10 @@ The following is the software demo design.
 ![Alt text](demo-software-design.png "agentic architecture image for demo")
 
 # 5. Installation
-      - required software
+      - Visual Studio 2022
+      - Docker Desktop (latest)
+      - Dapr powershell
+      - Ollama (installed locally)
 # 6. Usage
       - running the demo app
       - prompting the app
