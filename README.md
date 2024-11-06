@@ -1,5 +1,5 @@
 # 1. Agentic Dapr Demo Application (summary)
-A demo application employing domain driven design, Dapr (Distributed Application Runtime) and an Agentic architecture with microagents. The system will use Dapr Workflows as the orchestrator in the agentic patterns. Each microagent will have semantic memory, plugins, planners, personas (Khloe (supervisor), Jenny and Carlos) and memories. The microagents will assist the human completion chat by responding to prompts with user, meta(personas) and system prompts. The microagents will be feature extensions of microservices with in a bounded context. The bounded context will limit the behavior of the microagents funtionality as virtual domain experts. 
+A demo application employing domain driven design, Dapr (Distributed Application Runtime) and an agentic architecture with microagents. The system will use Dapr Workflows as the orchestrator in the agentic patterns. Each microagent will have semantic memory, plugins, planners, personas (Khloe (supervisor), Jenny and Carlos) and memories. The microagents will assist the human completion chat by responding to prompts with user, meta(personas) and system prompts. The microagents will be feature extensions of microservices with in a bounded context. The bounded context will limit the behavior of the microagents funtionality as virtual domain experts. 
 
 ## 2. Purpose 
 
@@ -61,7 +61,7 @@ We will omit gateways, authentication and middleware to keep focus on the above 
 ### Introduction
 #### Domain Model
 In order for microagents of an agentic architecture to work in context they should follow domain driven design principals.
-They should follow all the domain contextual relationships and live within the boundaries of their respective bounded context. 
+They should follow all the domain context relationships and live within the boundaries of their respective bounded context. 
 
 The following diagram is our demo basic domain with its various bounded context. We will keep it simple with only 3 contexts and a basic ubiquitous language.
 
@@ -72,12 +72,12 @@ The following diagram is our demo basic domain with its various bounded context.
   5. Receiving (Jenny) - Widgets on order. Use a document corpus for storing received widget stock.
 ![Alt text](contextmap-agentic-demo.png "Context map image for demo")
 
-This is a very general domain model with its related contexts. The U/D denotes an upstream/downstream relationship between contexts. PL denotes a Published Language as in Sales Force API. CS denotes Customer Supplier relationship and of course there is a Partnership relationship between Accounting and Inventory. The XRay icon denotes a Big Ball of Mudd or a legacy Inventory system. So we have many of the hybrid conditions found in most enterprises.
+This is a very familiar and general domain model with its related contexts. The U/D denotes an upstream/downstream relationship between contexts. PL denotes a Published Language as in a Sales Force API. CS denotes Customer Supplier relationship and of course there is a Partnership relationship between Accounting and Inventory. The XRay icon denotes a Big Ball of Mudd or a legacy inventory system. We have many of the hybrid conditions found in most enterprises.
 
-In agentic AI architectures an orchestrator is needed utilizing a saga or orchestrator design pattern. (verus choreographer however both should be considered)
-The orchestrator is the central manager of the agentic chat and coordinates messaging between microagents. A microagent follows the microservices pattern of a ganular application that centers around a specific domain model.
+In agentic AI architectures an orchestrator is needed utilizing a saga or orchestrator design pattern. (verus choreography however both should be considered)
+The orchestrator is the central manager of the agentic chat and coordinates chat completion messaging between microagents. A microagent follows the microservices pattern of a ganular application that centers around a specific domain model.
 
-More can be elaborated on best practices design for microagents but its recommended that a vertical slice architecture as used inmicroservices will suffice for now. A microagent can be a feature of a microservice as to not over granularize as a separate service.
+More can be elaborated on best practices design for microagents but its recommended that a vertical slice architecture as used in microservices will suffice for now. A microagent can be a feature of a microservice as to not over granularize as a separate service.
 
 ### Agentic Design Patterns
 The following diagrams depict the overall architectural elements and information flow. The first is a series of diagrams depicting the 4 main agentic patterns by Andrew Ng. The demo will be implementing all 4 to a limited extent.
@@ -88,7 +88,7 @@ The following diagrams depict the overall architectural elements and information
 - Multi-Agent Pattern:
 
 ### Agentic Architecture with MicroAgents
-The following diagram illustrates the scope of the demo and overall architecture. It is not a production worthy system as gateways, authorization, encryption and real business domains are omitted for purposes of clarity.
+The following diagram illustrates the scope of the demo and overall architecture. It is not a production worthy system as gateways, authorization, encryption and core business domains are omitted for purposes of clarity.
 
 ![Alt text](agentic-architecture.png "agentic architecture image for demo")
 # 5. Installation
