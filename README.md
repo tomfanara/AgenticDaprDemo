@@ -1,9 +1,9 @@
 # 1. Agentic Dapr Demo Application (summary)
-A demo application employing domain driven design, Dapr (Distributed Application Runtime) and an Agentic architecture with microagents. The system will use Dapr Workflows as the orchestrator in the agentic patterns. Each microagent will have semantic memory, plugins, planners, personas (Khloe, Jenny and Carlos) and memories. The microagents will assist the human chat by responding to prompts with user, meta(personas) and system prompts. The microagents will be feature extensions of microservices with in a bounded context. The bounded context will limit the behavior of the microagents funtionality. 
+A demo application employing domain driven design, Dapr (Distributed Application Runtime) and an Agentic architecture with microagents. The system will use Dapr Workflows as the orchestrator in the agentic patterns. Each microagent will have semantic memory, plugins, planners, personas (Khloe (supervisor), Jenny and Carlos) and memories. The microagents will assist the human completion chat by responding to prompts with user, meta(personas) and system prompts. The microagents will be feature extensions of microservices with in a bounded context. The bounded context will limit the behavior of the microagents funtionality as virtual domain experts. 
 
 ## 2. Purpose 
 
-This demo will serve as a means to develop and perhaps improve Dapr building blocks. Agentic architectures are still in early stages but natural language based development is growing at an incredible rate. Upon its completion it can be used to show case Dapr integration in agentic architectures!
+This demo will serve as a means to observe, develop and improve how Dapr Workflows and components work with agentic architectures. Agentic architectures are still in early stages but natural language based development is growing at an incredible rate. Upon its completion it can be used to show case Dapr integration in agentic architectures!
 
 The following Dapr building blocks will be included in the demo
       - Configuration
