@@ -94,12 +94,12 @@ The following diagram illustrates the scope of the demo and overall architecture
 
 The following is the demo software design. The main app is a .NET console application with a while(true) loop with write line prompts and read line outputs. It will also have 4 projects added.
 
-- AgenticWorkflow.API
-- Accounting.API
-- Inventory.API
-- Sales.API
+- AgenticWorkflow.API: Orchestrator pattern that maintains conversation state, app crash resilience and external calls.
+- Accounting.API: Contains a microagent feature that acts on behalf of the domain. Its domain model is persisted uses an SQL database.
+- Inventory.API: Contains a microagent feature that acts on behalf of the domain. Its domain model is persisted by a NoSQL database.
+- Sales.API: Contains a microagent feature that acts on behalf of the domain. Its domain model is persisted by a document corpus.
 
-The above APIs will run in Docker Compose as container based apps with respective ports. The console app will start the workflow and setup Semantic Kernel SDK. It then impments a while(true) loop. The prompts will make calls via the Dapr Output Bindings Chat Completion component to the work flow. Microagent to microagent chat completion will also be handled by chat completion output bidnings. The microagents contain there own plugins, personas, planners and memories. Lastly the Dapr external wait call we be used to call back to the console client from a microagent downstream.
+The above APIs will run in Docker Compose as container based apps with respective ports. The console app will start the workflow and setup Semantic Kernel SDK. It then impments a while(true) loop. The prompts will make calls via the Dapr Output Bindings Chat Completion component to the work flow. Microagent to microagent chat completion will also be handled by chat completion output bidnings. The microagents contain there own plugins, personas, planners and memories. The Dapr wait for external call we be used to call back to the console client from a microagent downstream. Finally documents will be requested by the supervisor microagent from theother agents and saved to a local folder.
 
 ![Alt text](demo-software-design.png "agentic architecture image for demo")
 
