@@ -91,6 +91,11 @@ The following diagrams depict the overall architectural elements and information
 The following diagram illustrates the scope of the demo and overall architecture. It is not a production worthy system as gateways, authorization, encryption and core business domains are omitted for purposes of clarity.
 
 ![Alt text](agentic-architecture.png "agentic architecture image for demo")
+
+The following is the software demo design.
+
+![Alt text](demo-software-design.png "agentic architecture image for demo")
+
 # 5. Installation
       - required software
 # 6. Usage
