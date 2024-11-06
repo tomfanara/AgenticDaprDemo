@@ -92,7 +92,14 @@ The following diagram illustrates the scope of the demo and overall architecture
 
 ![Alt text](agentic-architecture.png "agentic architecture image for demo")
 
-The following is the software demo design.
+The following is the demo software design. The main app is a .NET console application with a while(true) loop with write line prompts and read line outputs. It will also have 4 projects added.
+
+- AgenticWorkflow.API
+- Accounting.API
+- Inventory.API
+- Sales.API
+
+The above APIs will run in Docker Compose as container based apps with respective ports. The console app will start the workflow and setup Semantic Kernel SDK. It then impments a while(true) loop. The prompts will make calls via the Dapr Output Bindings Chat Completion component to the work flow. Microagent to microagent chat completion will also be handled by chat completion output bidnings. The microagents contain there own plugins, personas, planners and memories. Lastly the Dapr external wait call we be used to call back to the console client from a microagent downstream.
 
 ![Alt text](demo-software-design.png "agentic architecture image for demo")
 
