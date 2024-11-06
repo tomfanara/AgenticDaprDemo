@@ -1,9 +1,9 @@
 # 1. Agentic Dapr Demo Application (summary)
-A demo application employing domain driven design, Dapr (Distributed Application Runtime) and an agentic architecture with microagents. The system will use Dapr Workflows as the orchestrator in the agentic patterns. Each microagent will have semantic memory, plugins, planners, personas (Khloe (supervisor), Jenny and Carlos) and memories. The microagents will assist the human completion chat by responding to prompts with user, meta(personas) and system prompts. The microagents will be feature extensions of microservices with in a bounded context. The bounded context will limit the behavior of the microagents funtionality as virtual domain experts. 
+A demo application employing domain driven design, Dapr (Distributed Application Runtime) and an agentic architecture with microagents. The system will use Dapr Workflows as the orchestrator in the agentic system. Each microagent will have semantic memory, plugins, planners, personas (Khloe-supervisor, Jenny and Carlos) and memories. The microagents will assist the human completion chat by responding to prompts with user, meta(personas) and system prompts. The microagents will be feature extensions of microservices with in a bounded context. The bounded context will limit the behavior of the microagents funtionality as virtual domain experts. 
 
 ## 2. Purpose 
 
-This demo will serve as a means to observe, develop and improve how Dapr Workflows and components work with agentic architectures. Agentic architectures are still in early stages but natural language based development is growing at an incredible rate. Upon its completion it can be used to show case Dapr integration in agentic architectures!
+This demo will serve as a means to observe, develop and improve how Dapr Workflows and components work with agentic architectures. Agentic architectures are still in early stages but natural language based development is growing at an incredible rate. Upon its completion it can be used to show case Dapr integration in agentic architectures.
 
 The following Dapr building blocks will be included in the demo
       - Configuration
@@ -63,7 +63,7 @@ We will omit gateways, authentication and middleware to keep focus on the above 
 In order for microagents of an agentic architecture to work in context they should follow domain driven design principals.
 They should follow all the domain context relationships and live within the boundaries of their respective bounded context. 
 
-The following diagram is our demo basic domain with its various bounded context. We will keep it simple with only 3 contexts and a basic ubiquitous language.
+The following diagram is a basic domain with its various bounded context. We will keep it simple with only 3 contexts and a basic ubiquitous language.
 
   1. Accounting (Kloe) - Accounts receivables and payables. They are the manager of all operations. Use a SQL database for receivables and payables.
   2. Sales (Carlos) - Widgets in the sales pipleine. Uses Saleforce API and a NoSQL database for data storing orders.
@@ -77,18 +77,18 @@ This is a very familiar and general domain model with its related contexts. The 
 In agentic AI architectures an orchestrator is needed utilizing a saga or orchestrator design pattern. (verus choreography however both should be considered)
 The orchestrator is the central manager of the agentic chat and coordinates chat completion messaging between microagents. A microagent follows the microservices pattern of a ganular application that centers around a specific domain model.
 
-More can be elaborated on best practices design for microagents but its recommended that a vertical slice architecture as used in microservices will suffice for now. A microagent can be a feature of a microservice as to not over granularize as a separate service.
+More can be elaborated on best practices design for microagents but its recommended that a vertical slice architecture as used in microservices will suffice. A microagent can be a feature of a microservice as to not over granularize as a separate service.
 
 ### Agentic Design Patterns
 The following diagrams depict the overall architectural elements and information flow. The first is a series of diagrams depicting the 4 main agentic patterns by Andrew Ng. The demo will be implementing all 4 to a limited extent.
 ![Alt text](agentic-design-patterns.png "agentic design patterns image for demo")
-- Reflection Pattern: 
-- Tool Use Pattern:
-- Planning Pattern:
-- Multi-Agent Pattern:
+- Reflection Pattern 
+- Tool Use Pattern
+- Planning Pattern
+- Multi-Agent Pattern
 
 ### Agentic Architecture with MicroAgents
-The following diagram illustrates the scope of the demo and overall architecture. It is not a production worthy system as gateways, authorization, encryption and core business domains are omitted for purposes of clarity.
+The following diagram illustrates the scope of the demo and overall architecture. It is not a production worthy system as gateways, authorization, encryption and core business domains are omitted for purpose of clarity.
 
 ![Alt text](agentic-architecture.png "agentic architecture image for demo")
 
@@ -99,7 +99,7 @@ The following is the demo software design. The main app is a .NET console applic
 - Inventory.API: Contains a microagent feature that acts on behalf of the domain. Its domain model is persisted by a NoSQL database.
 - Sales.API: Contains a microagent feature that acts on behalf of the domain. Its domain model is persisted by a document corpus.
 
-The above APIs will run in Docker Compose as container based apps with respective ports. The console app will start the workflow and setup Semantic Kernel SDK. It then impments a while(true) loop. The prompts will make calls via the Dapr Output Bindings Chat Completion component to the work flow. Microagent to microagent chat completion will also be handled by chat completion output bidnings. The microagents contain there own plugins, personas, planners and memories. The Dapr wait for external call we be used to call back to the console client from a microagent downstream. Finally documents will be requested by the supervisor microagent from theother agents and saved to a local folder.
+The above APIs will run in Docker Compose as container based apps with respective ports. The console app will start the workflow and setup Semantic Kernel SDK. It then impments a while(true) loop. The prompts will make calls via the Dapr Output Bindings Chat Completion component to the work flow. Microagent to microagent chat completion will also be handled by chat completion output bidnings. The microagents contain there own plugins, personas, planners and memories. The Dapr wait for external call we be used to call back to the console client from a microagent downstream. Finally documents will be requested by the supervisor microagent from the other agents and saved to a local folder.
 
 ![Alt text](demo-software-design.png "agentic architecture image for demo")
 
