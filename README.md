@@ -67,7 +67,7 @@ The following is the demo software design. The main app is a .NET console applic
 - Sales.API: Contains a microagent feature that acts on behalf of the domain. Its domain model is persisted by a document corpus.
 
 ## Demo Software Design
-The above APIs will run in Docker Compose as container based apps with respective ports. The console app will start the workflow and setup Semantic Kernel SDK. It then impments a while(true) loop. The prompts will make calls via the Dapr Output Bindings Chat Completion component to the work flow. Microagent to microagent chat completion will also be handled by chat completion output bidnings. The microagents contain their own plugins, personas, planners and memories. The Dapr wait for external call we be used to call back to the console client from a microagent downstream. Finally documents will be requested by the supervisor microagent from the other agents and saved to a local folder.
+The above APIs will run in Docker Compose as container based apps with respective ports. The console app will start the workflow and setup Semantic Kernel SDK. It then impments a while(true) loop. The prompts will make calls via the Dapr Output Bindings Chat Completion component to the work flow. Microagent to microagent chat completion will also be handled by chat completion output bindings. The microagents contain their own plugins, personas, planners and memories. The Dapr wait for external call we be used to call back to the console client from a microagent downstream. Finally documents will be requested by the supervisor microagent from the other agents and saved to a local folder.
 
 ![Alt text](demo-software-design.png "agentic architecture image for demo")
 
