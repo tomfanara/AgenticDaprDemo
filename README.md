@@ -13,39 +13,6 @@ The following Dapr building blocks will be included in the demo
 
 We will omit gateways, authentication and middleware to keep focus on the above purpose.
 
-# Table of Contents
-
-1. Agentic Dapr Demo Application (summary)
-2. Purpose
-3. References
-4. Project Description
-      - Introduction
-      - Domain model
-      - Agentic Architecture
-          - Dapr Building Blocks
-          - Workflows
-          - Output Bindings
-          - Configuation
-          - Vector Storage
-      - MicroAgents
-          - As a microservice feature
-          - Working with the subdomain model
-          - Memories
-          - Plugins
-          - Planners
-          - Personas        
-5. Installation
-      - required software
-6. Usage
-      - running the demo app
-      - prompting the app
-7. Contributing
-8. License
-9. Contact Information
-10. FAQ
-11. Credit
-12. Changelog
-
 ## 3. References:
 - Domain Driven Design
 - Distributed Application Runtime (Dapr)
