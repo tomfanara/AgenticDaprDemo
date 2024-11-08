@@ -26,7 +26,7 @@ We will omit gateways, authentication and middleware to keep focus on the above 
 
 ## 4. Project Description:
 
-#### Domain Model
+### Domain Model
 In order for microagents of an agentic architecture to work in context they should follow domain driven design principals.
 They should follow all the domain context relationships and live within the boundaries of their respective bounded context. 
 
