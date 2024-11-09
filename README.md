@@ -27,7 +27,7 @@ We will omit gateways, authentication and middleware to keep focus on the above 
 ## 4. Project Description:
 
 ### Domain Model
-In order for microagents of an agentic architecture to work in context they should follow domain driven design principals.
+In order for micro agents of an agentic architecture to work in context they should follow domain driven design principals.
 They should follow all the domain context relationships and live within the boundaries of their respective bounded context. 
 
 The following diagram is a basic domain with its various bounded context. We will keep it simple with only 3 contexts and a basic ubiquitous language.
@@ -62,9 +62,9 @@ The following diagram illustrates the scope of the demo and overall architecture
 The following is the demo software design. The main app is a .NET console application with a while(true) loop with write line prompts and read line outputs. It will also have 4 additional .NET Core APIs and microservices.
 
 - AgenticWorkflow.API: Orchestrator pattern that maintains conversation state, app crash resilience and external calls.
-- Accounting.API: Contains a microagent feature that acts on behalf of the domain. Its domain model is persisted uses an SQL database.
-- Inventory.API: Contains a microagent feature that acts on behalf of the domain. Its domain model is persisted by a NoSQL database.
-- Sales.API: Contains a microagent feature that acts on behalf of the domain. Its domain model is persisted by a document corpus.
+- Accounting.API: Contains a micro agent feature that acts on behalf of the domain. Its domain model is persisted uses an SQL database.
+- Inventory.API: Contains a micro agent feature that acts on behalf of the domain. Its domain model is persisted by a NoSQL database.
+- Sales.API: Contains a micro agent feature that acts on behalf of the domain. Its domain model is persisted by a document corpus.
 
 ### Demo Software Design
 The above APIs will run in Docker Compose as container based apps with respective ports. The console app will start the workflow and setup Semantic Kernel SDK. It then implements a while(true) loop. The prompts will make calls via the Dapr Output Bindings Chat Completion component to the work flow. Micro agent to micro agent chat completion will also be handled by chat completion output bindings. The microagents contain their own plugins, personas, planners and memories. The Dapr wait for external call we be used to call back to the console client from a microagent downstream. Finally documents will be requested by the supervisor micro agent from the other agents and saved to a local folder.
