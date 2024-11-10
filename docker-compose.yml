@@ -1,0 +1,13 @@
+services:
+  accounting.api:
+    image: ${DOCKER_REGISTRY-}accountingapi
+    build:
+      context: .
+      dockerfile: Accounting.API/Dockerfile
+
+  inventory.api:
+    image: ${DOCKER_REGISTRY-}inventoryapi
+    build:
+      context: .
+      dockerfile: Inventory.API/Dockerfile
+

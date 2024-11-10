@@ -2,7 +2,7 @@
 {
     public record Message()
     {
-        public string? message
+        public string? Messages
         {
             get; set;
         }

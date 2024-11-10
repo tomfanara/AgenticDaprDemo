@@ -12,4 +12,10 @@
     <Folder Include="dapr\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Dapr.AspNetCore" Version="1.14.0" />
+    <PackageReference Include="Dapr.Client" Version="1.14.0" />
+    <PackageReference Include="Dapr.Workflow" Version="1.14.0" />
+  </ItemGroup>
+
 </Project>

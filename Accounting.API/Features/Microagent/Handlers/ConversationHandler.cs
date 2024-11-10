@@ -9,7 +9,7 @@
        
         public async Task<Chat> Handle(ConversationHandlerRequest request, CancellationToken cancellationToken)
         {
-            Chat chat = new Chat { Conversation = "hello" };
+            Chat chat = new Chat { Conversation = "Good Bye" };
             return chat;
         }
     }
