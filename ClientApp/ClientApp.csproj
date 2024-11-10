@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.SemanticKernel.Plugins.Memory" Version="1.28.0-alpha" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="dapr\" />
+  </ItemGroup>
+
 </Project>

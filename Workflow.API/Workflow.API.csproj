@@ -8,4 +8,8 @@
     <PublishAot>true</PublishAot>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="dapr\" />
+  </ItemGroup>
+
 </Project>
