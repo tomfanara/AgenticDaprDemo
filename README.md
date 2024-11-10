@@ -61,7 +61,7 @@ The following diagram illustrates the scope of the demo and overall architecture
 
 The following is the demo software design. The main app is a .NET console application with a while(true) loop with write line prompts and read line outputs. It will also have 4 additional .NET Core APIs and microservices.
 
-- ClientApp - Main chat initiation, starts workflow and keeps history.
+- ClientApp - Console application. Main chat initiation and dialogue, starts workflow and keeps history.
 - AgenticWorkflow.API: Orchestrator pattern that maintains conversation state, app crash resilience and external calls.
 - Accounting.API: Contains a micro agent feature that acts on behalf of the domain. Its domain model is persisted uses an SQL database.
 - Inventory.API: Contains a micro agent feature that acts on behalf of the domain. Its domain model is persisted by a NoSQL database.
