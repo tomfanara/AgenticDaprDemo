@@ -32,7 +32,7 @@ They should follow all the domain context relationships and live within the boun
 
 The following diagram is a basic domain with its various bounded context. We will keep it simple with only 3 contexts and a basic ubiquitous language.
 
-  1. Accounting (Kloe) - Accounts receivables and payables. They are the manager of all operations. Use a SQL database for receivables and payables.
+  1. Accounting (Khloe) - Accounts receivables and payables. They are the manager of all operations. Use a SQL database for receivables and payables.
   2. Sales (Carlos) - Widgets in the sales pipleine. Uses Saleforce API and a NoSQL database for data storing orders.
   3. Inventory (Jenny) - Widgets in inventory. Use SQL database for storage
   4. Shipping (Jenny) - Widgets in shipment. Use a SQL database for data storage of shipped widgets.
