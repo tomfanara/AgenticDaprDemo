@@ -5,7 +5,8 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "accounting.api": "StartDebugging",
-        "inventory.api": "StartDebugging"
+        "inventory.api": "StartDebugging",
+        "clientapp": "StartDebugging"
       }
     }
   }

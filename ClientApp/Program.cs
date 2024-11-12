@@ -21,12 +21,17 @@ Kernel kernel = Kernel.CreateBuilder()
 var aiChatService = kernel.GetRequiredService<IChatCompletionService>();
 var chatHistory = new ChatHistory();
 
-while (true)
-{
+
+var question = "Hi Phi how are you today?";
+
+
+//while (true)
+//{
     // Get user prompt and add to chat history
-    Console.WriteLine("Your prompt:");
-    var userPrompt = Console.ReadLine();
-    chatHistory.Add(new ChatMessageContent(AuthorRole.User, userPrompt));
+    Console.WriteLine("Your prompt:" + question);
+    var prompt = kernel.InvokePromptStreamingAsync(question);
+    //var userPrompt = Console.ReadLine();
+    chatHistory.Add(new ChatMessageContent(AuthorRole.User, question));
 
     // Stream the AI response and add to chat history
     Console.WriteLine("AI Response:");
@@ -39,4 +44,4 @@ while (true)
     }
     chatHistory.Add(new ChatMessageContent(AuthorRole.Assistant, response));
     Console.WriteLine();
-}
+//}
