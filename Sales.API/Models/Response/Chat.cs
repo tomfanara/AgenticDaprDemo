@@ -1,4 +1,4 @@
-﻿namespace ClientApp;
+﻿namespace Sales.API.Models.Response;
 
 public record Chat()
 {

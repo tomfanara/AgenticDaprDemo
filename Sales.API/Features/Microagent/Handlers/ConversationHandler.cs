@@ -1,12 +1,12 @@
-﻿namespace Accounting.API.Features.Microagent.Handlers
+﻿namespace Sales.API.Features.Microagent.Handlers
 {
-    using Accounting.API.Models.Request;
-    using Accounting.API.Models.Response;
+    using Sales.API.Models.Response;
     using MediatR;
     using Microsoft.SemanticKernel;
     using Microsoft.SemanticKernel.ChatCompletion;
+    using System.Text.Json.Nodes;
     using System;
-   
+    
     public class ConversationHandler()
         : IRequestHandler<ConversationHandlerRequest, Chat>
     {
@@ -24,11 +24,13 @@
         {
             var aiChatService = kernel.GetRequiredService<IChatCompletionService>();
             var chatHistory = new ChatHistory();
-            
+
             Console.WriteLine("Your prompt: " + request.Messages);
             var prompt = kernel.InvokePromptStreamingAsync(request.Messages);
+           
 
             chatHistory.Add(new ChatMessageContent(AuthorRole.User, request.Messages));
+
 
             // Stream the AI response and add to chat history
             Console.WriteLine("AI Response:");
@@ -40,39 +42,8 @@
             }
             chatHistory.Add(new ChatMessageContent(AuthorRole.Assistant, response));
 
-            var message = new Message { Messages = "Hi Jenny how are you today?" };
-            SendMessage(message);
-
             Chat chat = new Chat { Conversation = response };
             return chat;
-        }
-
-        private async void SendMessage(Message message)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                HttpResponseMessage response1 = await client.PostAsJsonAsync<Message>("http://localhost:5279/converse", message);
-                response1.EnsureSuccessStatusCode();
-
-
-                string? line;
-                using (Stream stream = await response1.Content.ReadAsStreamAsync())
-                using (StreamReader reader = new StreamReader(stream))
-                {
-
-                    while ((line = await reader.ReadLineAsync()) != null)
-                    {
-
-                        foreach (char c in line)
-                        {
-                            Console.Write(c);
-                            await Task.Delay(50);
-                        }
-                    }
-                }
-
-
-            }
         }
     }
 }

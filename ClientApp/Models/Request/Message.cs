@@ -1,4 +1,4 @@
-﻿namespace ClientApp;
+﻿namespace ClientApp.Models.Request;
 
 public record Message()
 {

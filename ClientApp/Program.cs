@@ -6,7 +6,7 @@
 #pragma warning disable SKEXP0052
 #pragma warning disable SKEXP0070
 
-using ClientApp;
+using ClientApp.Models.Request;
 using Dapr.Client;
 using Google.Api;
 using Microsoft.SemanticKernel;
@@ -54,7 +54,7 @@ var question = "Hi Phi how are you today?";
     Console.WriteLine();
 //}
 
-var message = new Message {Messages = "Hi Phi how are you?" };
+var message = new Message {Messages = "Hi Khloe how are you?" };
 
 
 using (HttpClient client = new HttpClient())
@@ -70,10 +70,11 @@ using (HttpClient client = new HttpClient())
         
         while ((line = await reader.ReadLineAsync()) != null)
         {
+
             foreach (char c in line)
             {
                 Console.Write(c);
-                await Task.Delay(100);
+                await Task.Delay(50);
             }
         }
     }
