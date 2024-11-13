@@ -3,19 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{2B0DA74D-D12B-4522-935E-D3C46F8F2059}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{2B0DA74D-D12B-4522-935E-D3C46F8F2059}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounting.API", "Accounting.API\Accounting.API.csproj", "{AC91CE6A-B980-4E0D-905F-F98615BE2CDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounting.API", "Accounting.API\Accounting.API.csproj", "{AC91CE6A-B980-4E0D-905F-F98615BE2CDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.API", "Inventory.API\Inventory.API.csproj", "{193EDB26-A580-4AF2-A09A-61879759ECF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventory.API", "Inventory.API\Inventory.API.csproj", "{193EDB26-A580-4AF2-A09A-61879759ECF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sales.API", "Sales.API\Sales.API.csproj", "{99A374D5-7996-4EF1-9FA3-316BD8EA6191}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sales.API", "Sales.API\Sales.API.csproj", "{99A374D5-7996-4EF1-9FA3-316BD8EA6191}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workflow.API", "Workflow.API\Workflow.API.csproj", "{979570A2-9FE6-4140-915E-2D3BCDD74B40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workflow.API", "Workflow.API\Workflow.API.csproj", "{979570A2-9FE6-4140-915E-2D3BCDD74B40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientApp", "ClientApp\ClientApp.csproj", "{E797EE7E-D839-49A9-99F1-A74F6CDE5604}"
-EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{D00A876C-AE29-495B-BCF8-430015A1269C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientApp", "ClientApp\ClientApp.csproj", "{E797EE7E-D839-49A9-99F1-A74F6CDE5604}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +45,6 @@ Global
 		{E797EE7E-D839-49A9-99F1-A74F6CDE5604}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E797EE7E-D839-49A9-99F1-A74F6CDE5604}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E797EE7E-D839-49A9-99F1-A74F6CDE5604}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D00A876C-AE29-495B-BCF8-430015A1269C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D00A876C-AE29-495B-BCF8-430015A1269C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D00A876C-AE29-495B-BCF8-430015A1269C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D00A876C-AE29-495B-BCF8-430015A1269C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
