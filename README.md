@@ -67,6 +67,12 @@ The following is the demo software design. The main app is a .NET console applic
 - Inventory.API: Contains a micro agent feature that acts on behalf of the domain. Its domain model is persisted by a NoSQL database.
 - Sales.API: Contains a micro agent feature that acts on behalf of the domain. Its domain model is persisted by a document corpus.
 
+### Future Using Agentic Mesh
+
+The more recent and advanced initiatives are moving to the idea of an agentic mesh. The mesh or service mesh would make micro agents fully discoverable. The mesh would give better security with LLMs and in transit data. The service mesh establishes a control and data plane. Micro agents are proxied by sidecars acting on behalf of the agent. Dapr workflows and functionalality can use these sidecars instead of Dapr sidecars. This will be included in subsequent releases of this demo as a full scale cloud deployment would be neccessary. See diagram below.
+
+![Alt text](agentic-mesh-architecture.png "agentic mesh architecture image for demo")
+
 ### Demo Software Design
 The above APIs will run in Docker Compose as container based apps with respective ports. The console app will start the workflow and setup Semantic Kernel SDK. It then implements a while(true) loop. The prompts will make calls via the Dapr Output Bindings Chat Completion component to the work flow. Micro agent to micro agent chat completion will also be handled by chat completion output bindings. The micro agents contain their own plugins, personas, planners and memories. The Dapr wait for external call we be used to call back to the console client from a micro agent downstream. Finally documents will be requested by the supervisor micro agent from the other agents and saved to a local folder.
 
