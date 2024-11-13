@@ -6,8 +6,16 @@
 #pragma warning disable SKEXP0052
 #pragma warning disable SKEXP0070
 
+using ClientApp;
+using Dapr.Client;
+using Google.Api;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
+using OpenAI.Assistants;
+using System.Net.Http.Json;
+using static System.Net.Mime.MediaTypeNames;
+
+var daprClient = new DaprClientBuilder().Build();
 
 // Create a kernel with OpenAI chat completion
 // Warning due to the experimental state of some Semantic Kernel SDK features.
@@ -45,3 +53,37 @@ var question = "Hi Phi how are you today?";
     chatHistory.Add(new ChatMessageContent(AuthorRole.Assistant, response));
     Console.WriteLine();
 //}
+
+var message = new Message {Messages = "Hi Phi how are you?" };
+
+
+using (HttpClient client = new HttpClient())
+{
+    HttpResponseMessage response1 = await client.PostAsJsonAsync<Message>("http://localhost:5167/converse", message);
+    response1.EnsureSuccessStatusCode();
+
+
+    string? line;
+    using (Stream stream = await response1.Content.ReadAsStreamAsync())
+    using (StreamReader reader = new StreamReader(stream))
+    {
+        
+        while ((line = await reader.ReadLineAsync()) != null)
+        {
+            foreach (char c in line)
+            {
+                Console.Write(c);
+                await Task.Delay(100);
+            }
+        }
+    }
+    
+
+}
+
+
+Console.WriteLine();
+
+//var httpClient = DaprClient.CreateInvokeHttpClient();
+
+//var chat = await httpClient.PostAsJsonAsync<Message>("http://localhost:5167/converse", message);
