@@ -6,11 +6,11 @@ using System.ComponentModel;
 using System.Data.SQLite;
 
     
-    public class NewsPlugin
+    public class AccountingPlugin
     {
-        [KernelFunction("execute_query"), Description("Get employees from accounting")]
+        [KernelFunction("get_employees"), Description("Get employees from accounting")]
         [return: Description("A list of employees from accounting.")]
-        public string ExecuteQuery(Kernel kernel)
+        public string GetEmployees(Kernel kernel)
         {
             // Connection string for an in-memory database
             string connectionString = "Data Source=:memory:;Version=3;New=True;";
@@ -20,29 +20,28 @@ using System.Data.SQLite;
                 connection.Open();
 
                 // Create a table
-                string createTableQuery = "CREATE TABLE SampleTable (Id INTEGER PRIMARY KEY, Name TEXT)";
+                string createTableQuery = "CREATE TABLE Employees (Id INTEGER PRIMARY KEY, Name TEXT)";
                 using (var command = new SQLiteCommand(createTableQuery, connection))
                 {
                     command.ExecuteNonQuery();
                 }
 
                 // Insert data into the table
-                string insertDataQuery = "INSERT INTO SampleTable (Name) VALUES ('Alice'), ('Bob'), ('Jimmy')";
+                string insertDataQuery = "INSERT INTO Employees (Name) VALUES ('Alice'), ('Bobby'), ('Carol')";
                 using (var command = new SQLiteCommand(insertDataQuery, connection))
                 {
                     command.ExecuteNonQuery();
                 }
 
                 // Query the data
-                string selectQuery = "SELECT * FROM SampleTable";
+                string selectQuery = "SELECT * FROM Employees";
                 
                 using (var command = new SQLiteCommand(selectQuery, connection))
                 {
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
-                        {
-                            //Console.WriteLine($"Id: {reader["Id"]}, Name: {reader["Name"]}");
+                        {                            
                             result = result + $"Id: {reader["Id"]}, Name: {reader["Name"]}";
                         }
                     }
@@ -52,15 +51,12 @@ using System.Data.SQLite;
            return result;
         }
 
-        [KernelFunction("get_news"), Description("Gets news items for today's date.")]
-        [return: Description("A list of current news stories.")]
-        public List<FeedItem> GetNews()
-        {
-            var reader = new FeedReader();
-            return reader.RetrieveFeed($"https://rss.nytimes.com/services/xml/rss/nyt/technology.xml").Take(1).ToList();
-           
+        [KernelFunction("save_data"), Description("Saves data to a file on your computer")]
+        [return: Description("A list of employees from accounting.")]
+        public async void SaveData(Kernel kernel, string fileName, string data)
+        {            
+            await File.WriteAllTextAsync($@"C:\temp\{fileName}.txt", data);
         }
-        
     }
 
 

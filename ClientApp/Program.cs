@@ -32,13 +32,13 @@ var aiChatService = kernel.GetRequiredService<IChatCompletionService>();
 var chatHistory = new ChatHistory();
 
 Console.ForegroundColor = ConsoleColor.Green;
-Console.WriteLine($"This simple agentic network will email reports based on questions from Tracy a human business analyst");
-Console.WriteLine("We are using the Phi3.5 LLM model");
+Console.WriteLine($"This simple agentic network will send reports based on questions from Tracy a human business analyst");
+Console.WriteLine("We are using the Phi3.5, Llama3.1 and Gemma2 LLM models");
 Console.WriteLine("The micro agents are Khloe (Accounting supervisor), Carlos (Sales manager) and Jenny (Inventory manager");
 Console.WriteLine("");
 Console.ResetColor();
 
-var question = "Hi Phi3.5 just checking in, are you ok?";
+var question = "Hi AI, just checking in are you ok?";
 
 // Get user prompt and add to chat history
 Console.ForegroundColor = ConsoleColor.Blue;
@@ -59,7 +59,7 @@ var prompt = kernel.InvokePromptStreamingAsync(question);
 // Stream the AI response and add to chat history
 Console.WriteLine("");
 Console.ForegroundColor = ConsoleColor.Blue;
-Console.WriteLine("AI Response:");
+Console.WriteLine("AI response:");
 Console.ResetColor();
 Console.WriteLine("");
 
@@ -74,7 +74,7 @@ var chatResponse = "";
 
 Console.WriteLine();
 
-var message = new Message {Messages = "Summarize getting new employees from accounting" };
+var message = new Message {Messages = "Hi Khloe, Summarize in a table getting new employees from accounting" };
 
 Console.WriteLine("");
 Console.ForegroundColor = ConsoleColor.Blue;
@@ -90,7 +90,7 @@ foreach (char c in message.Messages)
 Console.WriteLine("");
 Console.WriteLine("");
 Console.ForegroundColor = ConsoleColor.Blue;
-Console.WriteLine("Khloe's Response:");
+Console.WriteLine("Khloe's response:");
 Console.ResetColor();
 Console.WriteLine("");
 
@@ -113,8 +113,7 @@ using (HttpClient client = new HttpClient())
         {
             Console.Write(c);
             await Task.Delay(50);
-        }
-        
+        }        
     }
     else
     {
@@ -122,8 +121,57 @@ using (HttpClient client = new HttpClient())
     }  
 }
 
-Console.WriteLine();
+Console.WriteLine("");
 
+var message2 = new Message { Messages = "Hi Khloe, could you save the employee data to a file on my computer" };
+
+Console.WriteLine("");
+Console.ForegroundColor = ConsoleColor.Blue;
+Console.WriteLine("Your prompt:");
+Console.ResetColor();
+Console.WriteLine("");
+foreach (char c in message2.Messages)
+{
+    Console.Write(c);
+    Thread.Sleep(50); // Delay in milliseconds
+}
+
+Console.WriteLine("");
+Console.WriteLine("");
+Console.ForegroundColor = ConsoleColor.Blue;
+Console.WriteLine("Khloe's response:");
+Console.ResetColor();
+Console.WriteLine("");
+
+using (HttpClient client = new HttpClient())
+{
+    HttpResponseMessage response = await client.PostAsJsonAsync<Message>("http://localhost:5167/converse", message2);
+    response.EnsureSuccessStatusCode();
+
+    string? line;
+
+    if (response.IsSuccessStatusCode)
+    {
+        string responseBody = await response.Content.ReadAsStringAsync();
+        JsonDocument jsonDocument = JsonDocument.Parse(responseBody);
+        JsonElement root = jsonDocument.RootElement;
+
+        string value = root.GetProperty("conversation").GetString();
+
+        foreach (char c in value)
+        {
+            Console.Write(c);
+            await Task.Delay(50);
+        }
+    }
+    else
+    {
+        Console.WriteLine($"Error: {response.StatusCode}");
+    }
+}
+
+Console.WriteLine();
+Console.WriteLine();
 
 
 
