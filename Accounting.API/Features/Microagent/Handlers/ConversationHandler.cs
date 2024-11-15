@@ -1,49 +1,104 @@
 ﻿namespace Accounting.API.Features.Microagent.Handlers
 {
+    using Accounting.API.Features.Microagent.Personas;
+    using Accounting.API.Features.Microagent.Plugins;
     using Accounting.API.Models.Request;
     using Accounting.API.Models.Response;
     using MediatR;
     using Microsoft.SemanticKernel;
     using Microsoft.SemanticKernel.ChatCompletion;
+    using Microsoft.SemanticKernel.Connectors.OpenAI;
     using System;
    
     public class ConversationHandler()
         : IRequestHandler<ConversationHandlerRequest, Chat>
     {
-        // Create a kernel with OpenAI chat completion
-        // Warning due to the experimental state of some Semantic Kernel SDK features.
-        #pragma warning disable SKEXP0070
-        Kernel kernel = Kernel.CreateBuilder()
-                            .AddOllamaChatCompletion(
-                                modelId: "phi3.5",
-                                endpoint: new Uri("http://localhost:11434"))
-                            .Build();
-
-
+              
         public async Task<Chat> Handle(ConversationHandlerRequest request, CancellationToken cancellationToken)
         {
-            var aiChatService = kernel.GetRequiredService<IChatCompletionService>();
-            var chatHistory = new ChatHistory();
+
+            // Create a kernel with OpenAI chat completion
+            // Warning due to the experimental state of some Semantic Kernel SDK features.
+#pragma warning disable SKEXP0070
+            var builder = Kernel.CreateBuilder()
+                                .AddOllamaChatCompletion(
+                                    modelId: "phi3.5",
+                                    endpoint: new Uri("http://localhost:11434"));           
+
+            builder.Plugins.AddFromType<NewsPlugin>();
             
-            Console.WriteLine("Your prompt: " + request.Messages);
-            var prompt = kernel.InvokePromptStreamingAsync(request.Messages);
-
-            chatHistory.Add(new ChatMessageContent(AuthorRole.User, request.Messages));
-
-            // Stream the AI response and add to chat history
-            Console.WriteLine("AI Response:");
-            var response = "";
-            await foreach (var item in aiChatService.GetStreamingChatMessageContentsAsync(chatHistory))
+            Kernel kernel = builder.Build();            
+            
+            foreach (var pluginName in kernel.Plugins)
             {
-                Console.Write(item.Content);
-                response += item.Content;
+                Console.WriteLine(pluginName);
             }
-            chatHistory.Add(new ChatMessageContent(AuthorRole.Assistant, response));
 
-            var message = new Message { Messages = "Hi Jenny how are you today?" };
-            SendMessage(message);
+            //create a persona Khloe
+            Persona persona = new Persona
+            {
+                Name = "Khloe",
+                Tone = "friendly",
+                Style = "conversational",
+                Traits = new List<string> { "empathetic", "helpful", "approachable" }
+            };
 
-            Chat chat = new Chat { Conversation = response };
+            var settings = new PersonaSettings();
+            ApplyPersona(settings, persona);
+                                 
+            string greeting = settings.GenerateResponse(request.Messages);
+
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("Khloe's Response:");
+            Console.ResetColor();
+            Console.WriteLine("");
+            Console.WriteLine(greeting);
+
+            var chatService = kernel.GetRequiredService<IChatCompletionService>();
+                      
+            string promptTemplate = request.Messages + ": " + "{{execute_query}}";
+            //var result = await kernel.InvokePromptAsync(promptTemplate);
+
+            var result = await kernel.InvokePromptAsync(
+            promptTemplate,
+            new(new OpenAIPromptExecutionSettings()
+            {
+                MaxTokens = 50,
+                Temperature = 1
+            }));
+            Console.WriteLine(result.GetValue<string>());
+
+            var chatMessages = new ChatHistory();
+            chatMessages.AddUserMessage(promptTemplate);
+            
+            OpenAIPromptExecutionSettings openAIPromptExecutionSettings = new()
+            {
+
+                Temperature = 1.0,
+                MaxTokens = 200,
+               
+            };
+
+            //var completion = chatService.GetStreamingChatMessageContentsAsync(
+            //    chatMessages, openAIPromptExecutionSettings,                
+            //    kernel);
+
+            ////// Stream the AI response and add to chat history
+            ////Console.WriteLine("Khloe's Response:");
+            //var fullMessage = "";
+            //await foreach (var content in completion)
+            //{
+            //    Console.Write(content.Content);
+            //    fullMessage += content.Content;
+            //}
+
+            chatMessages.Add(new ChatMessageContent(AuthorRole.Assistant, result.GetValue<string>()));
+
+            //var message = new Message { Messages = "Hi Jenny how are you today?" };
+            //SendMessage(message);
+
+            Chat chat = new Chat { Conversation = result.GetValue<string>() };
             return chat;
         }
 
@@ -70,9 +125,16 @@
                         }
                     }
                 }
-
-
             }
         }
+
+        private static void ApplyPersona(PersonaSettings settings, Persona persona)
+        {
+            settings.SetTone(persona.Tone);
+            settings.SetStyle(persona.Style);
+            settings.SetTraits(persona.Traits);
+        }
+
+
     }
 }

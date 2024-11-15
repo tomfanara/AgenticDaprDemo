@@ -13,6 +13,8 @@ using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using OpenAI.Assistants;
 using System.Net.Http.Json;
+using System.Text.Json;
+using System.Net.Http;
 using static System.Net.Mime.MediaTypeNames;
 
 var daprClient = new DaprClientBuilder().Build();
@@ -22,69 +24,107 @@ var daprClient = new DaprClientBuilder().Build();
 #pragma warning disable SKEXP0070
 Kernel kernel = Kernel.CreateBuilder()
                     .AddOllamaChatCompletion(
-                        modelId: "phi3.5",
+                        modelId: "llama3.1",
                         endpoint: new Uri("http://localhost:11434"))
                     .Build();
 
 var aiChatService = kernel.GetRequiredService<IChatCompletionService>();
 var chatHistory = new ChatHistory();
 
+Console.ForegroundColor = ConsoleColor.Green;
+Console.WriteLine($"This simple agentic network will email reports based on questions from Tracy a human business analyst");
+Console.WriteLine("We are using the Phi3.5 LLM model");
+Console.WriteLine("The micro agents are Khloe (Accounting supervisor), Carlos (Sales manager) and Jenny (Inventory manager");
+Console.WriteLine("");
+Console.ResetColor();
 
-var question = "Hi Phi how are you today?";
+var question = "Hi Phi3.5 just checking in, are you ok?";
 
+// Get user prompt and add to chat history
+Console.ForegroundColor = ConsoleColor.Blue;
+Console.WriteLine("Your prompt:");
+Console.ResetColor();
+Console.WriteLine("");
+foreach (char c in question)
+{
+    Console.Write(c);
+    Thread.Sleep(50); // Delay in milliseconds
+}
+Console.WriteLine("");
 
-//while (true)
-//{
-    // Get user prompt and add to chat history
-    Console.WriteLine("Your prompt:" + question);
-    var prompt = kernel.InvokePromptStreamingAsync(question);
+var prompt = kernel.InvokePromptStreamingAsync(question);
     //var userPrompt = Console.ReadLine();
     chatHistory.Add(new ChatMessageContent(AuthorRole.User, question));
 
-    // Stream the AI response and add to chat history
-    Console.WriteLine("AI Response:");
-    var response = "";
+// Stream the AI response and add to chat history
+Console.WriteLine("");
+Console.ForegroundColor = ConsoleColor.Blue;
+Console.WriteLine("AI Response:");
+Console.ResetColor();
+Console.WriteLine("");
+
+var chatResponse = "";
     await foreach (var item in
         aiChatService.GetStreamingChatMessageContentsAsync(chatHistory))
     {
         Console.Write(item.Content);
-        response += item.Content;
+        chatResponse += item.Content;
     }
-    chatHistory.Add(new ChatMessageContent(AuthorRole.Assistant, response));
-    Console.WriteLine();
-//}
-
-var message = new Message {Messages = "Hi Khloe how are you?" };
-
-
-using (HttpClient client = new HttpClient())
-{
-    HttpResponseMessage response1 = await client.PostAsJsonAsync<Message>("http://localhost:5167/converse", message);
-    response1.EnsureSuccessStatusCode();
-
-
-    string? line;
-    using (Stream stream = await response1.Content.ReadAsStreamAsync())
-    using (StreamReader reader = new StreamReader(stream))
-    {
-        
-        while ((line = await reader.ReadLineAsync()) != null)
-        {
-
-            foreach (char c in line)
-            {
-                Console.Write(c);
-                await Task.Delay(50);
-            }
-        }
-    }
-    
-
-}
-
+    chatHistory.Add(new ChatMessageContent(AuthorRole.Assistant, chatResponse));
 
 Console.WriteLine();
 
-//var httpClient = DaprClient.CreateInvokeHttpClient();
+var message = new Message {Messages = "Summarize getting new employees from accounting" };
 
-//var chat = await httpClient.PostAsJsonAsync<Message>("http://localhost:5167/converse", message);
+Console.WriteLine("");
+Console.ForegroundColor = ConsoleColor.Blue;
+Console.WriteLine("Your prompt:");
+Console.ResetColor();
+Console.WriteLine("");
+foreach (char c in message.Messages)
+{
+    Console.Write(c);
+    Thread.Sleep(50); // Delay in milliseconds
+}
+
+Console.WriteLine("");
+Console.WriteLine("");
+Console.ForegroundColor = ConsoleColor.Blue;
+Console.WriteLine("Khloe's Response:");
+Console.ResetColor();
+Console.WriteLine("");
+
+using (HttpClient client = new HttpClient())
+{
+    HttpResponseMessage response = await client.PostAsJsonAsync<Message>("http://localhost:5167/converse", message);
+    response.EnsureSuccessStatusCode();
+
+    string? line;
+
+    if (response.IsSuccessStatusCode)
+    {
+        string responseBody = await response.Content.ReadAsStringAsync();
+        JsonDocument jsonDocument = JsonDocument.Parse(responseBody);
+        JsonElement root = jsonDocument.RootElement;
+
+        string value = root.GetProperty("conversation").GetString();
+
+        foreach (char c in value)
+        {
+            Console.Write(c);
+            await Task.Delay(50);
+        }
+        
+    }
+    else
+    {
+        Console.WriteLine($"Error: {response.StatusCode}");
+    }  
+}
+
+Console.WriteLine();
+
+
+
+
+
