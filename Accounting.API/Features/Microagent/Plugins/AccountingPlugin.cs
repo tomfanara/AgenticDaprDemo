@@ -7,7 +7,7 @@ using System.Data.SQLite;
     
     public class AccountingPlugin
     {
-        [KernelFunction("get_employees"), Description("Get employees")]
+        [KernelFunction("get_employees"), Description("Get a list of employees from accounting database")]
         [return: Description("A list of employees from accounting.")]
         public string GetEmployees(Kernel kernel)
         {

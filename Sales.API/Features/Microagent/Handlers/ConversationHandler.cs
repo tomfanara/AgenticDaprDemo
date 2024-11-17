@@ -24,8 +24,14 @@ public class ConversationHandler()
 {
     public async Task<Chat> Handle(ConversationHandlerRequest request, CancellationToken cancellationToken)
     {
+        var question = "Summarize what are the current iPad sales?";
+        Console.WriteLine($"This program will answer the following question: {question}");
+        Console.WriteLine("1st approach will be to ask the question directly to the Phi-3 model.");
+        Console.WriteLine("2nd approach will be to add facts to a semantic memory and ask the question again");
+        Console.WriteLine("");
+
         // Create a chat completion service
-        #pragma warning disable SKEXP0070
+#pragma warning disable SKEXP0070
         var builder = Kernel.CreateBuilder()
                       .AddOllamaChatCompletion(
                        modelId: "llama3.1",
@@ -33,36 +39,20 @@ public class ConversationHandler()
         builder.AddLocalTextEmbeddingGeneration();
         Kernel kernel = builder.Build();
 
-        //create a persona Khloe
-        Persona persona = new Persona
-        {
-            Name = "Carlos",
-            Tone = "very friendly",
-            Style = "conversational",
-            Traits = new List<string> { "fun", "helpful", "approachable" }
-        };
-
-        var settings = new PersonaSettings();
-        ApplyPersona(settings, persona);
-
-        string greeting = settings.GenerateResponse(request.Messages);
-
-        Console.WriteLine("");
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.WriteLine("Carlos's prompt:");
-        Console.ResetColor();
-        Console.WriteLine("");
-        Console.WriteLine(greeting);
-
-
         Console.WriteLine($"Phi-3 response (no memory).");
-        var response = kernel.InvokePromptStreamingAsync("What's Tom's favorite sport?");
+        var response = kernel.InvokePromptStreamingAsync(question);
         await foreach (var result in response)
         {
             Console.Write(result);
         }
-           
-        string filePath = "ragai.txt";
+
+        // separator
+        Console.WriteLine("");
+        Console.WriteLine("");
+        Console.WriteLine("==============");
+        Console.WriteLine("");
+
+        string filePath = "./data/sales.txt";
 
         // Read the content of the file
         string fileContent = File.ReadAllText(filePath);
@@ -108,41 +98,38 @@ public class ConversationHandler()
         // Import the text memory plugin into the Kernel.
         kernel.ImportPluginFromObject(memoryPluginChunked);
 
-        OpenAIPromptExecutionSettings kernelSettings = new()
+        OpenAIPromptExecutionSettings settings = new()
         {
             ToolCallBehavior = null,
             Temperature = 0,
         };
 
         var promptChunked = @"
-            Question: What is Tom's favorite sport?
-            Answer the question using the memory content: {{Recall}}";
+        Question: What are the current iPad sales?
+        Answer the question using the memory content: {{Recall}}";
 
-        var arguments = new KernelArguments(kernelSettings)
+        var arguments = new KernelArguments(settings)
         {
-        { "input", "What's Tom's favorite sport?" },
-        { "collection", MemoryCollectionNameChunked }
+            { "input", question },
+            { "collection", MemoryCollectionNameChunked }
         };
 
         Console.WriteLine($"Phi-3 response (using semantic memory and document chunking).");
 
         response = kernel.InvokePromptStreamingAsync(promptChunked, arguments);
-        var fullMessage = "";
+        string fullMessage = "";
         await foreach (var result in response)
         {
             Console.Write(result);
             fullMessage += result.ToString();
         }
 
-        //var fullMessage = "";
-        //await foreach (var content in chatResponse)
-        //{
-        //    Console.Write(content.Content);
-        //    fullMessage += content.Content;
-        //}
+        Console.WriteLine($"The end!");
 
+        Console.WriteLine($"");
         Chat chat = new Chat { Conversation = fullMessage };
         return chat;
+
     }
 
     private static void ApplyPersona(PersonaSettings settings, Persona persona)
