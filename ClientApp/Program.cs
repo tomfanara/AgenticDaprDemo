@@ -74,7 +74,7 @@ var chatResponse = "";
 
 Console.WriteLine();
 
-var message = new Message {Messages = "Hi Khloe, Summarize in a table getting new employees from accounting" };
+var message = new Message {Messages = "Hi Khloe, please summarize new employees in a table and save to my computer." };
 
 Console.WriteLine("");
 Console.ForegroundColor = ConsoleColor.Blue;
@@ -123,52 +123,51 @@ using (HttpClient client = new HttpClient())
 
 Console.WriteLine("");
 
-var message2 = new Message { Messages = "Hi Khloe, could you save the employee data to a file on my computer" };
+//var message2 = new Message { Messages = "Khloe, could you also give me our current inventory."
+//Console.WriteLine("");
+//Console.ForegroundColor = ConsoleColor.Blue;
+//Console.WriteLine("Your prompt:");
+//Console.ResetColor();
+//Console.WriteLine("");
+//foreach (char c in message2.Messages)
+//{
+//    Console.Write(c);
+//    Thread.Sleep(50); // Delay in milliseconds
+//}
 
-Console.WriteLine("");
-Console.ForegroundColor = ConsoleColor.Blue;
-Console.WriteLine("Your prompt:");
-Console.ResetColor();
-Console.WriteLine("");
-foreach (char c in message2.Messages)
-{
-    Console.Write(c);
-    Thread.Sleep(50); // Delay in milliseconds
-}
+//Console.WriteLine("");
+//Console.WriteLine("");
+//Console.ForegroundColor = ConsoleColor.Blue;
+//Console.WriteLine("Khloe's response:");
+//Console.ResetColor();
+//Console.WriteLine("");
 
-Console.WriteLine("");
-Console.WriteLine("");
-Console.ForegroundColor = ConsoleColor.Blue;
-Console.WriteLine("Khloe's response:");
-Console.ResetColor();
-Console.WriteLine("");
+//using (HttpClient client = new HttpClient())
+//{
+//    HttpResponseMessage response = await client.PostAsJsonAsync<Message>("http://localhost:5167/converse", message2);
+//    response.EnsureSuccessStatusCode();
 
-using (HttpClient client = new HttpClient())
-{
-    HttpResponseMessage response = await client.PostAsJsonAsync<Message>("http://localhost:5167/converse", message2);
-    response.EnsureSuccessStatusCode();
+//    string? line;
 
-    string? line;
+//    if (response.IsSuccessStatusCode)
+//    {
+//        string responseBody = await response.Content.ReadAsStringAsync();
+//        JsonDocument jsonDocument = JsonDocument.Parse(responseBody);
+//        JsonElement root = jsonDocument.RootElement;
 
-    if (response.IsSuccessStatusCode)
-    {
-        string responseBody = await response.Content.ReadAsStringAsync();
-        JsonDocument jsonDocument = JsonDocument.Parse(responseBody);
-        JsonElement root = jsonDocument.RootElement;
+//        string value = root.GetProperty("conversation").GetString();
 
-        string value = root.GetProperty("conversation").GetString();
-
-        foreach (char c in value)
-        {
-            Console.Write(c);
-            await Task.Delay(50);
-        }
-    }
-    else
-    {
-        Console.WriteLine($"Error: {response.StatusCode}");
-    }
-}
+//        foreach (char c in value)
+//        {
+//            Console.Write(c);
+//            await Task.Delay(50);
+//        }
+//    }
+//    else
+//    {
+//        Console.WriteLine($"Error: {response.StatusCode}");
+//    }
+//}
 
 Console.WriteLine();
 Console.WriteLine();

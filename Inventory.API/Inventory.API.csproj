@@ -12,9 +12,7 @@
   <ItemGroup>
     <Folder Include="dapr\" />
     <Folder Include="Features\Microagent\Memories\" />
-    <Folder Include="Features\Microagent\Personas\" />
     <Folder Include="Features\Microagent\Planners\" />
-    <Folder Include="Features\Microagent\Plugins\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,7 +21,7 @@
     <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.29.0" />
     <PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="1.29.0-alpha" />
-    <PackageReference Include="Microsoft.SemanticKernel.Plugins.Memory" Version="1.29.0-alpha" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
   </ItemGroup>
 
 </Project>

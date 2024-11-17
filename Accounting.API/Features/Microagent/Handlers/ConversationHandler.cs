@@ -26,14 +26,16 @@ public class ConversationHandler()
                                 modelId: "llama3.1",
                                 endpoint: new Uri("http://localhost:11434"));           
 
+        //register plugins
         builder.Plugins.AddFromType<AccountingPlugin>();
         
         Kernel kernel = builder.Build();            
         
-        foreach (var pluginName in kernel.Plugins)
-        {
-            Console.WriteLine(pluginName);
-        }
+        //check if plugin registered
+        //foreach (var pluginName in kernel.Plugins)
+        //{
+        //    Console.WriteLine(pluginName);
+        //}
 
         //create a persona Khloe
         Persona persona = new Persona
@@ -57,35 +59,50 @@ public class ConversationHandler()
         Console.WriteLine(greeting);
 
         var chatService = kernel.GetRequiredService<IChatCompletionService>();
-                  
+        
         string promptTemplate = request.Messages + ": " + "{{get_employees}}";
+        //string promptTemplate = request.Messages;
         //var result = await kernel.InvokePromptAsync(promptTemplate);
+
+        var chatHistory = new ChatHistory();
+        chatHistory.AddUserMessage(promptTemplate);
 
         var result = await kernel.InvokePromptAsync(
         promptTemplate,
         new(new OpenAIPromptExecutionSettings()
         {
             MaxTokens = 50,
-            Temperature = 1
+            Temperature = 0,
+            ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions,
+            //ChatSystemPrompt = @"{{save_data}}"
         }));
 
+        //OpenAIPromptExecutionSettings openAIPromptExecutionSettings = new()
+        //{
+        //    Temperature = 0,
+        //    MaxTokens = 200,
+        //    ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions,
+        //    ChatSystemPrompt = @"{get_employees}"
+        //};
+
+        //var chatResponse = "";
+
+        //var chatResponse = chatService.GetStreamingChatMessageContentsAsync(chatHistory, openAIPromptExecutionSettings, kernel: kernel);
+        //var fullMessage = "";
+        //await foreach (var content in chatResponse)
+        //{
+        //    Console.Write(content.Content);
+        //    fullMessage += content.Content;
+        //}
+
+        chatHistory.Add(new ChatMessageContent(AuthorRole.Assistant, result.GetValue<string>()));
+
         Console.WriteLine(result.GetValue<string>());
+             
+        chatHistory.Add(new ChatMessageContent(AuthorRole.Assistant, result.GetValue<string>()));
 
-        var chatMessages = new ChatHistory();
-        chatMessages.AddUserMessage(promptTemplate);
-        
-        OpenAIPromptExecutionSettings openAIPromptExecutionSettings = new()
-        {
-
-            Temperature = 1.0,
-            MaxTokens = 200,
-           
-        };
-
-        chatMessages.Add(new ChatMessageContent(AuthorRole.Assistant, result.GetValue<string>()));
-
-        //var message = new Message { Messages = "Hi Jenny how are you today?" };
-        //SendMessage(message);
+        var message = new Message { Messages = "Hi can you send me the current inventory?" };
+        SendMessage(message);
 
         Chat chat = new Chat { Conversation = result.GetValue<string>() };
         return chat;

@@ -15,15 +15,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AIToolbox.SemanticKernel.Connectors.Ollama" Version="0.1.0-alpha" />
     <PackageReference Include="Dapr.AspNetCore" Version="1.14.0" />
     <PackageReference Include="Dapr.Client" Version="1.14.0" />
     <PackageReference Include="MediatR" Version="12.4.1" />
-    <PackageReference Include="Microsoft.SemanticKernel" Version="1.28.0" />
-    <PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="1.28.0-alpha" />
-    <PackageReference Include="Microsoft.SemanticKernel.Plugins.Memory" Version="1.28.0-alpha" />
+    <PackageReference Include="Microsoft.SemanticKernel" Version="1.29.0" />
+    <PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="1.29.0-alpha" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
-    <PackageReference Include="SimpleFeedReader" Version="1.0.9" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
   </ItemGroup>
 

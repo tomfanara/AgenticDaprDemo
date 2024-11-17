@@ -5,10 +5,10 @@ using System.ComponentModel;
 using System.Data.SQLite;
 
     
-    public class AccountingPlugin
+    public class InventoryPlugin
     {
-        [KernelFunction("get_employees"), Description("Get employees from accounting")]
-        [return: Description("A list of employees from accounting.")]
+        [KernelFunction("get_inventory"), Description("Get current inventory")]
+        [return: Description("A list of current inventory.")]
         public string GetEmployees(Kernel kernel)
         {
             // Connection string for an in-memory database
@@ -19,21 +19,21 @@ using System.Data.SQLite;
                 connection.Open();
 
                 // Create a table
-                string createTableQuery = "CREATE TABLE Employees (Id INTEGER PRIMARY KEY, Name TEXT)";
+                string createTableQuery = "CREATE TABLE Inventory (Id INTEGER PRIMARY KEY, Item TEXT)";
                 using (var command = new SQLiteCommand(createTableQuery, connection))
                 {
                     command.ExecuteNonQuery();
                 }
 
                 // Insert data into the table
-                string insertDataQuery = "INSERT INTO Employees (Name) VALUES ('Alice'), ('Bobby'), ('Carol')";
+                string insertDataQuery = "INSERT INTO Inventory (Item) VALUES ('Laptop'), ('iPhone'), ('iPad')";
                 using (var command = new SQLiteCommand(insertDataQuery, connection))
                 {
                     command.ExecuteNonQuery();
                 }
 
                 // Query the data
-                string selectQuery = "SELECT * FROM Employees";
+                string selectQuery = "SELECT * FROM Inventory";
                 
                 using (var command = new SQLiteCommand(selectQuery, connection))
                 {
@@ -41,7 +41,7 @@ using System.Data.SQLite;
                     {
                         while (reader.Read())
                         {                            
-                            result = result + $"Id: {reader["Id"]}, Name: {reader["Name"]}";
+                            result = result + $"Id: {reader["Id"]}, Name: {reader["Item"]}";
                         }
                     }
                 }
@@ -50,15 +50,15 @@ using System.Data.SQLite;
             // save to txt file for now
             SaveData(kernel, result);
 
-           return result;
+            return result;
         }
 
-        [KernelFunction("save_data"), Description("Saves data to a file on your computer")]
-        [return: Description("A list of employees from accounting.")]
-        public async void SaveData(Kernel kernel, string data)
-        {            
-            await File.WriteAllTextAsync($@"C:\temp\employee.txt", data);
-        }
+    [KernelFunction("save_data"), Description("Saves data to a file on your computer")]
+    [return: Description("A list of employees from accounting.")]
+    public async void SaveData(Kernel kernel, string data)
+    {
+        await File.WriteAllTextAsync($@"C:\temp\inventory.txt", data);
     }
+}
 
 

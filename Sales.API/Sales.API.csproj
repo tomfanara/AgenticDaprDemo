@@ -16,13 +16,12 @@
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.29.0" />
     <PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="1.29.0-alpha" />
     <PackageReference Include="Microsoft.SemanticKernel.Plugins.Memory" Version="1.29.0-alpha" />
+    <PackageReference Include="SmartComponents.LocalEmbeddings.SemanticKernel" Version="0.1.0-preview10148" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Features\Microagent\Memories\" />
-    <Folder Include="Features\Microagent\Personas\" />
     <Folder Include="Features\Microagent\Planners\" />
-    <Folder Include="Features\Microagent\Plugins\" />
   </ItemGroup>
 
 </Project>
