@@ -7,7 +7,7 @@ using System.Data.SQLite;
     
     public class AccountingPlugin
     {
-        [KernelFunction("get_employees"), Description("Get employees from accounting")]
+        [KernelFunction("get_employees"), Description("Get employees")]
         [return: Description("A list of employees from accounting.")]
         public string GetEmployees(Kernel kernel)
         {
@@ -57,7 +57,7 @@ using System.Data.SQLite;
         [return: Description("A list of employees from accounting.")]
         public async void SaveData(Kernel kernel, string data)
         {            
-            await File.WriteAllTextAsync($@"C:\temp\employee.txt", data);
+            await File.WriteAllTextAsync($@"..\employee.txt", data);
         }
     }
 

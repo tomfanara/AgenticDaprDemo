@@ -57,7 +57,7 @@ using System.Data.SQLite;
     [return: Description("A list of employees from accounting.")]
     public async void SaveData(Kernel kernel, string data)
     {
-        await File.WriteAllTextAsync($@"C:\temp\inventory.txt", data);
+        await File.WriteAllTextAsync($@"..\inventory.txt", data);
     }
 }
 

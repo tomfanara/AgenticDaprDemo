@@ -51,7 +51,7 @@ public class ConversationHandler()
 
         Console.WriteLine("");
         Console.ForegroundColor = ConsoleColor.Blue;
-        Console.WriteLine("Khloe's prompt:");
+        Console.WriteLine("Jenny's prompt:");
         Console.ResetColor();
         Console.WriteLine("");
         Console.WriteLine(greeting);
