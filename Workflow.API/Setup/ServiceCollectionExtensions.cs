@@ -4,6 +4,7 @@ using Dapr.Workflow;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Workflow.API.Features.Activities;
+using Workflow.API.Features.Workflows;
 using Workflow.API.Models;
 
 public static class ServiceCollectionExtensions
@@ -12,17 +13,20 @@ public static class ServiceCollectionExtensions
     {        
         var daprClient = new Dapr.Client.DaprClientBuilder().Build();
         
-        services.AddDaprClient();        
+        services.AddDaprClient();
+        services.AddDaprWorkflowClient();
+
         services.AddEndpointsApiExplorer();      
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
         // register dapr services
         services.AddDaprWorkflow(options =>
         {
-            options.RegisterWorkflow<TaskChainingWorkflow>();
-            options.RegisterActivity<TaskChainingActivity>();
-            options.RegisterActivity<TaskChainingCompensationActivity>();
+            options.RegisterWorkflow<FanOutFanInWorkflow>();
+            options.RegisterActivity<FanOutFanInAccountingActivity>();
+            options.RegisterActivity<FanOutFanInInventoryActivity>();
+            options.RegisterActivity<FanOutFanInSalesActivity>();
         });
-
+      
     }
 }

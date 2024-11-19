@@ -1,10 +1,8 @@
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: delegatedAuth-pubsub
+  name: daprappid-pubsub
 spec:
   type: pubsub.in-memory
   version: v1
   metadata: []
-scopes:
-  - delegatedAuth    

@@ -7,6 +7,7 @@
 #pragma warning disable SKEXP0011
 #pragma warning disable SKEXP0050
 #pragma warning disable SKEXP0052
+#pragma warning disable SKEXP0070
 
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,14 +25,14 @@ public class ConversationHandler()
 {
     public async Task<Chat> Handle(ConversationHandlerRequest request, CancellationToken cancellationToken)
     {
-        var question = "Summarize what are the current iPad sales?";
+        var question = "Summarize the current iPad sales";
         Console.WriteLine($"This program will answer the following question: {question}");
         Console.WriteLine("1st approach will be to ask the question directly to the Phi-3 model.");
         Console.WriteLine("2nd approach will be to add facts to a semantic memory and ask the question again");
         Console.WriteLine("");
 
         // Create a chat completion service
-#pragma warning disable SKEXP0070
+       
         var builder = Kernel.CreateBuilder()
                       .AddOllamaChatCompletion(
                        modelId: "llama3.1",
@@ -39,12 +40,25 @@ public class ConversationHandler()
         builder.AddLocalTextEmbeddingGeneration();
         Kernel kernel = builder.Build();
 
-        Console.WriteLine($"Phi-3 response (no memory).");
-        var response = kernel.InvokePromptStreamingAsync(question);
-        await foreach (var result in response)
+        Console.WriteLine($"Phi-3 response (no RAG).");
+
+        OpenAIPromptExecutionSettings settings = new()
         {
-            Console.Write(result);
-        }
+            ToolCallBehavior = null,
+            MaxTokens = 30,
+            Temperature = 0,
+        };
+
+        var arguments = new KernelArguments(settings)
+        {
+            { "input", question },
+        };
+
+        //var response = kernel.InvokePromptStreamingAsync(question);
+        //await foreach (var result in response)
+        //{
+        //    Console.Write(result);
+        //}
 
         // separator
         Console.WriteLine("");
@@ -84,7 +98,7 @@ public class ConversationHandler()
         var embeddingGeneratorChunked = kernel.Services.GetRequiredService<ITextEmbeddingGenerationService>();
         var memoryChunked = new SemanticTextMemory(new VolatileMemoryStore(), embeddingGeneratorChunked);
 
-        const string MemoryCollectionNameChunked = "fanFactsChunked";
+        const string MemoryCollectionNameChunked = "appleSales";
 
         int i = 0;
         foreach (var chunk in chunks)
@@ -97,26 +111,21 @@ public class ConversationHandler()
 
         // Import the text memory plugin into the Kernel.
         kernel.ImportPluginFromObject(memoryPluginChunked);
-
-        OpenAIPromptExecutionSettings settings = new()
-        {
-            ToolCallBehavior = null,
-            Temperature = 0,
-        };
+     
 
         var promptChunked = @"
-        Question: What are the current iPad sales?
+        Question: Summarize the current iPad sales
         Answer the question using the memory content: {{Recall}}";
 
-        var arguments = new KernelArguments(settings)
+        var argumentsRAG = new KernelArguments(settings)
         {
             { "input", question },
             { "collection", MemoryCollectionNameChunked }
         };
 
-        Console.WriteLine($"Phi-3 response (using semantic memory and document chunking).");
+        Console.WriteLine($"Llama3.1 response (using RAG semantic memory and document chunking).");
 
-        response = kernel.InvokePromptStreamingAsync(promptChunked, arguments);
+        var response = kernel.InvokePromptStreamingAsync(promptChunked, argumentsRAG);
         string fullMessage = "";
         await foreach (var result in response)
         {
@@ -124,7 +133,7 @@ public class ConversationHandler()
             fullMessage += result.ToString();
         }
 
-        Console.WriteLine($"The end!");
+        Console.WriteLine($" The end!");
 
         Console.WriteLine($"");
         Chat chat = new Chat { Conversation = fullMessage };

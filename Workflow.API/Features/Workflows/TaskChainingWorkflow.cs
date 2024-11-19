@@ -5,49 +5,34 @@ using DurableTask.Core.Exceptions;
 using System;
 using static global::Workflow.API.Models.TaskChainingModels;
 
-public class TaskChainingWorkflow : Workflow<Steps, string>
+public class TaskChainingWorkflow : Workflow<string, string>
 {
-    public override async Task<string> RunAsync(WorkflowContext context, Steps steps)
+    public override async Task<string> RunAsync(WorkflowContext context, string prompt)
     {
+        // Expotential backoff retry policy that survives long outages
         var retryOptions = new WorkflowTaskOptions
         {
-            // put in component later
             RetryPolicy = new WorkflowRetryPolicy(
-            firstRetryInterval: TimeSpan.FromMinutes(1),
-            backoffCoefficient: 2.0,
-            maxRetryInterval: TimeSpan.FromHours(1),
-            maxNumberOfAttempts: 10),
+                firstRetryInterval: TimeSpan.FromMinutes(1),
+                backoffCoefficient: 2.0,
+                maxRetryInterval: TimeSpan.FromHours(1),
+                maxNumberOfAttempts: 10),
         };
 
         try
         {
-            var result = await context.CallActivityAsync<bool>(nameof(TaskChainingActivity), steps);
-
-            // ****wait for business logic endpoint to return or time out after 3 seconds
-            var response = await context.WaitForExternalEventAsync<Result>(
-              eventName: "ManagerApproval",
-              timeout: TimeSpan.FromSeconds(30));
-            if (response.successful)
-            {
-                // assume the external business logic returned true end the workflow here and report results
-                var results = string.Join(", ", response.message);
-            }
-
-            if (result)
-            {
-                return "Completed";
-            }
+            var result1 = await context.CallActivityAsync<string>("FanOutFanInAccountingActivity", prompt, retryOptions);
+            var result2 = await context.CallActivityAsync<string> ("FanOutFanInInventoryActivity", prompt, retryOptions);
+            var result3 = await context.CallActivityAsync <string> ("FanOutFanInSalesActivity", prompt, retryOptions);
+            //return string.Join(", ", result1, result2, result3);
+            return "hello";
         }
-        catch (OperationCanceledException) // Task failures are surfaced as TaskFailedException
+        catch (TaskFailedException) // Task failures are surfaced as TaskFailedException
         {
             // Retries expired - apply custom compensation logic
-            Console.WriteLine("cancel step");
+            await context.CallActivityAsync<long[]>("MyCompensation", options: retryOptions);
             throw;
         }
 
-        // dapr durable looping structure
-        steps.currentIndex += 1;
-        context.ContinueAsNew(steps, true);
-        return "still running...";
     }
 }

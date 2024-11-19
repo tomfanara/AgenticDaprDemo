@@ -1,15 +1,24 @@
 {
-  "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
     "http": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": false,
       "launchUrl": "todos",
-      "applicationUrl": "http://localhost:5139",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5049"
+    },
+    "Dapr-PWSH": {
+      "commandName": "Executable",
+      "executablePath": "pwsh",
+      "commandLineArgs": "-Command \"Start-Process http://localhost:5006/swagger; dapr run --app-id workflow --components-path dapr-local/ --config dapr-local/configuration.yaml --app-port 5006 --dapr-http-port 3500 --dapr-grpc-port 50007 --log-level Debug -- dotnet run --no-build --urls http://localhost:5006\"",
+      "workingDirectory": ".",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
-  }
+  },
+  "$schema": "http://json.schemastore.org/launchsettings.json"
 }

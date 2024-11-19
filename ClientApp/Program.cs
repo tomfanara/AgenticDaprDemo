@@ -32,7 +32,7 @@ var aiChatService = kernel.GetRequiredService<IChatCompletionService>();
 var chatHistory = new ChatHistory();
 
 Console.ForegroundColor = ConsoleColor.Green;
-Console.WriteLine($"This simple agentic network will send reports based on questions from Tracy a human business analyst");
+Console.WriteLine($"This simple agentic network will send reports based on questions from human business analyst");
 Console.WriteLine("We are using the Phi3.5, Llama3.1 and Gemma2 LLM models");
 Console.WriteLine("The micro agents are Khloe (Accounting supervisor), Carlos (Sales manager) and Jenny (Inventory manager");
 Console.WriteLine("");
@@ -48,7 +48,7 @@ Console.WriteLine("");
 foreach (char c in question)
 {
     Console.Write(c);
-    Thread.Sleep(50); // Delay in milliseconds
+    Thread.Sleep(25); // Delay in milliseconds
 }
 Console.WriteLine("");
 
@@ -74,7 +74,7 @@ var chatResponse = "";
 
 Console.WriteLine();
 
-var message = new Message {Messages = "Hi Khloe, please summarize new employees in a table and save to my computer." };
+var message = new Message {Messages = "I'm good AI. I'm conducting a marketing research project and need to summarize a list of new employees in accounting. Could you save on my computer." };
 
 Console.WriteLine("");
 Console.ForegroundColor = ConsoleColor.Blue;
@@ -84,7 +84,7 @@ Console.WriteLine("");
 foreach (char c in message.Messages)
 {
     Console.Write(c);
-    Thread.Sleep(50); // Delay in milliseconds
+    Thread.Sleep(25); // Delay in milliseconds
 }
 
 Console.WriteLine("");
@@ -112,7 +112,7 @@ using (HttpClient client = new HttpClient())
         foreach (char c in value)
         {
             Console.Write(c);
-            await Task.Delay(50);
+            await Task.Delay(25);
         }        
     }
     else
@@ -170,7 +170,7 @@ Console.WriteLine("");
 //}
 
 Console.WriteLine();
-Console.WriteLine();
+Console.ReadLine();
 
 
 

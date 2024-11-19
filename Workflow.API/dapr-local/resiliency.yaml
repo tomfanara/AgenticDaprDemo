@@ -1,7 +1,7 @@
 apiVersion: dapr.io/v1alpha1
 kind: Resiliency
 metadata:
-  name: delegatedAuth-resiliency
+  name: daprappid-resiliency
 spec:
   policies:
     timeouts:
@@ -28,12 +28,12 @@ spec:
         trip: consecutiveFailures >= 3
   targets:
     apps:
-      delegatedAuth:
+      daprappid:
         timeout: general
         retry: RetryPolicy
         circuitBreaker: CBPolicy
     components:
-      delegatedAuth-pubsub:
+      daprappid-pubsub:
         inbound:
           retry: RetryPolicy-pubsub
           circuitBreaker: CBPolicy-pubsub
