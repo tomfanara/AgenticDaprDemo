@@ -4,20 +4,20 @@ using static Workflow.API.Models.TaskChainingModels;
 
 namespace Workflow.API.Features.Activities
 {
-    public class FanOutFanInSalesActivity : WorkflowActivity<string, string>
+    public class AccountingActivity : WorkflowActivity<string, string>
     {
         private readonly DaprClient daprClient;
 
-        public FanOutFanInSalesActivity(DaprClient daprClient)
+        public AccountingActivity(DaprClient daprClient)
         {
-            this.daprClient = new DaprClientBuilder().Build();
+            this.daprClient = daprClient;
         }
 
         public override async Task<string> RunAsync(WorkflowActivityContext context, string steps)
         {
+           
 
-
-            return "good day";
+            return "hello";
         }
     }
 }

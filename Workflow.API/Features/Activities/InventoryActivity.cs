@@ -4,13 +4,13 @@ using static Workflow.API.Models.TaskChainingModels;
 
 namespace Workflow.API.Features.Activities
 {
-    public class FanOutFanInInventoryActivity : WorkflowActivity<string, string>
+    public class InventoryActivity : WorkflowActivity<string, string>
     {
         private readonly DaprClient daprClient;
 
-        public FanOutFanInInventoryActivity(DaprClient daprClient)
+        public InventoryActivity(DaprClient daprClient)
         {
-            this.daprClient = new DaprClientBuilder().Build();
+            this.daprClient = daprClient;
         }
 
         public override async Task<string> RunAsync(WorkflowActivityContext context, string steps)

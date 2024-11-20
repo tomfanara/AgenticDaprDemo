@@ -12,11 +12,11 @@ namespace Workflow.API.Features.Workflows;
             var tasks = new List<Task<string>>();
             
             tasks.Add(context.CallActivityAsync<string>(
-                nameof(FanOutFanInAccountingActivity)));
+                nameof(AccountingActivity)));
             tasks.Add(context.CallActivityAsync<string>(
-                nameof(FanOutFanInInventoryActivity)));
+                nameof(InventoryActivity)));
             tasks.Add(context.CallActivityAsync<string>(
-                nameof(FanOutFanInSalesActivity)));
+                nameof(SalesActivity)));
        
             var messages = await Task.WhenAll(tasks);
 

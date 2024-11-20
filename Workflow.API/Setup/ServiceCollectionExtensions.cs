@@ -23,9 +23,9 @@ public static class ServiceCollectionExtensions
         services.AddDaprWorkflow(options =>
         {
             options.RegisterWorkflow<FanOutFanInWorkflow>();
-            options.RegisterActivity<FanOutFanInAccountingActivity>();
-            options.RegisterActivity<FanOutFanInInventoryActivity>();
-            options.RegisterActivity<FanOutFanInSalesActivity>();
+            options.RegisterActivity<AccountingActivity>();
+            options.RegisterActivity<InventoryActivity>();
+            options.RegisterActivity<SalesActivity>();
         });
       
     }

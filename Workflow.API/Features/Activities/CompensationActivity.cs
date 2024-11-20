@@ -7,7 +7,7 @@ using System.Reactive;
 using System.Threading.Tasks;
 
 
-public class TaskChainingCompensationActivity : WorkflowActivity<object, object>
+public class CompensationActivity : WorkflowActivity<object, object>
 {
     public override Task<object> RunAsync(WorkflowActivityContext context, object input)
     {
