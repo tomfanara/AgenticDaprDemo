@@ -123,7 +123,7 @@ using (HttpClient client = new HttpClient())
 
 Console.WriteLine("");
 
-//var message2 = new Message { Messages = "Khloe, could you also give me our current inventory."
+var message2 = new Message { Messages = "Khloe, could you also give me our current inventory." };
 //Console.WriteLine("");
 //Console.ForegroundColor = ConsoleColor.Blue;
 //Console.WriteLine("Your prompt:");
@@ -144,7 +144,7 @@ Console.WriteLine("");
 
 //using (HttpClient client = new HttpClient())
 //{
-//    HttpResponseMessage response = await client.PostAsJsonAsync<Message>("http://localhost:5167/converse", message2);
+//    HttpResponseMessage response = await client.GetAsync("http://localhost:5006/initialize");
 //    response.EnsureSuccessStatusCode();
 
 //    string? line;
