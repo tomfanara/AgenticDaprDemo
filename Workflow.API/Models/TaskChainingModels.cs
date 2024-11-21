@@ -8,9 +8,9 @@ public class TaskChainingModels
 
     public record Notification(string message);
 
-    public class Steps
+    public class Prompts
     {
-        public Steps(int currentIndex, Step[] step)
+        public Prompts(int currentIndex, Prompt[] step)
         {
             this.currentIndex = currentIndex;
             this.step = step;
@@ -21,31 +21,31 @@ public class TaskChainingModels
             get; set;
         }
 
-        public Step[] step
+        public Prompt[] step
         {
             get; set;
         }
     }
     }
 
-public class Step
+public class Prompt
 {
     public int Index
     {
         get; set;
     }
 
-    public string? BusinessLogicEndpoint
+    public string? AgentAPIEndpoint
     {
         get; set;
     }
 
-    public string? CancelLogicEndpoint
+    public string? AgentName
     {
         get; set;
     }
 
-    public string? TaskName
+    public string? Message
     {
         get; set;
     }

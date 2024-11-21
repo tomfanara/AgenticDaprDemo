@@ -28,8 +28,34 @@ using static Workflow.API.Models.TaskChainingModels;
         {           
             // create fake Workflow Task Steps by hydrating the Steps model
             Console.WriteLine("intializing workflow and starting workflow");
-       
-            var workflowId = $"{Guid.NewGuid().ToString()[..8]}";
+
+            var prompts = new Prompt[3];
+
+            var prompt1 = new Prompt();
+            prompt1.Index = 0;
+            prompt1.AgentAPIEndpoint = "/converse";
+            prompt1.AgentName = "Khloe";
+            prompt1.Message = "Hi Klhoe...";
+
+            var prompt2 = new Prompt();
+            prompt2.Index = 0;
+            prompt2.AgentAPIEndpoint = "/converse";
+            prompt2.AgentName = "Jenny";
+            prompt2.Message = "Hi Jenny...";
+
+            var prompt3 = new Prompt();
+            prompt3.Index = 0;
+            prompt3.AgentAPIEndpoint = "/converse";
+            prompt3.AgentName = "Carlos";
+            prompt3.Message = "Hi Carlos...";
+
+            prompts[0] = prompt1;
+            prompts[1] = prompt2;
+            prompts[2] = prompt3;
+
+            var promptCollection = new Prompts(0, prompts);
+
+        var workflowId = $"{Guid.NewGuid().ToString()[..8]}";
 
             await this.daprWorkflowClient.ScheduleNewWorkflowAsync(           
             name: nameof(TaskChainingWorkflow),
