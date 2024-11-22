@@ -19,7 +19,7 @@ namespace Workflow.API.Features.Activities
         public override async Task<string> RunAsync(WorkflowActivityContext context, string messages)
         {
 
-            var message = new Message { Messages = "Hi Jenny, can you send me the current inventory?" };
+            var message = new Message { Messages = "Can you send me the current inventory?" };
             string? value = "";
             using (HttpClient client = new HttpClient())
             {
