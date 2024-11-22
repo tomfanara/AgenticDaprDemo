@@ -10,13 +10,16 @@ public static class WebApplicationExtensions
 {
     public static void MapUserEndpoints(this WebApplication app)
     {
-        app.MapGet("/initialize", Endpoint)
-        .WithName("Endpoint")
-        .WithTags("MyEndpoints")
-        .Produces(StatusCodes.Status500InternalServerError)
-        .Produces(StatusCodes.Status401Unauthorized)
-        .Produces(StatusCodes.Status403Forbidden);
-        app.MapPost("/raiseevent", Endpoint2)
+        app.MapPost("/converse", Converse)
+            .WithName("converse")
+            .WithTags("converse")
+            .Produces<Models.Response.Chat>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status500InternalServerError)
+            .Produces(StatusCodes.Status401Unauthorized)
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status403Forbidden)
+            .Produces<IResult>(StatusCodes.Status400BadRequest);
+        app.MapPost("/raiseevent", RaiseEvent)
         .Accepts<string>("application/json")
         .WithName("Endpoint2")
         .WithTags("MyEndpoints2")
@@ -25,16 +28,9 @@ public static class WebApplicationExtensions
         .Produces(StatusCodes.Status403Forbidden);
     }
 
-    private static async Task<IResult> Endpoint(IMediator mediator)
-    {
-        var result = await mediator.Send(new InitializeWorkflowCommand
-        {
+    private static async Task<Chat> Converse(IMediator mediator, ConversationHandlerRequest req) => await mediator.Send(req);
 
-        });
-        return Results.Ok();
-    }
-
-    private static async Task<IResult> Endpoint2(IMediator mediator, string message)
+    private static async Task<IResult> RaiseEvent(IMediator mediator, string message)
     {
         var result = await mediator.Send(new RaiseEventWorkflowCommand
         {

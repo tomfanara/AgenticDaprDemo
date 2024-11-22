@@ -96,7 +96,7 @@ Console.WriteLine("");
 
 using (HttpClient client = new HttpClient())
 {
-    HttpResponseMessage response = await client.PostAsJsonAsync<Message>("http://localhost:5167/converse", message);
+    HttpResponseMessage response = await client.PostAsJsonAsync<Message>("http://localhost:5006/converse", message);
     response.EnsureSuccessStatusCode();
 
     string? line;
@@ -123,51 +123,6 @@ using (HttpClient client = new HttpClient())
 
 Console.WriteLine("");
 
-var message2 = new Message { Messages = "Khloe, could you also give me our current inventory." };
-//Console.WriteLine("");
-//Console.ForegroundColor = ConsoleColor.Blue;
-//Console.WriteLine("Your prompt:");
-//Console.ResetColor();
-//Console.WriteLine("");
-//foreach (char c in message2.Messages)
-//{
-//    Console.Write(c);
-//    Thread.Sleep(50); // Delay in milliseconds
-//}
-
-//Console.WriteLine("");
-//Console.WriteLine("");
-//Console.ForegroundColor = ConsoleColor.Blue;
-//Console.WriteLine("Khloe's response:");
-//Console.ResetColor();
-//Console.WriteLine("");
-
-//using (HttpClient client = new HttpClient())
-//{
-//    HttpResponseMessage response = await client.GetAsync("http://localhost:5006/initialize");
-//    response.EnsureSuccessStatusCode();
-
-//    string? line;
-
-//    if (response.IsSuccessStatusCode)
-//    {
-//        string responseBody = await response.Content.ReadAsStringAsync();
-//        JsonDocument jsonDocument = JsonDocument.Parse(responseBody);
-//        JsonElement root = jsonDocument.RootElement;
-
-//        string value = root.GetProperty("conversation").GetString();
-
-//        foreach (char c in value)
-//        {
-//            Console.Write(c);
-//            await Task.Delay(50);
-//        }
-//    }
-//    else
-//    {
-//        Console.WriteLine($"Error: {response.StatusCode}");
-//    }
-//}
 
 Console.WriteLine();
 Console.ReadLine();

@@ -101,8 +101,8 @@ public class ConversationHandler()
              
         chatHistory.Add(new ChatMessageContent(AuthorRole.Assistant, result.GetValue<string>()));
 
-        var message = new Message { Messages = "Hi can you send me the current inventory?" };
-        SendMessage(message);
+        //var message = new Message { Messages = "Hi can you send me the current inventory?" };
+        //SendMessage(message);
 
         Chat chat = new Chat { Conversation = result.GetValue<string>() };
         return chat;

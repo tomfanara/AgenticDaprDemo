@@ -1,5 +1,6 @@
 ﻿using Dapr.Client;
 using Dapr.Workflow;
+using System.Text.Json;
 using Workflow.API.Models.Request;
 using Workflow.API.Models.Response;
 using static Workflow.API.Models.TaskChainingModels;
@@ -15,29 +16,32 @@ namespace Workflow.API.Features.Activities
             this.daprClient = daprClient;
         }
 
-        public override async Task<string> RunAsync(WorkflowActivityContext context, string message)
+        public override async Task<string> RunAsync(WorkflowActivityContext context, string messages)
         {
-            //var httpClient = DaprClient.CreateInvokeHttpClient();
-            //Message catMessage = new Message { Messages = message };
-            //var response = await httpClient.PostAsJsonAsync<string>("http://localhost:5167/converse", message);
+            var message = new Message { Messages = "Hi Carlos, can you send the current iPad Sales?" };
+            string? value = "";
+            using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.PostAsJsonAsync<Message>("http://localhost:5005/converse", message);
+                response.EnsureSuccessStatusCode();
 
-            string chatResponse = message;
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    string responseBody = await response.Content.ReadAsStringAsync();
-            //    JsonDocument jsonDocument = JsonDocument.Parse(responseBody);
-            //    JsonElement root = jsonDocument.RootElement;
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    JsonDocument jsonDocument = JsonDocument.Parse(responseBody);
+                    JsonElement root = jsonDocument.RootElement;
 
-            //    charResponse = root.GetProperty("conversation").GetString();
+                    value = root.GetProperty("conversation").GetString();
 
-            //}
-            //else
-            //{
-            //    Console.WriteLine($"Error: {response.StatusCode}");
-            //}
+                }
+                else
+                {
+                    Console.WriteLine($"Error: {response.StatusCode}");
+                }
+            }
 
-            Chat chat = new Chat { Conversation = chatResponse };
-
+            Console.WriteLine(value);
+            Chat chat = new Chat { Conversation = value };
             return await Task.FromResult(chat.Conversation);
         }
     }

@@ -1,8 +1,8 @@
 version: 1
 common:
-  resourcesPath: ResourcesLocal
+  resourcesPath: ./dapr-local
 apps:
-  - appID: Workflow.API
+  - appID: workflow-api
     appDirPath: .
     appPort: 5065
     daprHTTPPort: 3500

@@ -1,9 +1,12 @@
 ﻿using Dapr.Client;
 using Dapr.Workflow;
+using Google.Protobuf.WellKnownTypes;
+using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks.Dataflow;
 using Workflow.API.Models.Request;
 using Workflow.API.Models.Response;
+using static Google.Rpc.Context.AttributeContext.Types;
 using static Workflow.API.Models.TaskChainingModels;
 
 namespace Workflow.API.Features.Activities
@@ -17,30 +20,32 @@ namespace Workflow.API.Features.Activities
             this.daprClient = daprClient;
         }
 
-        public override async Task<string> RunAsync(WorkflowActivityContext context, string message)
+        public override async Task<string> RunAsync(WorkflowActivityContext context, string messages)
         {
+            var message = new Message { Messages = "Hi Khloe. I'm conducting a marketing research project and need to summarize a list of new employees in accounting. Could you save on my computer." };
+            string? value = "";
+            using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.PostAsJsonAsync<Message>("http://localhost:5167/converse", message);
+                response.EnsureSuccessStatusCode();               
 
-            //var httpClient = DaprClient.CreateInvokeHttpClient();
-            //Message catMessage = new Message { Messages = message };
-            //var response = await httpClient.PostAsJsonAsync<string>("http://localhost:5167/converse", message);
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    JsonDocument jsonDocument = JsonDocument.Parse(responseBody);
+                    JsonElement root = jsonDocument.RootElement;
 
-            string chatResponse = message;
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    string responseBody = await response.Content.ReadAsStringAsync();
-            //    JsonDocument jsonDocument = JsonDocument.Parse(responseBody);
-            //    JsonElement root = jsonDocument.RootElement;
+                    value = root.GetProperty("conversation").GetString();
+                    
+                }
+                else
+                {
+                    Console.WriteLine($"Error: {response.StatusCode}");
+                }
+            }
 
-            //    chatResponse = root.GetProperty("conversation").GetString();
-
-            //}
-            //else
-            //{
-            //    Console.WriteLine($"Error: {response.StatusCode}");
-            //}
-
-            Chat chat = new Chat { Conversation = chatResponse };
-
+            Console.WriteLine(value);
+            Chat chat = new Chat { Conversation = value };
             return await Task.FromResult(chat.Conversation);
         }
     }
