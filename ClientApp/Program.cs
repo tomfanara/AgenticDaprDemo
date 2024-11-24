@@ -52,7 +52,7 @@ foreach (char c in question)
 }
 Console.WriteLine("");
 
-var prompt = kernel.InvokePromptStreamingAsync(question);
+var prompt = kernel.InvokePromptAsync(question);
 //var userPrompt = Console.ReadLine();
 chatHistory.Add(new ChatMessageContent(AuthorRole.User, question));
 
