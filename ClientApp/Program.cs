@@ -24,7 +24,7 @@ var daprClient = new DaprClientBuilder().Build();
 #pragma warning disable SKEXP0070
 Kernel kernel = Kernel.CreateBuilder()
                     .AddOllamaChatCompletion(
-                        modelId: "llama3.1",
+                        modelId: "orca-mini",
                         endpoint: new Uri("http://localhost:11434"))
                     .Build();
 
@@ -33,7 +33,7 @@ var chatHistory = new ChatHistory();
 
 Console.ForegroundColor = ConsoleColor.Green;
 Console.WriteLine($"This simple agentic network will send reports based on questions from human business analyst");
-Console.WriteLine("We are using the Phi3.5, Llama3.1 and Gemma2 LLM models");
+Console.WriteLine("We are using the Phi3.5, Llama3.1 and Orca-Mini LLM models");
 Console.WriteLine("The micro agents are Khloe (Accounting supervisor), Carlos (Sales manager) and Jenny (Inventory manager");
 Console.WriteLine("");
 Console.ResetColor();
@@ -56,21 +56,33 @@ var prompt = kernel.InvokePromptAsync(question);
 //var userPrompt = Console.ReadLine();
 chatHistory.Add(new ChatMessageContent(AuthorRole.User, question));
 
-// Stream the AI response and add to chat history
-Console.WriteLine("");
-Console.ForegroundColor = ConsoleColor.Blue;
-Console.WriteLine("AI response:");
-Console.ResetColor();
-Console.WriteLine("");
 
 var chatResponse = "";
 await foreach (var item in
     aiChatService.GetStreamingChatMessageContentsAsync(chatHistory))
 {
-    Console.Write(item.Content);
+    //Console.Write(item.Content);
     chatResponse += item.Content;
 }
 chatHistory.Add(new ChatMessageContent(AuthorRole.Assistant, chatResponse));
+
+Console.WriteLine("");
+Console.ForegroundColor = ConsoleColor.Blue;
+Console.WriteLine("AI:");
+Console.ResetColor();
+Console.WriteLine("");
+foreach (char c in chatResponse)
+{
+    Console.Write(c);
+    Thread.Sleep(25); // Delay in milliseconds
+}
+
+//Console.WriteLine("");
+//Console.WriteLine("");
+//Console.ForegroundColor = ConsoleColor.Blue;
+//Console.WriteLine("Khloe's response:");
+//Console.ResetColor();
+//Console.WriteLine("");
 
 Console.WriteLine();
 

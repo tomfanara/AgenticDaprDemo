@@ -21,7 +21,7 @@ public class ConversationHandler()
 #pragma warning disable SKEXP0070
         var builder = Kernel.CreateBuilder()
                       .AddOllamaChatCompletion(
-                      modelId: "llama3.1",
+                      modelId: "orca-mini",
                       endpoint: new Uri("http://localhost:11434"));
 
         //register plugins
