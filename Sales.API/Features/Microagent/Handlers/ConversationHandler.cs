@@ -12,6 +12,7 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using Microsoft.SemanticKernel.Embeddings;
 using Microsoft.SemanticKernel.Memory;
@@ -40,6 +41,7 @@ public class ConversationHandler()
         string greeting = personaSettings.GenerateResponse(request.Messages);
 
         var question = "Summarize the current iPad sales";
+        Console.WriteLine("");
         Console.WriteLine($"This program will answer the following question: {question}");
         Console.WriteLine("1st approach will be to ask the question directly to the Phi-3 model.");
         Console.WriteLine("2nd approach will be to add facts to a semantic memory and ask the question again");
@@ -51,6 +53,7 @@ public class ConversationHandler()
         Console.WriteLine("Carlos's prompt:");
         Console.ResetColor();
         Console.WriteLine("");
+        Console.WriteLine(greeting);
 
         var builder = Kernel.CreateBuilder()
                       .AddOllamaChatCompletion(
@@ -59,7 +62,7 @@ public class ConversationHandler()
         builder.AddLocalTextEmbeddingGeneration();
         Kernel kernel = builder.Build();
 
-        Console.WriteLine($"llama 3.1 response (no RAG).");
+        Console.WriteLine(question);
 
         OpenAIPromptExecutionSettings settings = new()
         {
@@ -81,9 +84,11 @@ public class ConversationHandler()
 
         // separator
         Console.WriteLine("");
-        Console.WriteLine("");
         Console.WriteLine("==============");
         Console.WriteLine("");
+
+        var chatHistory = new ChatHistory();
+        chatHistory.AddUserMessage(question);
 
         string filePath = "./data/sales.txt";
 
@@ -151,6 +156,8 @@ public class ConversationHandler()
             Console.Write(result);
             fullMessage += result.ToString();
         }
+
+        chatHistory.AddUserMessage(fullMessage);
 
         Console.WriteLine($" The end!");
 

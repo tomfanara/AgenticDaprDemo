@@ -69,8 +69,9 @@ public class ConversationHandler()
         promptTemplate,
         new(new OpenAIPromptExecutionSettings()
         {
-            MaxTokens = 50,
+            MaxTokens = 25,
             Temperature = 0,
+            //TopP = 0,
             ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions
             //ChatSystemPrompt = @"{{save_data}}"
         }));
@@ -79,8 +80,6 @@ public class ConversationHandler()
 
         Console.WriteLine(result.GetValue<string>());
              
-        chatHistory.Add(new ChatMessageContent(AuthorRole.Assistant, result.GetValue<string>()));
-
         Chat chat = new Chat { Conversation = result.GetValue<string>() };
         return chat;
     }   

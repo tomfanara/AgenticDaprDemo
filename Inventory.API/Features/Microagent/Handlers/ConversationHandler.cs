@@ -97,8 +97,6 @@ public class ConversationHandler()
 
         Console.WriteLine(result.GetValue<string>());
 
-        chatHistory.Add(new ChatMessageContent(AuthorRole.Assistant, result.GetValue<string>()));
-
         //var message = new Message { Messages = "Hi Carlos, can you send the current iPad Sales?" };
         //SendMessage(message);
 
