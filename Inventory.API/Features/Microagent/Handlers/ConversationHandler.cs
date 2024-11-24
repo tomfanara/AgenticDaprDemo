@@ -39,8 +39,8 @@ public class ConversationHandler()
         Persona persona = new Persona
         {
             Name = "Jenny",
-            Tone = "shy",
-            Style = "terse",
+            Tone = "quiet",
+            Style = "analytical",
             Traits = new List<string> { "quiet", "helpful", "timid" }
         };
 

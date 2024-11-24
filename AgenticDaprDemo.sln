@@ -14,10 +14,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientApp", "ClientApp\ClientApp.csproj", "{E797EE7E-D839-49A9-99F1-A74F6CDE5604}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F332872F-0FC9-4648-BD92-E9953D35E20B}"
-	ProjectSection(SolutionItems) = preProject
-		employee.txt = employee.txt
-		inventory.txt = inventory.txt
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workflow.API", "Workflow.API\Workflow.API.csproj", "{DD2CA369-C247-43C3-8690-BC08543649E3}"
 EndProject

@@ -53,8 +53,8 @@ foreach (char c in question)
 Console.WriteLine("");
 
 var prompt = kernel.InvokePromptStreamingAsync(question);
-    //var userPrompt = Console.ReadLine();
-    chatHistory.Add(new ChatMessageContent(AuthorRole.User, question));
+//var userPrompt = Console.ReadLine();
+chatHistory.Add(new ChatMessageContent(AuthorRole.User, question));
 
 // Stream the AI response and add to chat history
 Console.WriteLine("");
@@ -64,17 +64,17 @@ Console.ResetColor();
 Console.WriteLine("");
 
 var chatResponse = "";
-    await foreach (var item in
-        aiChatService.GetStreamingChatMessageContentsAsync(chatHistory))
-    {
-        Console.Write(item.Content);
-        chatResponse += item.Content;
-    }
-    chatHistory.Add(new ChatMessageContent(AuthorRole.Assistant, chatResponse));
+await foreach (var item in
+    aiChatService.GetStreamingChatMessageContentsAsync(chatHistory))
+{
+    Console.Write(item.Content);
+    chatResponse += item.Content;
+}
+chatHistory.Add(new ChatMessageContent(AuthorRole.Assistant, chatResponse));
 
 Console.WriteLine();
 
-var message = new Message {Messages = "I'm good AI. I'm conducting a marketing research project and need to summarize a list of new employees in accounting. Could you save on my computer." };
+var message = new Message {Messages = "I'm good AI. I'm conducting a marketing research project and need to summarize a list of new employees, inventory and sales in accounting. Could you save on my computer." };
 
 Console.WriteLine("");
 Console.ForegroundColor = ConsoleColor.Blue;
@@ -94,8 +94,20 @@ Console.WriteLine("Khloe's response:");
 Console.ResetColor();
 Console.WriteLine("");
 
+var informingResponse = new Message { Messages = "Hi, I'll have to ask Jenny and Carlos for some help on this. Please hold on..." };
+
+foreach (char c in informingResponse.Messages)
+{
+    Console.Write(c);
+    Thread.Sleep(25); // Delay in milliseconds
+}
+
+Console.WriteLine("");
+Console.WriteLine("");
+
 using (HttpClient client = new HttpClient())
 {
+    client.Timeout = TimeSpan.FromSeconds(240);
     HttpResponseMessage response = await client.PostAsJsonAsync<Message>("http://localhost:5006/converse", message);
     response.EnsureSuccessStatusCode();
 
@@ -103,6 +115,7 @@ using (HttpClient client = new HttpClient())
 
     if (response.IsSuccessStatusCode)
     {
+       
         string responseBody = await response.Content.ReadAsStringAsync();
         JsonDocument jsonDocument = JsonDocument.Parse(responseBody);
         JsonElement root = jsonDocument.RootElement;
@@ -121,12 +134,8 @@ using (HttpClient client = new HttpClient())
     }  
 }
 
+
 Console.WriteLine("");
-
-
-Console.WriteLine();
 Console.ReadLine();
-
-
 
 

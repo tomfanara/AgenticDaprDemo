@@ -7,8 +7,8 @@ using System.Data.SQLite;
     
     public class AccountingPlugin
     {
-        [KernelFunction("get_employees"), Description("Get a list of employees from accounting database")]
-        [return: Description("A list of employees from accounting.")]
+        [KernelFunction("get_employees")]
+        [Description("Gets a list of current employees")]
         public string GetEmployees(Kernel kernel)
         {
             // Connection string for an in-memory database
@@ -50,7 +50,7 @@ using System.Data.SQLite;
             // save to txt file for now
             SaveData(kernel, result);
 
-           return result;
+           return "result";
         }
 
         [KernelFunction("save_data"), Description("Saves data to a file on your computer")]

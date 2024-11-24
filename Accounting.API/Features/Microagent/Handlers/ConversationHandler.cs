@@ -42,7 +42,7 @@ public class ConversationHandler()
         {
             Name = "Khloe",
             Tone = "friendly",
-            Style = "conversational",
+            Style = "efficient",
             Traits = new List<string> { "empathetic", "helpful", "approachable" }
         };
 
@@ -60,9 +60,7 @@ public class ConversationHandler()
 
         var chatService = kernel.GetRequiredService<IChatCompletionService>();
         
-        string promptTemplate = request.Messages + ": " + "{{get_employees}}";
-        //string promptTemplate = request.Messages;
-        //var result = await kernel.InvokePromptAsync(promptTemplate);
+        string promptTemplate = request.Messages + ": " + "{{get_employees}}";      
 
         var chatHistory = new ChatHistory();
         chatHistory.AddUserMessage(promptTemplate);
@@ -72,67 +70,20 @@ public class ConversationHandler()
         new(new OpenAIPromptExecutionSettings()
         {
             MaxTokens = 50,
-            Temperature = 0.1,
-            ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions,
+            Temperature = 0,
+            ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions
             //ChatSystemPrompt = @"{{save_data}}"
         }));
-
-        //OpenAIPromptExecutionSettings openAIPromptExecutionSettings = new()
-        //{
-        //    Temperature = 0,
-        //    MaxTokens = 200,
-        //    ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions,
-        //    ChatSystemPrompt = @"{get_employees}"
-        //};
-
-        //var chatResponse = "";
-
-        //var chatResponse = chatService.GetStreamingChatMessageContentsAsync(chatHistory, openAIPromptExecutionSettings, kernel: kernel);
-        //var fullMessage = "";
-        //await foreach (var content in chatResponse)
-        //{
-        //    Console.Write(content.Content);
-        //    fullMessage += content.Content;
-        //}
-
+     
         chatHistory.Add(new ChatMessageContent(AuthorRole.Assistant, result.GetValue<string>()));
 
         Console.WriteLine(result.GetValue<string>());
              
         chatHistory.Add(new ChatMessageContent(AuthorRole.Assistant, result.GetValue<string>()));
 
-        //var message = new Message { Messages = "Hi can you send me the current inventory?" };
-        //SendMessage(message);
-
         Chat chat = new Chat { Conversation = result.GetValue<string>() };
         return chat;
-    }
-
-    private async void SendMessage(Message message)
-    {
-        using (HttpClient client = new HttpClient())
-        {
-            HttpResponseMessage response1 = await client.PostAsJsonAsync<Message>("http://localhost:5279/converse", message);
-            response1.EnsureSuccessStatusCode();
-
-
-            string? line;
-            using (Stream stream = await response1.Content.ReadAsStreamAsync())
-            using (StreamReader reader = new StreamReader(stream))
-            {
-
-                while ((line = await reader.ReadLineAsync()) != null)
-                {
-
-                    foreach (char c in line)
-                    {
-                        Console.Write(c);
-                        await Task.Delay(50);
-                    }
-                }
-            }
-        }
-    }
+    }   
 
     private static void ApplyPersona(PersonaSettings settings, Persona persona)
     {

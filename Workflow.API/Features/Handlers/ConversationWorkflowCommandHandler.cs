@@ -48,10 +48,10 @@ using static Workflow.API.Models.TaskChainingModels;
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }
 
-            //Display the result from the workflow
-            var result = string.Join(" ", workflowState.ReadOutputAs<string>());
-
-            Chat chat = new Chat{ Conversation = result };
+        //Display the result from the workflow
+        //var result = string.Join(" ", workflowState.ReadOutputAs<string[]>() ?? Array.Empty<string>());
+        var result = string.Join(" ", workflowState.ReadOutputAs<string>());
+        Chat chat = new Chat{ Conversation = result };
             return chat;
         }
     }

@@ -25,6 +25,20 @@ public class ConversationHandler()
 {
     public async Task<Chat> Handle(ConversationHandlerRequest request, CancellationToken cancellationToken)
     {
+        //create a persona Khloe
+        Persona persona = new Persona
+        {
+            Name = "Carlos",
+            Tone = "creative",
+            Style = "efficient",
+            Traits = new List<string> { "empathetic", "helpful", "approachable" }
+        };
+
+        var personaSettings = new PersonaSettings();
+        ApplyPersona(personaSettings, persona);
+
+        string greeting = personaSettings.GenerateResponse(request.Messages);
+
         var question = "Summarize the current iPad sales";
         Console.WriteLine($"This program will answer the following question: {question}");
         Console.WriteLine("1st approach will be to ask the question directly to the Phi-3 model.");
@@ -32,7 +46,12 @@ public class ConversationHandler()
         Console.WriteLine("");
 
         // Create a chat completion service
-       
+        Console.WriteLine("");
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("Carlos's prompt:");
+        Console.ResetColor();
+        Console.WriteLine("");
+
         var builder = Kernel.CreateBuilder()
                       .AddOllamaChatCompletion(
                        modelId: "llama3.1",
@@ -40,7 +59,7 @@ public class ConversationHandler()
         builder.AddLocalTextEmbeddingGeneration();
         Kernel kernel = builder.Build();
 
-        Console.WriteLine($"Phi-3 response (no RAG).");
+        Console.WriteLine($"llama 3.1 response (no RAG).");
 
         OpenAIPromptExecutionSettings settings = new()
         {
