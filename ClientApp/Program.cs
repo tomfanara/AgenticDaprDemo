@@ -77,12 +77,6 @@ foreach (char c in chatResponse)
     Thread.Sleep(25); // Delay in milliseconds
 }
 
-//Console.WriteLine("");
-//Console.WriteLine("");
-//Console.ForegroundColor = ConsoleColor.Blue;
-//Console.WriteLine("Khloe's response:");
-//Console.ResetColor();
-//Console.WriteLine("");
 
 Console.WriteLine();
 
@@ -102,11 +96,14 @@ foreach (char c in message.Messages)
 Console.WriteLine("");
 Console.WriteLine("");
 Console.ForegroundColor = ConsoleColor.Blue;
-Console.WriteLine("Khloe's response:");
+Console.WriteLine("AI:");
 Console.ResetColor();
 Console.WriteLine("");
 
-var informingResponse = new Message { Messages = "Hi, I'll have to ask Jenny and Carlos for some help on this. Please hold on..." };
+//add delay
+Thread.Sleep(2000);
+
+var informingResponse = new Message { Messages = "Hi, I'll have to ask Khloe, Jenny and Carlos for some help on this. Please hold on..." };
 
 foreach (char c in informingResponse.Messages)
 {
@@ -145,7 +142,6 @@ using (HttpClient client = new HttpClient())
         Console.WriteLine($"Error: {response.StatusCode}");
     }  
 }
-
 
 Console.WriteLine("");
 Console.ReadLine();

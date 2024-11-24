@@ -19,14 +19,14 @@ using System.Data.SQLite;
                 connection.Open();
 
                 // Create a table
-                string createTableQuery = "CREATE TABLE Inventory (Id INTEGER PRIMARY KEY, Item TEXT)";
+                string createTableQuery = "CREATE TABLE Inventory (Id INTEGER PRIMARY KEY, Item TEXT, Description TEXT, Quantity TEXT)";
                 using (var command = new SQLiteCommand(createTableQuery, connection))
                 {
                     command.ExecuteNonQuery();
                 }
 
                 // Insert data into the table
-                string insertDataQuery = "INSERT INTO Inventory (Item) VALUES ('Laptop'), ('iPhone'), ('iPad')";
+                string insertDataQuery = "INSERT INTO Inventory (Item, Description, Quantity) VALUES ('Laptop', 'Dell Latitude', '43'), ('Mobile Phone', 'iPhone', '20' ), ('Tablet', 'iPad', '56')";
                 using (var command = new SQLiteCommand(insertDataQuery, connection))
                 {
                     command.ExecuteNonQuery();
@@ -41,7 +41,7 @@ using System.Data.SQLite;
                     {
                         while (reader.Read())
                         {                            
-                            result = result + $"Id: {reader["Id"]}, Name: {reader["Item"]}";
+                            result = result + $"Id: {reader["Id"]}, Item: {reader["Item"]}, Description: {reader["Description"]}, Quantity: {reader["Quantity"]}";
                         }
                     }
                 }

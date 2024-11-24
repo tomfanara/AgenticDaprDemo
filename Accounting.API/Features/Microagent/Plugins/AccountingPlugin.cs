@@ -19,14 +19,14 @@ public class AccountingPlugin
             connection.Open();
 
             // Create a table
-            string createTableQuery = "CREATE TABLE Employees (Id INTEGER PRIMARY KEY, Name TEXT)";
+            string createTableQuery = "CREATE TABLE Employees (Id INTEGER PRIMARY KEY, Name TEXT, Title TEXT, StartDate TEXT)";
             using (var command = new SQLiteCommand(createTableQuery, connection))
             {
                 command.ExecuteNonQuery();
             }
 
             // Insert data into the table
-            string insertDataQuery = "INSERT INTO Employees (Name) VALUES ('Alice'), ('Bobby'), ('Carol')";
+            string insertDataQuery = "INSERT INTO Employees (Name, Title, StartDate) VALUES ('Alice', 'manager', '02/05/2024'), ('Bobby', 'developer', '04/15/2023'), ('Carol', 'scrum master', '06/25/2021')";
             using (var command = new SQLiteCommand(insertDataQuery, connection))
             {
                 command.ExecuteNonQuery();
@@ -41,7 +41,7 @@ public class AccountingPlugin
                 {
                     while (reader.Read())
                     {
-                        result = result + $"Id: {reader["Id"]}, Name: {reader["Name"]}";
+                        result = result + $"Id: {reader["Id"]}, Name: {reader["Name"]}, Title: {reader["Title"]}, Start Date: {reader["StartDate"]}";
                     }
                 }
             }
