@@ -1,6 +1,5 @@
 ﻿namespace Sales.API.Features.Microagent.Handlers;
 
-
 #pragma warning disable SKEXP0001
 #pragma warning disable SKEXP0003
 #pragma warning disable SKEXP0010
