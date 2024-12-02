@@ -70,8 +70,8 @@ public class ConversationHandler()
         new(new OpenAIPromptExecutionSettings()
         {
             MaxTokens = 25,
-            Temperature = 0,
-            //TopP = 0,
+            Temperature = 1,
+            TopP = 0,
             ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions
             //ChatSystemPrompt = @"{{save_data}}"
         }));

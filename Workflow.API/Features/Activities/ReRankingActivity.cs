@@ -7,7 +7,7 @@ using System.Reactive;
 using System.Threading.Tasks;
 
 
-public class RequeryActivity : WorkflowActivity<object, object>
+public class ReRankingActivity : WorkflowActivity<object, object>
 {
     public override Task<object> RunAsync(WorkflowActivityContext context, object input)
     {
