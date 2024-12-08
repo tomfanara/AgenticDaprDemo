@@ -24,9 +24,11 @@ public static class ServiceCollectionExtensions
         {
             options.RegisterWorkflow<FanOutFanInWorkflow>();
             options.RegisterWorkflow<TaskChainingWorkflow>();
+            options.RegisterActivity<QueryRewriteActivity>();
             options.RegisterActivity<AccountingActivity>();
             options.RegisterActivity<InventoryActivity>();
             options.RegisterActivity<SalesActivity>();
+            options.RegisterActivity<ReRankingActivity>();
         });
       
     }
