@@ -10,6 +10,17 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+
+    "Dapr-PWSH": {
+      "commandName": "Executable",
+      "executablePath": "pwsh",
+      "commandLineArgs": "-Command \"dapr run --app-id sales-api --components-path dapr-local/ --config dapr-local/configuration.yaml --dapr-http-port 3500 --dapr-grpc-port 4001 --log-level Debug -- dotnet run --no-build --urls http://localhost:5005\"",
+      "workingDirectory": ".",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     }
   }
+}
 }
