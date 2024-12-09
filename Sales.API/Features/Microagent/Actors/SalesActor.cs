@@ -1,6 +1,7 @@
 ﻿using Dapr.Actors.Runtime;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.SemanticKernel.ChatCompletion;
 using Sales.API.Models.Response;
 
 namespace Sales.API.Features.Microagent.Actors
@@ -8,6 +9,7 @@ namespace Sales.API.Features.Microagent.Actors
     public class SalesActor : Actor, ISales, IRemindable
     {
         private readonly ISalesService salesService;
+        private readonly string chatDataKey = "chat-data";
 
         public SalesActor(ActorHost host, SalesService salesService) : base(host)
         {
@@ -29,14 +31,18 @@ namespace Sales.API.Features.Microagent.Actors
             throw new NotImplementedException();
         }
 
-        public Task SaveChatHistoryAsync(Chat chatHistory)
+        public async Task<string> SaveChatHistoryAsync(SalesChatHistoryData chatHistory)
         {
-            throw new NotImplementedException();
+            // This set state action can happen along other state changing operations in each actor method and those changes will be maintained
+            // in a local cache to be committed as a single transaction to the backing store when the method has completed. As such, there is 
+            // no need to (and in fact makes your code less transactional) call `this.StateManager.SaveStateAsync()` as it will be automatically
+            // invoked by the actor runtime following the conclusion of this method as part of the internal `OnPostActorMethodAsyncInternal` method.
+
+            // Note also that all saved state must be DataContract serializable.
+            await StateManager.SetStateAsync<SalesChatHistoryData>(chatDataKey, chatHistory);
+
+            return "Success";
         }
 
-        public Task TriggerAlarmForAllAgents()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

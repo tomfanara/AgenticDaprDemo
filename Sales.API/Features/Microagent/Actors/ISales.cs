@@ -1,4 +1,5 @@
 ﻿using Dapr.Actors;
+using Microsoft.SemanticKernel.ChatCompletion;
 using Sales.API.Models.Response;
 
 namespace Sales.API.Features.Microagent.Actors
@@ -6,13 +7,12 @@ namespace Sales.API.Features.Microagent.Actors
     public interface ISales : IActor
     {
         Chat GetSales(string prompt);
-        Task SaveChatHistoryAsync(Chat chatHistory);
+        Task<string> SaveChatHistoryAsync(SalesChatHistoryData chatHistory);
         Task<string[]> ListAgentsAsync();
-        Task TriggerAlarmForAllAgents();
     }
 
     public class SalesChatHistoryData
     {
-        public string ChatHistory { get; set; } = default!;
+        public ChatHistory ChatHistory { get; set; } = default!;
     }
 }

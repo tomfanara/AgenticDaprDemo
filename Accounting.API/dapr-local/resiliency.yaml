@@ -1,0 +1,39 @@
+apiVersion: dapr.io/v1alpha1
+kind: Resiliency
+metadata:
+  name: accounting-resiliency
+spec:
+  policies:
+    timeouts:
+      general: 5s
+      important: 60s
+      largeResponse: 10s
+    retries:
+      RetryPolicy-pubsub:
+        policy: constant
+        duration: 5s
+        maxRetries: 4
+      RetryPolicy:
+        policy: constant
+        duration: 5s
+        maxRetries: 4
+    circuitBreakers:
+      CBPolicy-pubsub:
+        maxRequests: 1
+        timeout: 5s 
+        trip: consecutiveFailures >= 3
+      CBPolicy:
+        maxRequests: 1
+        timeout: 5s 
+        trip: consecutiveFailures >= 3
+  targets:
+    apps:
+      delegatedAuth:
+        timeout: general
+        retry: RetryPolicy
+        circuitBreaker: CBPolicy
+    components:
+      delegatedAuth-pubsub:
+        inbound:
+          retry: RetryPolicy-pubsub
+          circuitBreaker: CBPolicy-pubsub

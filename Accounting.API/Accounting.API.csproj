@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="dapr\" />
+    <Folder Include="dapr-local\" />
     <Folder Include="Features\Microagent\Planners\" />
   </ItemGroup>
 

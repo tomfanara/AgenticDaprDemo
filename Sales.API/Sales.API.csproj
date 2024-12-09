@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Dapr.Actors" Version="1.14.0" />
+    <PackageReference Include="Dapr.Actors.AspNetCore" Version="1.14.0" />
     <PackageReference Include="Dapr.AspNetCore" Version="1.14.0" />
     <PackageReference Include="Dapr.Client" Version="1.14.0" />
     <PackageReference Include="MediatR" Version="12.4.1" />
