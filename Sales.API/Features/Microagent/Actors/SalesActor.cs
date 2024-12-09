@@ -1,7 +1,4 @@
 ﻿using Dapr.Actors.Runtime;
-using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.SemanticKernel.ChatCompletion;
 using Sales.API.Models.Response;
 
 namespace Sales.API.Features.Microagent.Actors
@@ -16,7 +13,7 @@ namespace Sales.API.Features.Microagent.Actors
             this.salesService = salesService;
         }
 
-        public Chat GetSales(string prompt)
+        public Task<Chat> GetSales(string prompt)
         {
             return this.salesService.GetSales(prompt);
         }

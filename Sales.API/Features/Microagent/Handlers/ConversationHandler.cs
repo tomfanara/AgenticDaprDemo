@@ -31,16 +31,16 @@ public class ConversationHandler()
 
         var sales = proxySales.GetSales(request.Messages);
 
-        chatHistory.Add(new ChatMessageContent(AuthorRole.Assistant, sales.Conversation));
+        chatHistory.Add(new ChatMessageContent(AuthorRole.Assistant, sales.Result.Conversation));
 
         var chatHistoryData = new SalesChatHistoryData()
         {
             ChatHistory = chatHistory
         };
 
-        var salesChatHistory = proxySales.SaveChatHistoryAsync(chatHistoryData);
+        var salesChatHistory = await proxySales.SaveChatHistoryAsync(chatHistoryData);
 
-        return sales;
+        return sales.Result;
     }
 
     

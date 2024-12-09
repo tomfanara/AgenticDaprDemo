@@ -6,7 +6,7 @@ namespace Sales.API.Features.Microagent.Actors
 {
     public interface ISales : IActor
     {
-        Chat GetSales(string prompt);
+        Task<Chat> GetSales(string prompt);
         Task<string> SaveChatHistoryAsync(SalesChatHistoryData chatHistory);
         Task<string[]> ListAgentsAsync();
     }

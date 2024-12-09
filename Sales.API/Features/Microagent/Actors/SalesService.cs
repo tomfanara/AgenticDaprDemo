@@ -22,7 +22,7 @@ namespace Sales.API.Features.Microagent.Actors
 {
     public class SalesService : ISalesService
     {
-        public Chat GetSales(string prompt)
+        public async Task<Chat> GetSales(string prompt)
         {
             //create a persona Khloe
             Persona persona = new Persona
@@ -125,7 +125,7 @@ namespace Sales.API.Features.Microagent.Actors
             int i = 0;
             foreach (var chunk in chunks)
             {
-                memoryChunked.SaveInformationAsync(MemoryCollectionNameChunked, id: "info" + i, text: chunk);
+                await memoryChunked.SaveInformationAsync(MemoryCollectionNameChunked, id: "info" + i, text: chunk);
                 i++;
             }
 
@@ -136,14 +136,14 @@ namespace Sales.API.Features.Microagent.Actors
 
 
             var promptChunked = @"
-        Question: Summarize the current iPad sales
-        Answer the question using the memory content: {{Recall}}";
+            Question: Summarize the current iPad sales
+            Answer the question using the memory content: {{Recall}}";
 
             var argumentsRAG = new KernelArguments(settings)
-        {
-            { "input", question },
-            { "collection", MemoryCollectionNameChunked }
-        };
+            {
+                { "input", question },
+                { "collection", MemoryCollectionNameChunked }
+            };
 
             Console.WriteLine($"Llama3.1 response (using RAG semantic memory and document chunking).");
 
