@@ -24,9 +24,9 @@ public class TaskChainingWorkflow : Workflow<string, string>
             var result1 = await context.CallActivityAsync<string>("AccountingActivity", prompt, retryOptions);
             var result2 = await context.CallActivityAsync<string>("InventoryActivity", prompt, retryOptions);
             var result3 = await context.CallActivityAsync<string>("SalesActivity", prompt, retryOptions);
+            var result4 = await context.CallActivityAsync<string>("ResultsRewriteActivity", string.Join(", ", result1, result2, result3), retryOptions);
             Console.WriteLine(string.Join(", ", result1, result2, result3));
-            return string.Join(",\r\n\n", result1, result2, result3);
-            return result1;
+            return string.Join(",\r\n\n", result4);
 
         }
         catch (TaskFailedException) // Task failures are surfaced as TaskFailedException

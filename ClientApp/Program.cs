@@ -116,7 +116,7 @@ Console.WriteLine("");
 
 using (HttpClient client = new HttpClient())
 {
-    client.Timeout = TimeSpan.FromSeconds(240);
+    client.Timeout = TimeSpan.FromSeconds(480);
     HttpResponseMessage response = await client.PostAsJsonAsync<Message>("http://localhost:5006/converse", message);
     response.EnsureSuccessStatusCode();
 

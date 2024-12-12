@@ -10,7 +10,7 @@ builder.Services.AddLocal(builder.Configuration);
 
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
-    serverOptions.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(4); // Set the keep-alive timeout to 4 minutes
+    serverOptions.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(6); // Set the keep-alive timeout to 4 minutes
     serverOptions.Limits.RequestHeadersTimeout = TimeSpan.FromSeconds(60); // Set the request headers timeout to 30 seconds
 });
 
