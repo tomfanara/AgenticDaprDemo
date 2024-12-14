@@ -39,12 +39,12 @@ public class ResultsRewriteActivity : WorkflowActivity<string, string>
 
         string fullMessage = "";
 
-        var response = kernel.InvokePromptStreamingAsync(question);
-        await foreach (var result in response)
-        {
-            Console.Write(result);
-            fullMessage += result.ToString();
-        }
+        //var response = kernel.InvokePromptStreamingAsync(question);
+        //await foreach (var result in response)
+        //{
+        //    Console.Write(result);
+        //    fullMessage += result.ToString();
+        //}
 
         // separator
         Console.WriteLine("");
@@ -116,7 +116,7 @@ public class ResultsRewriteActivity : WorkflowActivity<string, string>
 
         Console.WriteLine($"Phi-3 response (using semantic memory and document chunking).");
 
-        response = kernel.InvokePromptStreamingAsync(promptChunked, arguments);
+        var response = kernel.InvokePromptStreamingAsync(promptChunked, arguments);
 
         
         await foreach (var result in response)

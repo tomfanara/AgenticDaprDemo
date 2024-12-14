@@ -26,7 +26,7 @@ public class TaskChainingModels
             get; set;
         }
     }
-    }
+}
 
 public class Prompt
 {

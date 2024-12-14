@@ -16,14 +16,15 @@ public class TaskChainingWorkflow : Workflow<string, string>
                 firstRetryInterval: TimeSpan.FromMinutes(1),
                 backoffCoefficient: 2.0,
                 maxRetryInterval: TimeSpan.FromHours(1),
-                maxNumberOfAttempts: 10),
+                maxNumberOfAttempts: 2),
         };
 
         try
         {
-            var result1 = await context.CallActivityAsync<string>("AccountingActivity", prompt, retryOptions);
-            var result2 = await context.CallActivityAsync<string>("InventoryActivity", prompt, retryOptions);
-            var result3 = await context.CallActivityAsync<string>("SalesActivity", prompt, retryOptions);
+            var prompts = await context.CallActivityAsync<string[]>("QueryRewriteActivity", prompt, retryOptions);
+            var result1 = await context.CallActivityAsync<string>("AccountingActivity", prompts[4], retryOptions);
+            var result2 = await context.CallActivityAsync<string>("InventoryActivity", prompts[5], retryOptions);
+            var result3 = await context.CallActivityAsync<string>("SalesActivity", prompts[6], retryOptions);
             var result4 = await context.CallActivityAsync<string>("ResultsRewriteActivity", string.Join(", ", result1, result2, result3), retryOptions);
             Console.WriteLine(string.Join(", ", result1, result2, result3));
             return string.Join(",\r\n\n", result4);
