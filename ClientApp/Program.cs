@@ -111,6 +111,7 @@ foreach (char c in informingResponse.Messages)
     Thread.Sleep(25); // Delay in milliseconds
 }
 
+
 Console.WriteLine("");
 Console.WriteLine("");
 

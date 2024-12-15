@@ -62,7 +62,7 @@ public class ConversationHandler()
         
         string promptTemplate = request.Messages + ": " + "{{get_employees}}";      
 
-        var chatHistory = new ChatHistory();
+        var chatHistory = new ChatHistory(greeting);
         chatHistory.AddUserMessage(promptTemplate);
 
         var result = await kernel.InvokePromptAsync(

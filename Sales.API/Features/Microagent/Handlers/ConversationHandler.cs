@@ -86,7 +86,7 @@ public class ConversationHandler()
         Console.WriteLine("==============");
         Console.WriteLine("");
 
-        var chatHistory = new ChatHistory();
+        var chatHistory = new ChatHistory(greeting);
         chatHistory.AddUserMessage(question);
 
         string filePath = "./data/sales.txt";

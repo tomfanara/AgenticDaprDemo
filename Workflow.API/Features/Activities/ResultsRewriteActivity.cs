@@ -42,15 +42,15 @@ public class ResultsRewriteActivity : WorkflowActivity<string, string>
         //var response = kernel.InvokePromptStreamingAsync(question);
         //await foreach (var result in response)
         //{
-        //    Console.Write(result);
+        //    //Console.Write(result);
         //    fullMessage += result.ToString();
         //}
 
         // separator
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("==============");
-        Console.WriteLine("");
+        //Console.WriteLine("");
+        //Console.WriteLine("");
+        //Console.WriteLine("==============");
+        //Console.WriteLine("");
 
         //string filePath = "aggregate.txt";
 
@@ -67,7 +67,7 @@ public class ResultsRewriteActivity : WorkflowActivity<string, string>
         var chunks = TextChunker.SplitPlainTextParagraphs(lines, maxTokensPerChunk);
 
         // separator
-        Console.WriteLine("Chunked output from a text document");
+        //Console.WriteLine("Chunked output from a text document");
 
         // Output the chunks
         foreach (var chunk in chunks)
@@ -76,9 +76,9 @@ public class ResultsRewriteActivity : WorkflowActivity<string, string>
         }
 
         // separator
-        Console.WriteLine("");
-        Console.WriteLine("==============");
-        Console.WriteLine("");
+        //Console.WriteLine("");
+        //Console.WriteLine("==============");
+        //Console.WriteLine("");
 
         // get the embeddings generator service
         var embeddingGeneratorChunked = kernel.Services.GetRequiredService<ITextEmbeddingGenerationService>();
@@ -102,7 +102,7 @@ public class ResultsRewriteActivity : WorkflowActivity<string, string>
         {
             ToolCallBehavior = null,
             Temperature = 1,
-            TopP = 1
+            TopP = .5
         };
 
         var promptChunked = @"
@@ -114,14 +114,14 @@ public class ResultsRewriteActivity : WorkflowActivity<string, string>
             { "collection", MemoryCollectionNameChunked }
         };
 
-        Console.WriteLine($"Phi-3 response (using semantic memory and document chunking).");
+        //Console.WriteLine($"Phi-3 response (using semantic memory and document chunking).");
 
         var response = kernel.InvokePromptStreamingAsync(promptChunked, arguments);
 
         
         await foreach (var result in response)
         {
-            Console.Write(result);
+            //Console.Write(result);
             fullMessage += result.ToString();
         }
 
