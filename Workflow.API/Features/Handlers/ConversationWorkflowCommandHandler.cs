@@ -27,7 +27,7 @@ using static Workflow.API.Models.TaskChainingModels;
             var workflowId = $"{Guid.NewGuid().ToString()[..8]}";
 
             var response = await this.daprWorkflowClient.ScheduleNewWorkflowAsync(           
-            name: nameof(TaskChainingWorkflow),
+            name: nameof(FanOutFanInWorkflow),
             input: request.Messages,
             instanceId: workflowId);
 

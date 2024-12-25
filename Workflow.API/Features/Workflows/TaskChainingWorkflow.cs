@@ -22,11 +22,11 @@ public class TaskChainingWorkflow : Workflow<string, string>
         try
         {
             var prompts = await context.CallActivityAsync<string[]>("QueryRewriteActivity", prompt, retryOptions);
-            var result1 = await context.CallActivityAsync<string>("AccountingActivity", prompts[4], retryOptions);
-            var result2 = await context.CallActivityAsync<string>("InventoryActivity", prompts[5], retryOptions);
-            var result3 = await context.CallActivityAsync<string>("SalesActivity", prompts[6], retryOptions);
+            var result1 = await context.CallActivityAsync<string>("AccountingActivity", prompts[1], retryOptions);
+            var result2 = await context.CallActivityAsync<string>("InventoryActivity", prompts[2], retryOptions);
+            var result3 = await context.CallActivityAsync<string>("SalesActivity", prompts[3], retryOptions);
             var result4 = await context.CallActivityAsync<string>("ResultsRewriteActivity", string.Join(", ", result1, result2, result3), retryOptions);
-            Console.WriteLine(string.Join(", ", result1, result2, result3));
+            //Console.WriteLine(string.Join(", ", result1, result2, result3));
             return string.Join(",\r\n\n", result4);
 
         }

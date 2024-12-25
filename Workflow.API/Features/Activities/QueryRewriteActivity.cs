@@ -29,7 +29,7 @@ public class QueryRewriteActivity : WorkflowActivity<string, string[]>
 
         var builder = Kernel.CreateBuilder()
                               .AddOllamaChatCompletion(
-                               modelId: "llama3.1",
+                               modelId: "llama3",
                                endpoint: new Uri("http://localhost:11434"));
         builder.AddLocalTextEmbeddingGeneration();
         Kernel kernel = builder.Build();
@@ -84,7 +84,7 @@ public class QueryRewriteActivity : WorkflowActivity<string, string[]>
         {
             ToolCallBehavior = null,
             Temperature = 0,
-            TopP = .5
+            TopP = 0
         };
 
         var promptChunked = @"You are a helpful assistant that generates search queries "
@@ -109,9 +109,9 @@ public class QueryRewriteActivity : WorkflowActivity<string, string[]>
             fullMessage += result.ToString();
         }
 
-        int index = fullMessage.IndexOf("Sub questions:");
+        int index = fullMessage.IndexOf("CSV format:");
 
-        string subQuestions = fullMessage.Substring(index + 15);
+        string subQuestions = fullMessage.Substring(index + 17, 82);
 
         string[] questions = subQuestions.Split(new char[] { ',' });
 
