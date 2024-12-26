@@ -39,7 +39,7 @@ public class ConversationHandler()
 
         string greeting = personaSettings.GenerateResponse(request.Messages);
 
-        var question = "Summarize the current iPad sales";
+        var question = "Summarize the current sales";
         Console.WriteLine("");
         Console.WriteLine($"This program will answer the following question: {question}");
         Console.WriteLine("1st approach will be to ask the question directly to the Phi-3 model.");
@@ -56,12 +56,12 @@ public class ConversationHandler()
 
         var builder = Kernel.CreateBuilder()
                       .AddOllamaChatCompletion(
-                       modelId: "llama3.1",
+                       modelId: "llama3-chatqa",
                        endpoint: new Uri("http://localhost:11434"));
         builder.AddLocalTextEmbeddingGeneration();
         Kernel kernel = builder.Build();
 
-        Console.WriteLine(question);
+        //Console.WriteLine(request.Messages);
 
         OpenAIPromptExecutionSettings settings = new()
         {
@@ -72,7 +72,7 @@ public class ConversationHandler()
 
         var arguments = new KernelArguments(settings)
         {
-            { "input", question },
+            { "input", request.Messages},
         };
 
         //var response = kernel.InvokePromptStreamingAsync(question);
@@ -135,9 +135,8 @@ public class ConversationHandler()
         // Import the text memory plugin into the Kernel.
         kernel.ImportPluginFromObject(memoryPluginChunked);
      
-
         var promptChunked = @"
-        Question: Summarize the current iPad sales
+        Question: Summarize the current sales
         Answer the question using the memory content: {{Recall}}";
 
         var argumentsRAG = new KernelArguments(settings)
@@ -158,7 +157,7 @@ public class ConversationHandler()
 
         chatHistory.AddUserMessage(fullMessage);
 
-        Console.WriteLine($" The end!");
+        //Console.WriteLine($" The end!");
 
         Console.WriteLine($"");
         Chat chat = new Chat { Conversation = fullMessage };

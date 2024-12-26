@@ -5,8 +5,7 @@ using Workflow.API.Models;
 using static Workflow.API.Models.TaskChainingModels;
 
 namespace Workflow.API.Features.Workflows;
-
-    
+   
     public class FanOutFanInWorkflow : Workflow<string, string>
     {
         

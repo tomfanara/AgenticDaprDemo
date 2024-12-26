@@ -34,7 +34,7 @@ using static Workflow.API.Models.TaskChainingModels;
             WorkflowState state = await daprWorkflowClient.WaitForWorkflowStartAsync(
                                     instanceId: workflowId);
 
-            Console.WriteLine($"{nameof(TaskChainingWorkflow)} (ID = {workflowId}) started successfully");
+            Console.WriteLine($"{nameof(FanOutFanInWorkflow)} (ID = {workflowId}) started successfully");
 
             //Get the status of the workflow
             WorkflowState workflowState;
