@@ -30,7 +30,7 @@ We will omit gateways, authentication and middleware to keep focus on the above 
 In order for micro agents of an agentic architecture to work in context they should follow domain driven design principals.
 They should follow all the domain context relationships and live within the boundaries of their respective bounded context. 
 
-The following diagram is a basic domain with its various bounded context. We will keep it simple with only 3 contexts and a basic ubiquitous language.
+The Demo Domain Driven Design diagram below is a basic domain with its various bounded context. We will keep it simple with only 3 contexts and a basic ubiquitous language.
 
   1. Accounting (Khloe) - Accounts receivables and payables. They are the manager of all operations. Use a SQL database for receivables and payables.
   2. Sales (Carlos) - Widgets in the sales pipleine. Uses Saleforce API and a NoSQL database for data storing orders.
