@@ -57,7 +57,7 @@ The following diagrams depict the overall architectural elements and information
 ### Agentic Architecture with MicroAgents
 The following diagram illustrates the scope of the demo and overall architecture. It is not a production worthy system as gateways, authorization, encryption and core business domains are omitted for purpose of clarity.
 
-![Alt text](agentic-architecture.png "agentic architecture image for demo")
+![Alt text](agenticarchdemo2.png "agentic architecture image for demo")
 
 The following is the demo software design. The main app is a .NET console application with a while(true) loop with write line prompts and read line outputs. It will also have 4 additional .NET Core APIs and microservices.
 
