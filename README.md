@@ -1,6 +1,5 @@
 # 1. Agentic Dapr Demo Application (summary)
 A demo application employing domain driven design, Dapr (Distributed Application Runtime) and an agentic architecture with micro agents. The system will use Dapr Workflows as the orchestrator in the agentic system. Each micro agent will have semantic memory, plugins, planners, personas (Khloe-supervisor, Jenny and Carlos) and memories. The micro agents will assist the human completion chat by responding to prompts with user, meta (personas) and system prompts. The micro agents will be feature extensions of microservices with in a bounded context. The bounded context will limit the behavior of the micro agents funtionality as virtual domain experts. 
-
 ## 2. Purpose 
 This demo will serve as a means to observe, develop and improve how Dapr Workflows and components work with agentic architectures. Agentic architectures are still in early stages but natural language based development is growing at an incredible rate. The most salient issue to discuss should be eventual consistency in distibuted environments such as microservices. How can workflows assist agentic systems to maintain side effects in a distributed architecture? Upon its completion it can be used to show case Dapr integration in agentic architectures. 
 
@@ -21,7 +20,6 @@ We will omit gateways, authentication and middleware to keep focus on the above 
     - Tools pattern
     - Planner pattern
     - Multi Agent pattern
-
 ## 4. Project Description:
 ### Domain Model
 In order for micro agents of an agentic architecture to work in context they should follow domain driven design principals.
@@ -46,9 +44,7 @@ The following diagrams depict the overall architectural elements and information
 ![Alt text](agentic-design-patterns.png "agentic design patterns image for demo")
 ### Agentic Architecture with MicroAgents
 The following diagram illustrates the scope of the demo and overall architecture. It is not a production worthy system as gateways, authorization, encryption and core business domains are omitted for purpose of clarity.
-
 ![Alt text](agenticarchdemo2.png "agentic architecture image for demo")
-
 The following is the demo software design. The main app is a .NET console application with a while(true) loop with write line prompts and read line outputs. It will also have 4 additional .NET Core APIs and microservices.
 
 - ClientApp - Console application. Main chat initiation and dialogue, starts workflow and keeps history.
