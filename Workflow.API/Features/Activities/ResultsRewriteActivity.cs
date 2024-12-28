@@ -30,7 +30,7 @@ public class ResultsRewriteActivity : WorkflowActivity<string, string>
 
         var builder = Kernel.CreateBuilder()
                               .AddOllamaChatCompletion(
-                               modelId: "llama3.1",
+                               modelId: "wizardlm2",
                                endpoint: new Uri("http://localhost:11434"));
         builder.AddLocalTextEmbeddingGeneration();
         Kernel kernel = builder.Build();
