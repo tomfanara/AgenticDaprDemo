@@ -81,13 +81,13 @@ Its important to note that the workflow will first implement query rewriting as 
 ![Alt text](demo-software-design.png "agentic architecture image for demo")
 
 # 5. Installation
-      - Visual Studio 2022
+      - Visual Studio 2022 (with powershell tools extension)
       - Docker Desktop (latest)
-      - Dapr powershell
-      - Ollama (installed locally)
+      - Dapr Client and Runtime 1.14
+      - Ollama (install/run phi3, llava-phi3, llama3.1, llama3, orca-mini, wizardlm2)
 # 6. Usage
       - running the demo app
-      - prompting the app
+      - prompting the app (coming soon as UX)
 # 7. Contributing
 # 8. License
 # 9. Contact Information
