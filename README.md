@@ -37,7 +37,6 @@ The following diagram is a basic domain with its various bounded context. We wil
   3. Inventory (Jenny) - Widgets in inventory. Use SQL database for storage
   4. Shipping (Jenny) - Widgets in shipment. Use a SQL database for data storage of shipped widgets.
   5. Receiving (Jenny) - Widgets on order. Use a document corpus for storing received widget stock.
-![Alt text](contextmap-agentic-demo.png "Context map image for demo")
 
 This is a very familiar and general domain model with its related contexts. The U/D denotes an upstream/downstream relationship between contexts. PL denotes a Published Language as in a Sales Force API. CS denotes Customer Supplier relationship and of course there is a Partnership relationship between Accounting and Inventory. The Xray icon denotes a Big Ball of Mudd or a legacy inventory system. We have many of the hybrid conditions found in most enterprises.
 
@@ -67,18 +66,10 @@ The following is the demo software design. The main app is a .NET console applic
 - Inventory.API: Contains a micro agent feature that acts on behalf of the domain. Its domain model is persisted by a NoSQL database.
 - Sales.API: Contains a micro agent feature that acts on behalf of the domain. Its domain model is persisted by a document corpus.
 
-<!--### Future Using Agentic Mesh
-
-The more recent and advanced initiatives are moving to the idea of an agentic mesh. The mesh or service mesh would make micro agents fully discoverable. The mesh would give better security with LLMs and in transit data. The service mesh establishes a control and data plane. Micro agents are proxied by sidecars acting on behalf of the agent. Dapr workflows and functionalality can use these sidecars instead of Dapr sidecars. This will be included in subsequent releases of this demo as a full scale cloud deployment would be neccessary. See diagram below.
-
-![Alt text](agentic-mesh-architecture.png "agentic mesh architecture image for demo")-->
-
 ### Demo Software Design
 The above APIs will run in Docker Compose as container based apps with respective ports. The console app will start the workflow and setup Semantic Kernel SDK. It then implements a client console application that prompts AI. The prompts will make calls via the Dapr Output Bindings Chat Completion component to the work flow. Micro agent to micro agent chat completion will also be handled by chat completion output bindings. The micro agents contain their own plugins, personas, planners and memories. The Dapr wait for external call we be used to call back to the console client from a micro agent downstream. Finally documents will be requested by the supervisor micro agent from the other agents and saved to a local folder.
 
 Its important to note that the workflow will first implement query rewriting as the basis of contacting and orchestrating micro agents. Finally at the end it will re-query the aggregated results and refine the prompt request.
-
-![Alt text](demo-software-design.png "agentic architecture image for demo")
 
 # 5. Installation
       - Visual Studio 2022 (with powershell tools extension)
