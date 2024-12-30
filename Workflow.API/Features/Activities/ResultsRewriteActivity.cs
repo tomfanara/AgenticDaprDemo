@@ -20,12 +20,20 @@ using Microsoft.SemanticKernel.Text;
 using Dapr.Workflow;
 using System.Reactive;
 using System.Threading.Tasks;
+using static Workflow.API.Models.TaskChainingModels;
 
 
-public class ResultsRewriteActivity : WorkflowActivity<string, string>
+public class ResultsRewriteActivity : WorkflowActivity<string[], string>
 {
-    public async override Task<string> RunAsync(WorkflowActivityContext context, string input)
+    public async override Task<string> RunAsync(WorkflowActivityContext context, string[] messages)
     {
+        string result = "";
+        foreach (string message in messages)
+        {
+            result += message + " ";
+        }
+
+
         var question = "I'm conducting a marketing research project and need to summarize a list of new employees, inventory and sales.";
 
         var builder = Kernel.CreateBuilder()
@@ -58,7 +66,7 @@ public class ResultsRewriteActivity : WorkflowActivity<string, string>
         //string fileContent = File.ReadAllText(input);
 
         // Split the text into lines
-        var lines = new List<string> { input };
+        var lines = new List<string> { result };
 
         // Define the maximum number of tokens per chunk
         int maxTokensPerChunk = 800;
@@ -119,10 +127,10 @@ public class ResultsRewriteActivity : WorkflowActivity<string, string>
         var response = kernel.InvokePromptStreamingAsync(promptChunked, arguments);
 
         
-        await foreach (var result in response)
+        await foreach (var responses in response)
         {
             //Console.Write(result);
-            fullMessage += result.ToString();
+            fullMessage += responses.ToString();
         }
 
         return fullMessage;

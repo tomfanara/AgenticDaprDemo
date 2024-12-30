@@ -24,7 +24,7 @@ namespace Workflow.API.Features.Workflows;
 
         
 
-        var tasks = new List<Task<string>>();
+            var tasks = new List<Task<string>>();
 
             try {
 
@@ -35,17 +35,17 @@ namespace Workflow.API.Features.Workflows;
                 tasks.Add(context.CallActivityAsync<string>("SalesActivity", prompts[3], retryOptions));
 
                 var messages = await Task.WhenAll(tasks);
-                string result = "";
+                //string result = "";
 
-                foreach (string message in messages)
-                { 
-                    result += message + " "; 
-                }
+                //foreach (string message in messages)
+                //{ 
+                //    result += message + " "; 
+                //}
 
-                var reWrite = await context.CallActivityAsync<string>("ResultsRewriteActivity", result, retryOptions);
+                var reWrite = await context.CallActivityAsync<string>("ResultsRewriteActivity", messages, retryOptions);
                 
-                return string.Join(",\r\n\n", reWrite);
-        }
+                return reWrite;
+            }
             catch (TaskFailedException) // Task failures are surfaced as TaskFailedException
             {
                 // Retries expired - apply custom compensation logic
