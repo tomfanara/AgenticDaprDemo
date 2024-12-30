@@ -1,7 +1,7 @@
 # 1. Agentic Dapr Demo Application (summary)
 A demo application employing domain driven design, Dapr (Distributed Application Runtime) and an agentic architecture with micro agents. The system will use Dapr Workflows as the orchestrator in the agentic system. Each micro agent will have semantic memory, plugins, planners, personas (Khloe-supervisor, Jenny and Carlos) and memories. The micro agents will assist the human completion chat by responding to prompts with user, meta (personas) and system prompts. The micro agents will be feature extensions of microservices with in a bounded context. The bounded context will limit the behavior of the micro agents funtionality as virtual domain experts. 
 ## 2. Purpose 
-This demo will serve as a means to observe, develop and improve how Dapr Workflows and components work with agentic architectures. Agentic architectures are still in early stages but natural language based development is growing at an incredible rate. The most salient issue to discuss should be eventual consistency in distibuted environments such as microservices. How can workflows assist agentic systems to maintain side effects in a distributed architecture? Upon its completion it can be used to show case Dapr integration in agentic architectures. 
+This demo will serve as a means to observe, develop and improve how Dapr Workflows and components work with agentic architectures. Agentic architectures are still in early stages but natural language based development is growing at an incredible rate. Upon its completion it can be used to show case Dapr integration in agentic architectures. 
 
 The following Dapr building blocks will be included in the demo
       - Configuration
@@ -14,7 +14,8 @@ We will omit gateways, authentication and middleware to keep focus on the above 
 - Domain Driven Design
 - Distributed Application Runtime (Dapr)
 - Agentic Architecture and related patterns
-- Semantic Kernel
+- Microsoft Semantic Kernel
+- Ollama LLM Framework
 - Andrew Ng - Agentic Design Patterns
     - Reflection pattern
     - Tools pattern
@@ -27,11 +28,11 @@ They should follow all the domain context relationships and live within the boun
 
 The Demo Domain Driven Design diagram below is a basic domain with its various bounded context. We will keep it simple with only 3 contexts and a basic ubiquitous language.
 
-  1. Accounting (Khloe) - Accounts receivables and payables. They are the manager of all operations. Use a SQL database for receivables and payables.
-  2. Sales (Carlos) - Widgets in the sales pipleine. Uses Saleforce API and a NoSQL database for data storing orders.
-  3. Inventory (Jenny) - Widgets in inventory. Use SQL database for storage
-  4. Shipping (Jenny) - Widgets in shipment. Use a SQL database for data storage of shipped widgets.
-  5. Receiving (Jenny) - Widgets on order. Use a document corpus for storing received widget stock.
+  1. Human Resources (Khloe) - Employee resourcing. They are the managers of all operations. Use a SQL database for receivables and payables.
+  2. Sales (Carlos) - Uses document storage.
+  3. Inventory (Jenny) - Use SQL database for storage
+  4. Shipping (Jenny) - Use a SQL database for data storage of shipped widgets.
+  5. Receiving (Jenny) - Use a document corpus for storing received widget stock.
 
 This is a very familiar and general domain model with its related contexts. The U/D denotes an upstream/downstream relationship between contexts. PL denotes a Published Language as in a Sales Force API. CS denotes Customer Supplier relationship and of course there is a Partnership relationship between Accounting and Inventory. The Xray icon denotes a Big Ball of Mudd or a legacy inventory system. We have many of the hybrid conditions found in most enterprises.
 
