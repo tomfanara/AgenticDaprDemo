@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.35" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.11" />
+    <PackageReference Include="Microsoft.KernelMemory.AI.Ollama" Version="0.95.241216.2" />
+    <PackageReference Include="Microsoft.KernelMemory.Core" Version="0.95.241216.2" />
+    <PackageReference Include="Microsoft.KernelMemory.MemoryDb.Postgres" Version="0.95.241216.2" />
+    <PackageReference Include="Microsoft.KernelMemory.SemanticKernelPlugin" Version="0.95.241216.2" />
+    <PackageReference Include="Microsoft.SemanticKernel" Version="1.32.0" />
+    <PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="1.32.0-alpha" />
+    <PackageReference Include="Pgvector.Dapper" Version="0.3.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Handlers\" />
+  </ItemGroup>
+
+</Project>

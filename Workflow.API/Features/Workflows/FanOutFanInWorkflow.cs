@@ -35,13 +35,7 @@ namespace Workflow.API.Features.Workflows;
                 tasks.Add(context.CallActivityAsync<string>("SalesActivity", prompts[3], retryOptions));
 
                 var messages = await Task.WhenAll(tasks);
-                //string result = "";
-
-                //foreach (string message in messages)
-                //{ 
-                //    result += message + " "; 
-                //}
-
+               
                 var reWrite = await context.CallActivityAsync<string>("ResultsRewriteActivity", messages, retryOptions);
                 
                 return reWrite;
