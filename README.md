@@ -28,7 +28,7 @@ They should follow all the domain context relationships and live within the boun
 
 The Demo Domain Driven Design diagram below is a basic domain with its various bounded context. We will keep it simple with only 3 contexts and a basic ubiquitous language.
 
-  1. Human Resources (Khloe) - Employee resourcing. They are the managers of all operations. Use a SQL database for receivables and payables.
+  1. Human Resources (still Accounting in code) (Khloe) - Employee resourcing. They are the managers of all operations. Use a SQL database for receivables and payables.
   2. Sales (Carlos) - Uses document storage.
   3. Inventory (Jenny) - Use SQL database for storage
   4. Shipping (Jenny) - Use a SQL database for data storage of shipped widgets.
@@ -37,7 +37,7 @@ The Demo Domain Driven Design diagram below is a basic domain with its various b
 This is a very familiar and general domain model with its related contexts. The U/D denotes an upstream/downstream relationship between contexts. PL denotes a Published Language as in a Sales Force API. CS denotes Customer Supplier relationship and of course there is a Partnership relationship between Accounting and Inventory. The Xray icon denotes a Big Ball of Mudd or a legacy inventory system. We have many of the hybrid conditions found in most enterprises.
 
 In agentic AI architectures an orchestrator is needed utilizing a saga or orchestrator design pattern. (verus choreography however both should be considered)
-The orchestrator is the central manager of the agentic chat and coordinates chat completion messaging between micro agents. A micro agent follows the microservices pattern of a ganular application that centers around a specific domain model.
+The orchestrator is the central manager of the agentic chat and coordinates chat completion messaging between micro agents. A micro agent follows the microservices pattern of a granular application that centers around a specific domain model.
 
 More can be elaborated on best practices design for micro agents but its recommended that a vertical slice architecture as used in microservices will suffice. A micro agent can be a feature of a microservice as to not over granularize as a separate service.
 ### Agentic Design Patterns
@@ -46,7 +46,7 @@ The following diagrams depict the overall architectural elements and information
 ### Agentic Architecture with MicroAgents
 The following diagram illustrates the scope of the demo and overall architecture. It is not a production worthy system as gateways, authorization, encryption and core business domains are omitted for purpose of clarity.
 ![Alt text](agenticarchdemo2.png "agentic architecture image for demo")
-The following is the demo software design. The main app is a .NET console application with a while(true) loop with write line prompts and read line outputs. It will also have 4 additional .NET Core APIs and microservices.
+The following is the demo software design. The main app is a .NET console application with a console app write line prompts and read line outputs. It will also have 4 additional .NET Core APIs and microservices.
 
 - ClientApp - Console application. Main chat initiation and dialogue, starts workflow and keeps history.
 - AgenticWorkflow.API: Orchestrator pattern that maintains conversation state, app crash resilience and external calls.
