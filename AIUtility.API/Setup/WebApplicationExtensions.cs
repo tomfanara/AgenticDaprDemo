@@ -19,7 +19,7 @@ public static class WebApplicationExtensions
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status403Forbidden)
             .Produces<IResult>(StatusCodes.Status400BadRequest);
-        app.MapPost("/resultrewrite", ResultRewrite)
+        app.MapPost("/responsewrite", ResponseRewrite)
         .Accepts<string>("application/json")
         .WithName("Endpoint2")
         .WithTags("MyEndpoints2")
@@ -30,7 +30,7 @@ public static class WebApplicationExtensions
 
     private static async Task<Chat> RequestRewrite(IMediator mediator, RequestRewriteHandlerRequest req) => await mediator.Send(req);
 
-    private static async Task<Rewrite> ResultRewrite(IMediator mediator, ResultRewriteHandlerRequest req) => await mediator.Send(req);
+    private static async Task<Rewrite> ResponseRewrite(IMediator mediator, ResultRewriteHandlerRequest req) => await mediator.Send(req);
 
 }
    

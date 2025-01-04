@@ -109,7 +109,7 @@ public class ResultsRewriteActivity : WorkflowActivity<string[], string>
         OpenAIPromptExecutionSettings settings = new()
         {
             ToolCallBehavior = null,
-            Temperature = 1,
+            Temperature = 0,
             TopP = .5
         };
 
@@ -124,10 +124,10 @@ public class ResultsRewriteActivity : WorkflowActivity<string[], string>
 
         //Console.WriteLine($"Phi-3 response (using semantic memory and document chunking).");
 
-        var response = kernel.InvokePromptStreamingAsync(promptChunked, arguments);
+        //var response = kernel.InvokePromptStreamingAsync(promptChunked, arguments);
 
         
-        await foreach (var responses in response)
+        await foreach (var responses in kernel.InvokePromptStreamingAsync(promptChunked, arguments))
         {
             //Console.Write(result);
             fullMessage += responses.ToString();

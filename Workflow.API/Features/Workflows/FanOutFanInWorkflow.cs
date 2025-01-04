@@ -16,10 +16,10 @@ namespace Workflow.API.Features.Workflows;
             var retryOptions = new WorkflowTaskOptions
             {
                 RetryPolicy = new WorkflowRetryPolicy(
-                firstRetryInterval: TimeSpan.FromMinutes(1),
+                firstRetryInterval: TimeSpan.FromMilliseconds(3000),
                 backoffCoefficient: 2.0,
                 maxRetryInterval: TimeSpan.FromHours(1),
-                maxNumberOfAttempts: 10),
+                maxNumberOfAttempts: 3),
             };
 
         
