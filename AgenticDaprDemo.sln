@@ -15,9 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientApp", "ClientApp\Clie
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F332872F-0FC9-4648-BD92-E9953D35E20B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workflow.API", "Workflow.API\Workflow.API.csproj", "{DD2CA369-C247-43C3-8690-BC08543649E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workflow.API", "Workflow.API\Workflow.API.csproj", "{DD2CA369-C247-43C3-8690-BC08543649E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIUtility.API", "AIUtility.API\AIUtility.API.csproj", "{655F07B9-6E40-4AE0-86AF-C89F4BF54FC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIUtility.API", "AIUtility.API\AIUtility.API.csproj", "{655F07B9-6E40-4AE0-86AF-C89F4BF54FC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatHub", "ChatHub\ChatHub.csproj", "{A4558AB4-38FE-4B08-B3FD-26D74BA57C7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{655F07B9-6E40-4AE0-86AF-C89F4BF54FC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{655F07B9-6E40-4AE0-86AF-C89F4BF54FC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{655F07B9-6E40-4AE0-86AF-C89F4BF54FC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4558AB4-38FE-4B08-B3FD-26D74BA57C7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4558AB4-38FE-4B08-B3FD-26D74BA57C7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4558AB4-38FE-4B08-B3FD-26D74BA57C7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4558AB4-38FE-4B08-B3FD-26D74BA57C7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

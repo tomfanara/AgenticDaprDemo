@@ -7,12 +7,12 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5049"
+      "applicationUrl": "http://localhost:5006"
     },
     "Dapr-PWSH": {
       "executablePath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
       "commandName": "Executable",
-      "commandLineArgs": "-Command \"dapr run --app-id workflow-api --components-path dapr-local/ --config dapr-local/configuration.yaml --dapr-http-port 3500 --dapr-grpc-port 4001 --log-level Info -- dotnet run --no-build --urls http://localhost:5006\"",
+      "commandLineArgs": "-Command \"dapr run --app-id workflow-api --components-path dapr-local/ --config dapr-local/configuration.yaml --dapr-http-port 3501 --dapr-grpc-port 4002 --log-level Info -- dotnet run --no-build --urls http://localhost:5006\"",
       "workingDirectory": ".",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

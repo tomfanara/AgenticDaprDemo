@@ -38,11 +38,11 @@ public class ResultsRewriteActivity : WorkflowActivity<string[], string>
 
         var builder = Kernel.CreateBuilder()
                               .AddOllamaChatCompletion(
-                               modelId: "wizardlm2",
+                               modelId: "llama3",
                                endpoint: new Uri("http://localhost:11434"));
         builder.AddLocalTextEmbeddingGeneration();
         Kernel kernel = builder.Build();
-
+         
         Console.WriteLine($"Phi-3 response (no memory).");
 
         string fullMessage = "";

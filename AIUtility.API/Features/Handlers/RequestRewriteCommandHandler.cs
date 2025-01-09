@@ -25,7 +25,7 @@ using MediatR;
     {
         public async Task<Chat> Handle(RequestRewriteHandlerRequest request, CancellationToken cancellationToken)
         {
-            var question = "I'm conducting a marketing research project and need to summarize a list of new employees, inventory and sales.";
+            var question = request.Messages;// "I'm conducting a marketing research project and need to summarize a list of new employees, inventory and sales.";
 
             var builder = Kernel.CreateBuilder()
                               .AddOllamaChatCompletion(
@@ -40,7 +40,7 @@ using MediatR;
             string fileContent = "I'm conducting a marketing research project and need to summarize a list of new employees, inventory and sales.";
             //string fileContent = input;
             // Split the text into lines
-            var lines = new List<string> { fileContent };
+            var lines = new List<string> { question };
 
             // Define the maximum number of tokens per chunk
             int maxTokensPerChunk = 300;
@@ -86,7 +86,7 @@ using MediatR;
                 { "input", question },
                 { "collection", MemoryCollectionNameChunked }
             };
-
+            
             //Console.WriteLine($"Phi-3 response (using semantic memory and document chunking).");
 
             var response = kernel.InvokePromptStreamingAsync(promptChunked, arguments);
