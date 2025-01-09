@@ -7,3 +7,11 @@ public record Chat()
         get; set;
     }
 }
+
+public record Chato()
+{
+    public string? Conversation
+    {
+        get; set;
+    }
+}

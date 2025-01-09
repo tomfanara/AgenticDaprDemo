@@ -66,13 +66,13 @@ connection.On<string>("CRSReceiveMessage", async (message) =>
         using (HttpClient client = new HttpClient())
         {
             client.Timeout = TimeSpan.FromMinutes(3);
-            HttpResponseMessage resp = await client.PostAsJsonAsync<Message>("http://localhost:5052/requestrewrite", msg);
+            HttpResponseMessage resp = await client.PostAsJsonAsync<Message>("http://localhost:5167/converse", msg);
             resp.EnsureSuccessStatusCode();
 
             if (resp.IsSuccessStatusCode)
             {
                 string responseBody = await resp.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<Chat>(responseBody);
+                var result = JsonConvert.DeserializeObject<Chato>(responseBody.ToString());
                 //JsonElement root = jsonDocument.RootElement;
 
                 var value = result.Conversation;// root.GetProperty("conversation").GetString();
