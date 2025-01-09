@@ -25,56 +25,20 @@ public class ConversationHandler()
 {
     public async Task<Chat> Handle(ConversationHandlerRequest request, CancellationToken cancellationToken)
     {
-        //create a persona Khloe
-        Persona persona = new Persona
-        {
-            Name = "Carlos",
-            Tone = "creative",
-            Style = "efficient",
-            Traits = new List<string> { "empathetic", "helpful", "approachable" }
-        };
-
-        var personaSettings = new PersonaSettings();
-        ApplyPersona(personaSettings, persona);
-
-        string greeting = personaSettings.GenerateResponse(request.Messages);
-
-        var question = "Summarize the current sales";
-        Console.WriteLine("");
+        var question = "Please summarize sales";
         Console.WriteLine($"This program will answer the following question: {question}");
         Console.WriteLine("1st approach will be to ask the question directly to the Phi-3 model.");
         Console.WriteLine("2nd approach will be to add facts to a semantic memory and ask the question again");
         Console.WriteLine("");
 
-        // Create a chat completion service
-        Console.WriteLine("");
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.WriteLine("Carlos's prompt:");
-        Console.ResetColor();
-        Console.WriteLine("");
-        Console.WriteLine(greeting);
-
         var builder = Kernel.CreateBuilder()
-                      .AddOllamaChatCompletion(
-                       modelId: "llama3",
-                       endpoint: new Uri("http://localhost:11434"));
+                              .AddOllamaChatCompletion(
+                               modelId: "orca-mini",
+                               endpoint: new Uri("http://localhost:11434"));
         builder.AddLocalTextEmbeddingGeneration();
         Kernel kernel = builder.Build();
 
-        //Console.WriteLine(request.Messages);
-
-        OpenAIPromptExecutionSettings settings = new()
-        {
-            ToolCallBehavior = null,
-            MaxTokens = 30,
-            Temperature = 0,
-        };
-
-        var arguments = new KernelArguments(settings)
-        {
-            { "input", request.Messages},
-        };
-
+        //Console.WriteLine($"Phi-3 response (no memory).");
         //var response = kernel.InvokePromptStreamingAsync(question);
         //await foreach (var result in response)
         //{
@@ -83,11 +47,9 @@ public class ConversationHandler()
 
         // separator
         Console.WriteLine("");
+        Console.WriteLine("");
         Console.WriteLine("==============");
         Console.WriteLine("");
-
-        var chatHistory = new ChatHistory(greeting);
-        chatHistory.AddUserMessage(question);
 
         string filePath = "./data/sales.txt";
 
@@ -121,7 +83,7 @@ public class ConversationHandler()
         var embeddingGeneratorChunked = kernel.Services.GetRequiredService<ITextEmbeddingGenerationService>();
         var memoryChunked = new SemanticTextMemory(new VolatileMemoryStore(), embeddingGeneratorChunked);
 
-        const string MemoryCollectionNameChunked = "appleSales";
+        const string MemoryCollectionNameChunked = "fanFactsChunked";
 
         int i = 0;
         foreach (var chunk in chunks)
@@ -134,28 +96,34 @@ public class ConversationHandler()
 
         // Import the text memory plugin into the Kernel.
         kernel.ImportPluginFromObject(memoryPluginChunked);
-     
+
+        OpenAIPromptExecutionSettings settings = new()
+        {
+            ToolCallBehavior = null,
+            Temperature = 1,
+            TopP = 1,
+        };
+
         var promptChunked = @"
-        Question: Summarize the current sales
+        Question: what are current sales and please calculate total sales?
         Answer the question using the memory content: {{Recall}}";
 
-        var argumentsRAG = new KernelArguments(settings)
+        var arguments = new KernelArguments(settings)
         {
             { "input", question },
             { "collection", MemoryCollectionNameChunked }
         };
 
-        Console.WriteLine($"Llama3.1 response (using RAG semantic memory and document chunking).");
+        Console.WriteLine($"Phi-3 response (using semantic memory and document chunking).");
 
-        var response = kernel.InvokePromptStreamingAsync(promptChunked, argumentsRAG);
         string fullMessage = "";
+        var response = kernel.InvokePromptStreamingAsync(promptChunked, arguments);
         await foreach (var result in response)
         {
             Console.Write(result);
-            fullMessage += result.ToString();
+            fullMessage += result;
         }
-
-        chatHistory.AddUserMessage(fullMessage);
+        //chatHistory.AddUserMessage(fullMessage);
 
         //Console.WriteLine($" The end!");
 

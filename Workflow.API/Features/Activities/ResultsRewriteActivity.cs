@@ -78,6 +78,7 @@ public class ResultsRewriteActivity : WorkflowActivity<string[], string>
         //Console.WriteLine("Chunked output from a text document");
 
         // Output the chunks
+        Console.WriteLine("chunks");
         foreach (var chunk in chunks)
         {
             Console.WriteLine(chunk);
@@ -109,7 +110,7 @@ public class ResultsRewriteActivity : WorkflowActivity<string[], string>
         OpenAIPromptExecutionSettings settings = new()
         {
             ToolCallBehavior = null,
-            Temperature = 0,
+            Temperature = 1,
             TopP = .5
         };
 

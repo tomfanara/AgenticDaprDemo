@@ -24,7 +24,7 @@ var daprClient = new DaprClientBuilder().Build();
 #pragma warning disable SKEXP0070
 Kernel kernel = Kernel.CreateBuilder()
                     .AddOllamaChatCompletion(
-                        modelId: "llava-phi3",
+                        modelId: "orca-mini",
                         endpoint: new Uri("http://localhost:11434"))
                     .Build();
 

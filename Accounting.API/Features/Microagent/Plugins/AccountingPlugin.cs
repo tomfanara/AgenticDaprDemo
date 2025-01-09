@@ -2,7 +2,7 @@
 
 using Microsoft.SemanticKernel;
 using System.ComponentModel;
-using System.Data.SQLite;
+using Microsoft.Data.Sqlite;
 
 
 public class AccountingPlugin
@@ -12,22 +12,22 @@ public class AccountingPlugin
     public string GetEmployees(Kernel kernel)
     {
         // Connection string for an in-memory database
-        string connectionString = "Data Source=:memory:;Version=3;New=True;";
+        string connectionString = "Data Source=:memory:";
         string result = "";
-        using (var connection = new SQLiteConnection(connectionString))
+        using (var connection = new SqliteConnection(connectionString)) // Fix: Corrected the class name to SqliteConnection
         {
             connection.Open();
 
             // Create a table
             string createTableQuery = "CREATE TABLE Employees (Id INTEGER PRIMARY KEY, Name TEXT, Title TEXT, StartDate TEXT)";
-            using (var command = new SQLiteCommand(createTableQuery, connection))
+            using (var command = new SqliteCommand(createTableQuery, connection)) // Fix: Corrected the class name to SqliteCommand
             {
                 command.ExecuteNonQuery();
             }
 
             // Insert data into the table
             string insertDataQuery = "INSERT INTO Employees (Name, Title, StartDate) VALUES ('Alice', 'manager', '02/05/2024'), ('Bobby', 'developer', '04/15/2023'), ('Carol', 'scrum master', '06/25/2021')";
-            using (var command = new SQLiteCommand(insertDataQuery, connection))
+            using (var command = new SqliteCommand(insertDataQuery, connection)) // Fix: Corrected the class name to SqliteCommand
             {
                 command.ExecuteNonQuery();
             }
@@ -35,7 +35,7 @@ public class AccountingPlugin
             // Query the data
             string selectQuery = "SELECT * FROM Employees";
 
-            using (var command = new SQLiteCommand(selectQuery, connection))
+            using (var command = new SqliteCommand(selectQuery, connection)) // Fix: Corrected the class name to SqliteCommand
             {
                 using (var reader = command.ExecuteReader())
                 {

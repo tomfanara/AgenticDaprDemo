@@ -16,7 +16,7 @@ namespace Workflow.API.Features.Workflows;
             var retryOptions = new WorkflowTaskOptions
             {
                 RetryPolicy = new WorkflowRetryPolicy(
-                firstRetryInterval: TimeSpan.FromMilliseconds(3000),
+                firstRetryInterval: TimeSpan.FromMilliseconds(10000),
                 backoffCoefficient: 2.0,
                 maxRetryInterval: TimeSpan.FromHours(1),
                 maxNumberOfAttempts: 3),
