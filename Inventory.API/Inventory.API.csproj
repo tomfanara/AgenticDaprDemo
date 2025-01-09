@@ -19,9 +19,9 @@
     <PackageReference Include="Dapr.AspNetCore" Version="1.14.0" />
     <PackageReference Include="Dapr.Client" Version="1.14.0" />
     <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.0" />
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.29.0" />
     <PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="1.29.0-alpha" />
-    <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
   </ItemGroup>
 
 </Project>

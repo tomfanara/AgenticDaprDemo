@@ -102,11 +102,13 @@ public class QueryRewriteActivity : WorkflowActivity<string, string[]>
 
         //Console.WriteLine($"Phi-3 response (using semantic memory and document chunking).");
 
-        var response = kernel.InvokePromptStreamingAsync(promptChunked, arguments);
-        await foreach (var result in response)
-        {
-            //Console.Write(result);
-            fullMessage += result.ToString();
+        int messageIndex = 0;
+
+        //var response = kernel.InvokePromptStreamingAsync(promptChunked, arguments);
+        await foreach (var result in kernel.InvokePromptStreamingAsync(promptChunked, arguments))
+        {         
+                //Console.Write(result);
+                fullMessage += result.ToString();           
         }
 
         int index = fullMessage.IndexOf("CSV format:");

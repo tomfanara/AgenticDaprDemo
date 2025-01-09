@@ -37,7 +37,7 @@ public class ResultRewriteCommandHandler : IRequestHandler<ResultRewriteHandlerR
 
         var builder = Kernel.CreateBuilder()
                               .AddOllamaChatCompletion(
-                               modelId: "wizardlm2",
+                               modelId: "llama3",
                                endpoint: new Uri("http://localhost:11434"));
         builder.AddLocalTextEmbeddingGeneration();
         Kernel kernel = builder.Build();

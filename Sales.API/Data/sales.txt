@@ -1,5 +1,3 @@
-Current iPad sales are 200 at $800 each
-Current Laptop sales are 100 at $1200 each
-Other sales projected to come in are camera orders
-New items coming in are air pods
-Current iPhone sales are 500 at $1000 each
+Current iPad sales are 200 units at $800 each
+Current Laptop sales are 100 units at $1200 each
+Current iPhone sales are 500 units at $1000 each
