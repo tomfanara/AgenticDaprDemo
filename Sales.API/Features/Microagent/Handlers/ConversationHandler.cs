@@ -24,12 +24,11 @@ public class ConversationHandler()
 : IRequestHandler<ConversationHandlerRequest, Chat>
 {
     public async Task<Chat> Handle(ConversationHandlerRequest request, CancellationToken cancellationToken)
-    {
-        var question = "Please summarize sales";
-        Console.WriteLine($"This program will answer the following question: {question}");
-        Console.WriteLine("1st approach will be to ask the question directly to the Phi-3 model.");
-        Console.WriteLine("2nd approach will be to add facts to a semantic memory and ask the question again");
-        Console.WriteLine("");
+    {        var question = "summarize current total sales";
+        //Console.WriteLine($"This program will answer the following question: {question}");
+        //Console.WriteLine("1st approach will be to ask the question directly to the Phi-3 model.");
+        //Console.WriteLine("2nd approach will be to add facts to a semantic memory and ask the question again");
+        //Console.WriteLine("");
 
         var builder = Kernel.CreateBuilder()
                               .AddOllamaChatCompletion(
@@ -83,7 +82,7 @@ public class ConversationHandler()
         var embeddingGeneratorChunked = kernel.Services.GetRequiredService<ITextEmbeddingGenerationService>();
         var memoryChunked = new SemanticTextMemory(new VolatileMemoryStore(), embeddingGeneratorChunked);
 
-        const string MemoryCollectionNameChunked = "fanFactsChunked";
+        const string MemoryCollectionNameChunked = "SalesChunked";
 
         int i = 0;
         foreach (var chunk in chunks)
