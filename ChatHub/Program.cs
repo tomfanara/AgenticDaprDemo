@@ -11,7 +11,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         builder =>
         {
-            builder.WithOrigins("http://localhost:63439")
+            builder.WithOrigins("http://localhost:4200")
                 .AllowAnyHeader()
                 .WithMethods("GET", "POST")
                 .AllowCredentials();
@@ -42,5 +42,5 @@ app.UseAuthorization();
 //});
 app.UseCors();
 
-app.MapHub<ChatHub.Setup.ChatHub>("/hub/chat");
+app.MapHub<ChatHub.Setup.Features.ChatHub>("/hub/chat");
 app.Run();

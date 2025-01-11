@@ -49,27 +49,27 @@ connection.On<string>("CRSReceiveMessage", async (message) =>
         //enter logic here.
 
 
-        //string? value = "";
-        //using (HttpClient client = new HttpClient())
-        //{
-        //    client.Timeout = TimeSpan.FromMinutes(3);
-        //    HttpResponseMessage resp = await client.PostAsJsonAsync<Message>("http://localhost:5167/converse", msg);
-        //    resp.EnsureSuccessStatusCode();
+        string? value = "";
+        using (HttpClient client = new HttpClient())
+        {
+            client.Timeout = TimeSpan.FromMinutes(3);
+            HttpResponseMessage resp = await client.PostAsJsonAsync<Message>("http://localhost:5006/converse", msg);
+            resp.EnsureSuccessStatusCode();
 
-        //    if (resp.IsSuccessStatusCode)
-        //    {
-        //        string responseBody = await resp.Content.ReadAsStringAsync();
-        //        var result = JsonConvert.DeserializeObject<Chato>(responseBody.ToString());
-        //        //JsonElement root = jsonDocument.RootElement;
+            if (resp.IsSuccessStatusCode)
+            {
+                string responseBody = await resp.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<Chato>(responseBody.ToString());
+                //JsonElement root = jsonDocument.RootElement;
 
-        //        var value = result.Conversation;// root.GetProperty("conversation").GetString();
-        //        await connection.InvokeAsync("SendMessageToClient", String.Join(" ", value));
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine($"Error: {resp.StatusCode}");
-        //    }
-        //}
+                value = result.Conversation;// root.GetProperty("conversation").GetString();
+                await connection.InvokeAsync("SendMessageToClient", String.Join(" ", value));
+            }
+            else
+            {
+                Console.WriteLine($"Error: {resp.StatusCode}");
+            }
+        }
 
     }
     catch (Exception ex)
