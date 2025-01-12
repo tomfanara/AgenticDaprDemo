@@ -37,7 +37,7 @@ connection.Closed += async (error) =>
     await Task.Delay(new Random().Next(0, 5) * 1000);
     await connection.StartAsync();
 };
-connection.On<string>("CRSReceiveMessage", async (message) =>
+connection.On<string>("CSRReceiveMessage", async (message) =>
 {
     try
     {
@@ -53,7 +53,7 @@ connection.On<string>("CRSReceiveMessage", async (message) =>
         using (HttpClient client = new HttpClient())
         {
             client.Timeout = TimeSpan.FromMinutes(3);
-            HttpResponseMessage resp = await client.PostAsJsonAsync<Message>("http://localhost:5006/converse", msg);
+            HttpResponseMessage resp = await client.PostAsJsonAsync<Message>("http://localhost:5006/taskchat", msg);
             resp.EnsureSuccessStatusCode();
 
             if (resp.IsSuccessStatusCode)

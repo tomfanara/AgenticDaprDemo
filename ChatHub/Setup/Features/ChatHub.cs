@@ -20,7 +20,7 @@ namespace ChatHub.Setup.Features
             await Clients.All.SendAsync(WebSocketActions.USER_LEFT, username);
         }
 
-        public async Task SendMessageToCrsAssist(string message)
+        public async Task SendMessageToCSRAssist(string message)
         {
             await Clients.All.SendAsync(WebSocketActions.CSR_MESSAGE_RECEIVED, message);
         }
@@ -31,7 +31,7 @@ namespace ChatHub.Setup.Features
     }
     public struct WebSocketActions
     {
-        public static readonly string CSR_MESSAGE_RECEIVED = "CRSReceiveMessage";
+        public static readonly string CSR_MESSAGE_RECEIVED = "CSRReceiveMessage";
         public static readonly string CLIENT_MESSAGE_RECEIVED = "ClientReceiveMessage";
         public static readonly string USER_LEFT = "userLeft";
         public static readonly string USER_JOINED = "userJoined";
