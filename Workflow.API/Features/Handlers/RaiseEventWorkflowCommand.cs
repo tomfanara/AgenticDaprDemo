@@ -2,18 +2,12 @@
 namespace Workflow.API.Features.Microagent.Handlers;
 
 using Dapr.Client;
+using Dapr.Workflow;
 using MediatR;
+using Workflow.API.Models.Response;
 using static Workflow.API.Models.TaskChainingModels;
 
-public class RaiseEventWorkflowCommand : IRequest<string>
-    {
-        public string? message
-        {
-            get; set;
-        }
-    }
-
-    public class RaiseEventWorkflowCommandHandler : IRequestHandler<RaiseEventWorkflowCommand, string>
+    public class RaiseEventWorkflowCommandHandler : IRequestHandler<RaiseEventHandlerRequest, Chat>
 
     {
         private readonly DaprClient daprClient;
@@ -24,20 +18,26 @@ public class RaiseEventWorkflowCommand : IRequest<string>
             this.daprClient = new DaprClientBuilder().Build();
         }
 
-        public async Task<string> Handle(RaiseEventWorkflowCommand request, CancellationToken cancellationToken)
+    [Obsolete]
+    public async Task<Chat> Handle(RaiseEventHandlerRequest request, CancellationToken cancellationToken)
         {
             // raise event from client to let workflow continue
-            Result res = new Result(true, "success");
+            //Result res = new Result(true, "success");
 
-            // can only call in same appId for now and instance Id must match workflow instance Id
+        // can only call in same appId for now and instance Id must match workflow instance Id
 
-            await daprClient.RaiseWorkflowEventAsync(
-            instanceId: request.message,
+#pragma warning disable CA2016 // Forward the 'CancellationToken' parameter to methods
+        await daprClient.RaiseWorkflowEventAsync(
+            instanceId: "12345678",
             workflowComponent: DaprWorkflowComponent,
-            eventName: "ManagerApproval",
-            eventData: res);
+            eventName: "PromptMessage",
+            eventData: request.Messages);
+#pragma warning restore CA2016 // Forward the 'CancellationToken' parameter to methods
 
-            return "completed";
-        }
+        //var result = string.Join(" ", workflowState.ReadOutputAs<string>());
+        Chat chat = new Chat { Conversation = "hello"};
+        return chat;
     }
+}
+  
 

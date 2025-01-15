@@ -5,12 +5,15 @@ namespace Workflow.API.Features.Activities;
 using Dapr.Workflow;
 using System.Reactive;
 using System.Threading.Tasks;
+using Workflow.API.Models;
 
 
-public class CompensationActivity : WorkflowActivity<object, object>
+public class CompensationActivity : WorkflowActivity<string, string>
 {
-    public override Task<object> RunAsync(WorkflowActivityContext context, object input)
+    public override Task<string> RunAsync(WorkflowActivityContext context, string input)
     {
-        throw new NotImplementedException();
+
+        Console.WriteLine(input);
+        return Task.FromResult(input);
     }
 }
