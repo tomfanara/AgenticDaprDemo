@@ -36,7 +36,7 @@ public class MonitorWorkflow : Workflow<string, string>
             if (promptResult == "EXIT")
             {
                 // The order was rejected, end the workflow here
-                Console.WriteLine(prompt);             
+                Console.WriteLine(promptResult);             
                 return "Chat has Exited";
             }
             
@@ -45,7 +45,7 @@ public class MonitorWorkflow : Workflow<string, string>
         {
             // Retries expired - apply custom compensation logic
             await context.CallActivityAsync<string>("CompensationActivity", "Good bye", options: retryOptions);
-            return "Chat has been cancelled";
+            return "Chat has timed out";
             //throw;
         }
 

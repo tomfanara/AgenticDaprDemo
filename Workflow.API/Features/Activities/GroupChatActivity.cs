@@ -185,6 +185,7 @@ namespace Workflow.API.Features.Activities
 
         public override async Task<string> RunAsync(WorkflowActivityContext context, string messages)
         {
+            Console.WriteLine("Receiving message...");
             //bool isComplete = false;
             //do
             //{
@@ -243,11 +244,13 @@ namespace Workflow.API.Features.Activities
 #pragma warning disable SKEXP0110 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
                 await foreach (ChatMessageContent response in this.chat.InvokeAsync())
                 {
-                    fullMessage = response.Content;
+                    fullMessage = response.AuthorName.ToUpperInvariant() + " " + response.Content;
                     Console.WriteLine();
                     Console.WriteLine($"{response.AuthorName.ToUpperInvariant()}:{Environment.NewLine}{response.Content}");
                 }
 #pragma warning restore SKEXP0110 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+
+                 
             }
             catch (HttpOperationException exception)
             {
