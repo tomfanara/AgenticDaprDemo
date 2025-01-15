@@ -25,7 +25,7 @@ public class MonitorWorkflow : Workflow<string, string>
         
             var response = await context.CallActivityAsync<string>("GroupChatActivity", prompt, retryOptions);
 
-            //// Pause and wait for a human to approve the order
+            //// Pause and wait for a human prompt
             string promptResult = await context.WaitForExternalEventAsync<string>(
                 eventName: "PromptMessage",
                 timeout: TimeSpan.FromSeconds(20));
@@ -51,7 +51,7 @@ public class MonitorWorkflow : Workflow<string, string>
 
         // Ensure a return statement is present for all code paths
         context.ContinueAsNew(result, false);
-        return "Chat still running...";
+        return response;
 
     }
 }
