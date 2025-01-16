@@ -6,5 +6,6 @@
 
     public record RaiseEventHandlerRequest : Message, IRequest<Chat>
     {
+
     }
 }

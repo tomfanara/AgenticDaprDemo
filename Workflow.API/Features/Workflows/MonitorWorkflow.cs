@@ -19,19 +19,24 @@ public class MonitorWorkflow : Workflow<string, string>
                 maxRetryInterval: TimeSpan.FromHours(1),
                 maxNumberOfAttempts: 2),
         };
-
+        string? response;
         try
         {
-        
-            var response = await context.CallActivityAsync<string>("GroupChatActivity", prompt, retryOptions);
-
             //// Pause and wait for a human prompt
             string promptResult = await context.WaitForExternalEventAsync<string>(
                 eventName: "PromptMessage",
-                timeout: TimeSpan.FromSeconds(20));
+                timeout: TimeSpan.FromSeconds(180));
 
-            result = promptResult;
-            Console.WriteLine(promptResult);
+            response = await context.CallActivityAsync<string>("GroupChatActivity", promptResult, retryOptions);
+            Console.WriteLine("START ACTIVITY ReplyToChatHubAcitivity:");
+            var rep= await context.CallActivityAsync<bool>("ReplyToChatHubAcitivity", response, retryOptions);
+                if (rep)
+                {
+                    result = response;
+                    Console.WriteLine(response);
+                }
+            
+            
 
             if (promptResult == "EXIT")
             {

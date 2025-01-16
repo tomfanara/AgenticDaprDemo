@@ -33,7 +33,7 @@ public static class WebApplicationExtensions
         .Accepts<string>("application/json")
         .WithName("groupchatraiseevent")
         .WithTags("groupchatraiseevent")
-        .Produces<Models.Response.Chat>(StatusCodes.Status200OK)
+        .Produces(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status500InternalServerError)
         .Produces(StatusCodes.Status401Unauthorized)
         .Produces(StatusCodes.Status403Forbidden);
@@ -43,7 +43,7 @@ public static class WebApplicationExtensions
 
     private static async Task<Chat> GroupChatInitializer(IMediator mediator, [FromBody] GroupChatHandlerRequest req) => await mediator.Send(req);
 
-    private static async Task<Chat> GroupChatRaiseEvent(IMediator mediator, [FromBody] RaiseEventHandlerRequest req) => await mediator.Send(req);
+    private static async void GroupChatRaiseEvent(IMediator mediator, [FromBody] RaiseEventHandlerRequest req) => await mediator.Send(req);
 
 
 }

@@ -32,6 +32,7 @@ public static class ServiceCollectionExtensions
             options.RegisterActivity<ResultsRewriteActivity>();
             options.RegisterActivity<GroupChatActivity>();
             options.RegisterActivity<CompensationActivity>();
+            options.RegisterActivity<ReplyToChatHubAcitivity>();
 
         });
       

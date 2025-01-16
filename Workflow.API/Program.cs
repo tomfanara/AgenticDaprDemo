@@ -8,7 +8,18 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.SignalR.Client;
 
 
-var builder = WebApplication.CreateSlimBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:4200")
+                .AllowAnyHeader()
+                .WithMethods("GET", "POST")
+                .AllowCredentials();
+        });
+});
 builder.Services.AddLocal(builder.Configuration);
 
 builder.WebHost.ConfigureKestrel(serverOptions =>
@@ -27,6 +38,7 @@ var app = builder.Build();
 
 app.MapUserEndpoints();
 app.UseCloudEvents();
+app.UseCors();
 
 HubConnection connection;
 connection = new HubConnectionBuilder()
@@ -53,7 +65,7 @@ connection.On<string>("CSRReceiveMessage", async (message) =>
         using (HttpClient client = new HttpClient())
         {
             client.Timeout = TimeSpan.FromMinutes(3);
-            HttpResponseMessage resp = await client.PostAsJsonAsync<Message>("http://localhost:5006/taskchat", msg);
+            HttpResponseMessage resp = await client.PostAsJsonAsync<Message>("http://localhost:5006/groupchatraiseevent", msg);
             resp.EnsureSuccessStatusCode();
 
             if (resp.IsSuccessStatusCode)
@@ -62,8 +74,8 @@ connection.On<string>("CSRReceiveMessage", async (message) =>
                 var result = JsonConvert.DeserializeObject<Chato>(responseBody.ToString());
                 //JsonElement root = jsonDocument.RootElement;
 
-                value = result.Conversation;// root.GetProperty("conversation").GetString();
-                await connection.InvokeAsync("SendMessageToClient", String.Join(" ", value));
+                //value = result.Conversation;// root.GetProperty("conversation").GetString();
+                //await connection.InvokeAsync("SendMessageToClient", String.Join(" ", value));
             }
             else
             {
