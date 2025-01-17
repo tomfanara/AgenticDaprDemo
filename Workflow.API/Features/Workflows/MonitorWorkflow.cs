@@ -25,7 +25,7 @@ public class MonitorWorkflow : Workflow<string, string>
             //// Pause and wait for a human prompt
             string promptResult = await context.WaitForExternalEventAsync<string>(
                 eventName: "PromptMessage",
-                timeout: TimeSpan.FromSeconds(180));
+                timeout: TimeSpan.FromSeconds(30));
 
             response = await context.CallActivityAsync<string>("GroupChatActivity", promptResult, retryOptions);
             Console.WriteLine("START ACTIVITY ReplyToChatHubAcitivity:");

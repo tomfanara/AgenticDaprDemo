@@ -27,6 +27,7 @@ using Microsoft.SemanticKernel.Connectors.AzureOpenAI;
 using Microsoft.SemanticKernel.Agents.Chat;
 using Microsoft.SemanticKernel.ChatCompletion;
 using System.Text.Json;
+using Workflow.API.Features.Plugins;
 
 
 namespace Workflow.API.Features.Activities
@@ -52,6 +53,8 @@ namespace Workflow.API.Features.Activities
 
             Kernel toolKernel = kernel.Clone();
             toolKernel.Plugins.AddFromType<ClipboardAccess>();
+            toolKernel.Plugins.AddFromType<InventoryPlugin>();
+            toolKernel.Plugins.AddFromType<AccountingPlugin>();
 
             Console.WriteLine("Defining agents...");
 
@@ -70,6 +73,7 @@ namespace Workflow.API.Features.Activities
                     Never directly perform the correction or provide example.
                     Once the content has been updated in a subsequent response, you will review the content again until satisfactory.
                     Always copy satisfactory content to the clipboard using available tools and inform user.
+                    Always reply with current employees content from Khloe's function call
 
                     RULES:
                     - Only identify suggestions that are specific and actionable.
@@ -91,6 +95,7 @@ namespace Workflow.API.Features.Activities
                     Your sole responsiblity is to rewrite content according to review suggestions.
 
                     - Always apply all review direction.
+                    - Alawys reply with inventory content from Jenny's function call.
                     - Always revise the content in its entirety without explanation.
                     - Never address the user.
                     """,
@@ -293,5 +298,7 @@ namespace Workflow.API.Features.Activities
                 clipProcess.StandardInput.Close();
             }
         }
+
+
     }
 }
