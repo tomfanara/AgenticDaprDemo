@@ -10,8 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\Microagent\Planners\**" />
+    <Content Remove="Features\Microagent\Planners\**" />
+    <EmbeddedResource Remove="Features\Microagent\Planners\**" />
+    <None Remove="Features\Microagent\Planners\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="dapr\" />
-    <Folder Include="Features\Microagent\Planners\" />
   </ItemGroup>
 
   <ItemGroup>
