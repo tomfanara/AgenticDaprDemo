@@ -43,6 +43,7 @@ namespace Workflow.API.Features.Workflows;
                 //}
 
                 var reWrite = await context.CallActivityAsync<string>("ResultsRewriteActivity", messages, retryOptions);
+                var chabback= await context.CallActivityAsync<bool>("ReplyToChatHubAcitivity", reWrite, retryOptions);
                 
                 return reWrite;
             }

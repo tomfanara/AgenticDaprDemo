@@ -20,7 +20,7 @@ namespace ChatHub.Setup.Features
             await Clients.All.SendAsync(WebSocketActions.USER_LEFT, username);
         }
 
-        public async Task SendMessageToCSRAssist(string message)
+        public async Task SendMessageToCSRAssist(HubMessage message)
         {
             await Clients.All.SendAsync(WebSocketActions.CSR_MESSAGE_RECEIVED, message);
         }
@@ -29,6 +29,7 @@ namespace ChatHub.Setup.Features
             await Clients.All.SendAsync(WebSocketActions.CLIENT_MESSAGE_RECEIVED, message);
         }
     }
+    public record HubMessage(string message, string mode) { }
     public struct WebSocketActions
     {
         public static readonly string CSR_MESSAGE_RECEIVED = "CSRReceiveMessage";

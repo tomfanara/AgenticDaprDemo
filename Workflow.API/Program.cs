@@ -49,15 +49,17 @@ connection.Closed += async (error) =>
     await Task.Delay(new Random().Next(0, 5) * 1000);
     await connection.StartAsync();
 };
-connection.On<string>("CSRReceiveMessage", async (message) =>
+connection.On<HubMessage>("CSRReceiveMessage", async (message) =>
 {
     try
     {
-        Console.WriteLine($"Message: {message}");
+       // var  msg=JsonConvert.DeserializeObject<HubMessage>(message.ToString());
+        Console.WriteLine($"Message: {message.message}");
         Console.WriteLine("processing answer.......");
 
-        var msg = new Message { Messages = message };
+        var msg_chat = new Message { Messages = message.message };
 
+        Console.WriteLine("CHAT MODE:" + message.mode);
         //enter logic here.
 
 
@@ -65,22 +67,45 @@ connection.On<string>("CSRReceiveMessage", async (message) =>
         using (HttpClient client = new HttpClient())
         {
             client.Timeout = TimeSpan.FromMinutes(3);
-            HttpResponseMessage resp = await client.PostAsJsonAsync<Message>("http://localhost:5006/groupchatraiseevent", msg);
-            resp.EnsureSuccessStatusCode();
-
-            if (resp.IsSuccessStatusCode)
+            if (message.mode.Equals("GroupChat"))
             {
-                string responseBody = await resp.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<Chato>(responseBody.ToString());
-                //JsonElement root = jsonDocument.RootElement;
+                HttpResponseMessage resp = await client.PostAsJsonAsync<Message>("http://localhost:5006/groupchatraiseevent", msg_chat);
+                resp.EnsureSuccessStatusCode();
 
-                //value = result.Conversation;// root.GetProperty("conversation").GetString();
-                //await connection.InvokeAsync("SendMessageToClient", String.Join(" ", value));
+                if (resp.IsSuccessStatusCode)
+                {
+                    string responseBody = await resp.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<Chato>(responseBody.ToString());
+                    //JsonElement root = jsonDocument.RootElement;
+
+                    //value = result.Conversation;// root.GetProperty("conversation").GetString();
+                    //await connection.InvokeAsync("SendMessageToClient", String.Join(" ", value));
+                }
+                else
+                {
+                    Console.WriteLine($"Error: {resp.StatusCode}");
+                }
             }
             else
             {
-                Console.WriteLine($"Error: {resp.StatusCode}");
+                HttpResponseMessage resp = await client.PostAsJsonAsync<Message>("http://localhost:5006/taskchat", msg_chat);
+                resp.EnsureSuccessStatusCode();
+
+                if (resp.IsSuccessStatusCode)
+                {
+                    string responseBody = await resp.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<Chato>(responseBody.ToString());
+                    //JsonElement root = jsonDocument.RootElement;
+
+                    //value = result.Conversation;// root.GetProperty("conversation").GetString();
+                    //await connection.InvokeAsync("SendMessageToClient", String.Join(" ", value));
+                }
+                else
+                {
+                    Console.WriteLine($"Error: {resp.StatusCode}");
+                }
             }
+           
         }
 
     }
@@ -108,4 +133,5 @@ internal partial class AppJsonSerializerContext : JsonSerializerContext
 {
 
 }
+public record HubMessage(string message, string mode) { }
 
