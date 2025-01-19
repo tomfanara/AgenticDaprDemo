@@ -28,7 +28,7 @@ namespace Workflow.API.Features.Activities
                 {
                     Console.WriteLine("connection failed: " + ex.Message);
                 }
-                Console.WriteLine("SNDING MESSAGE BACK TO UI:" + input);
+                Console.WriteLine("SENDING MESSAGE BACK TO UI: " + input);
                 await connection.InvokeAsync("SendMessageToClient", input);
                 return true;
             }

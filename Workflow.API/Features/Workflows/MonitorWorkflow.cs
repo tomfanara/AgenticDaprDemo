@@ -35,16 +35,16 @@ public class MonitorWorkflow : Workflow<string, string>
                     result = response;
                     Console.WriteLine(response);
                 }
-            
-            
+
+
 
             if (promptResult == "EXIT")
             {
                 // The order was rejected, end the workflow here
-                Console.WriteLine(promptResult);             
+                Console.WriteLine(promptResult);
                 return "Chat has Exited";
             }
-            
+
         }
         catch (OperationCanceledException) // Task failures are surfaced as TaskFailedException
         {

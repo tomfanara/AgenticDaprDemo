@@ -13,13 +13,13 @@ using static Google.Rpc.Context.AttributeContext.Types;
 using static Workflow.API.Models.TaskChainingModels;
 
     
-    public class ConversationWorkflowCommandHandler(DaprWorkflowClient daprWorkflowClient) : IRequestHandler<ConversationHandlerRequest, Chat>
+    public class TaskChatWorkflowCommandHandler(DaprWorkflowClient daprWorkflowClient) : IRequestHandler<TaskChatHandlerRequest, Chat>
     {
         
         private readonly DaprWorkflowClient daprWorkflowClient = daprWorkflowClient ?? throw new ArgumentNullException(nameof(daprWorkflowClient));
         
 
-        public async Task<Chat> Handle(ConversationHandlerRequest request, CancellationToken cancellationToken)
+        public async Task<Chat> Handle(TaskChatHandlerRequest request, CancellationToken cancellationToken)
         {           
             // create fake Workflow Task Steps by hydrating the Steps model
             Console.WriteLine("intializing workflow and starting workflow");            

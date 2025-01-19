@@ -58,27 +58,23 @@ namespace Workflow.API.Features.Activities
 
             Console.WriteLine("Defining agents...");
 
-            const string ReviewerName = "Khloe";
-            const string WriterName = "Jenny";
+            const string HumanResourcesManagerName = "Khloe";
+            const string InventoryManagerName = "Jenny";
 
 #pragma warning disable SKEXP0110 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             ChatCompletionAgent agentReviewer =
                 new()
                 {
-                    Name = ReviewerName,
+                    Name = HumanResourcesManagerName,
                     Instructions =
                         """
-                    Your responsiblity is to review and identify how to improve user provided content.
-                    If the user has providing input or direction for content already provided, specify how to address this input.
-                    Never directly perform the correction or provide example.
-                    Once the content has been updated in a subsequent response, you will review the content again until satisfactory.
-                    Always copy satisfactory content to the clipboard using available tools and inform user.
-                    Always reply with current employees content from Khloe's function call
+                    Your responsiblity is to provide human resources content as in current employees.                  
+                    Always reply with current employees content from GetEmployees function call
 
                     RULES:
                     - Only identify suggestions that are specific and actionable.
-                    - Verify previous suggestions have been addressed.
                     - Never repeat previous suggestions.
+                    - Address the user.
                     """,
                     Kernel = toolKernel,
                     Arguments = new KernelArguments(new AzureOpenAIPromptExecutionSettings() { FunctionChoiceBehavior = FunctionChoiceBehavior.Auto() })
@@ -89,15 +85,15 @@ namespace Workflow.API.Features.Activities
             ChatCompletionAgent agentWriter =
                 new()
                 {
-                    Name = WriterName,
+                    Name = InventoryManagerName,
                     Instructions =
                         """
-                    Your sole responsiblity is to rewrite content according to review suggestions.
+                    Your responsiblity is to provide inventory content as in current inventory.
+                    Always reply with current inventory content from GetInventory function call
 
-                    - Always apply all review direction.
-                    - Alawys reply with inventory content from Jenny's function call.
-                    - Always revise the content in its entirety without explanation.
-                    - Never address the user.
+                    RULES:
+                    - Only identify suggestions that are specific and actionable.
+                    - Address the user.
                     """,
                     Kernel = kernel,
                 };
@@ -112,13 +108,12 @@ namespace Workflow.API.Features.Activities
                 Never choose the participant named in the RESPONSE.
 
                 Choose only from these participants:
-                - {{{ReviewerName}}}
-                - {{{WriterName}}}
+                - {{{HumanResourcesManagerName}}}
+                - {{{InventoryManagerName}}}
 
                 Always follow these rules when choosing the next participant:
-                - If RESPONSE is user input, it is {{{ReviewerName}}}'s turn.
-                - If RESPONSE is by {{{ReviewerName}}}, it is {{{WriterName}}}'s turn.
-                - If RESPONSE is by {{{WriterName}}}, it is {{{ReviewerName}}}'s turn.
+                - If RESPONSE is user input and input is employee related, the author name is {{{HumanResourcesManagerName}}}'s turn.
+                - If RESPONSE is user input and input is inventory related, the author name is {{{InventoryManagerName}}}'s turn.
 
                 RESPONSE:
                 {{$lastmessage}}
@@ -128,12 +123,13 @@ namespace Workflow.API.Features.Activities
 
             const string TerminationToken = "yes";
 
+            //If content is satisfactory, respond with a single word without explanation: {{{TerminationToken}}}.
+
 #pragma warning disable SKEXP0110 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             KernelFunction terminationFunction =
                 AgentGroupChat.CreatePromptFunctionForStrategy(
                     $$$"""
-                Examine the RESPONSE and determine whether the content has been deemed satisfactory.
-                If content is satisfactory, respond with a single word without explanation: {{{TerminationToken}}}.
+                Examine the RESPONSE and determine whether the content has been deemed satisfactory.                
                 If specific suggestions are being provided, it is not satisfactory.
                 If no correction is suggested, it is satisfactory.
 
@@ -157,25 +153,25 @@ namespace Workflow.API.Features.Activities
                             new KernelFunctionSelectionStrategy(selectionFunction, kernel)
                             {
                                 // Always start with the editor agent.
-                                InitialAgent = agentReviewer,
+                                //InitialAgent = agentReviewer,
                                 // Save tokens by only including the final response
                                 HistoryReducer = historyReducer,
                                 // The prompt variable name for the history argument.
                                 HistoryVariableName = "lastmessage",
                                 // Returns the entire result value as a string.
-                                ResultParser = (result) => result.GetValue<string>() ?? agentReviewer.Name
+                                //ResultParser = (result) => result.GetValue<string>() ?? agentReviewer.Name
                             },
                         TerminationStrategy =
                             new KernelFunctionTerminationStrategy(terminationFunction, kernel)
                             {
                                 // Only evaluate for editor's response
-                                Agents = [agentReviewer],
+                                //Agents = [agentReviewer],
                                 // Save tokens by only including the final response
                                 HistoryReducer = historyReducer,
                                 // The prompt variable name for the history argument.
                                 HistoryVariableName = "lastmessage",
                                 // Limit total number of turns
-                                MaximumIterations = 12,
+                                MaximumIterations = 1,
                                 // Customer result parser to determine if the response is "yes"
                                 ResultParser = (result) => result.GetValue<string>()?.Contains(TerminationToken, StringComparison.OrdinalIgnoreCase) ?? false
                             }
@@ -191,53 +187,37 @@ namespace Workflow.API.Features.Activities
         public override async Task<string> RunAsync(WorkflowActivityContext context, string messages)
         {
             Console.WriteLine("Receiving message...");
-            //bool isComplete = false;
-            //do
-            //{
-            //Console.WriteLine();
-            //Console.Write("> ");
-            string input = messages;
-            //if (string.IsNullOrWhiteSpace(input))
-            //{
-            //    //continue;
-            //}
-            //input = input.Trim();
-            //if (input.Equals("EXIT", StringComparison.OrdinalIgnoreCase))
-            //{
-            //    isComplete = true;
-            //    //break;
-            //}
+            bool isComplete = false;
+           
+                //Console.WriteLine();
+                //Console.Write("> ");
+                string input = messages;
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                //return await Task.FromResult("Empty prompt please enter a request");
+            }
+            input = input.Trim();
+            if (input.Equals("EXIT", StringComparison.OrdinalIgnoreCase))
+            {
+                isComplete = true;
+                //return await Task.FromResult("EXIT");
 
-//            if (input.Equals("RESET", StringComparison.OrdinalIgnoreCase))
-//            {
-//#pragma warning disable SKEXP0110 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-//                await this.chat.ResetAsync();
-//#pragma warning restore SKEXP0110 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-//                Console.WriteLine("[Converation has been reset]");
-//                //continue;
-//            }
+            }
 
-            //if (input.StartsWith("@", StringComparison.Ordinal) && input.Length > 1)
-            //{
-            //    string filePath = input.Substring(1);
-            //    try
-            //    {
-            //        if (!File.Exists(filePath))
-            //        {
-            //            Console.WriteLine($"Unable to access file: {filePath}");
-            //            //continue;
-            //        }
-            //        input = File.ReadAllText(filePath);
-            //    }
-            //    catch (Exception)
-            //    {
-            //        Console.WriteLine($"Unable to access file: {filePath}");
-            //        //continue;
-            //    }
-            //}
+                if (input.Equals("RESET", StringComparison.OrdinalIgnoreCase))
+                {
+#pragma warning disable SKEXP0110 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+                    await this.chat.ResetAsync();
+#pragma warning restore SKEXP0110 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+                    Console.WriteLine("[Converation has been reset]");
+                return await Task.FromResult("[Converation has been reset]");
+                
+            }
+
+              
 
 #pragma warning disable SKEXP0110 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-            this.chat.AddChatMessage(new ChatMessageContent(AuthorRole.User, input));
+                this.chat.AddChatMessage(new ChatMessageContent(AuthorRole.User, input));
 #pragma warning restore SKEXP0110 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #pragma warning disable SKEXP0110 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             this.chat.IsComplete = false;
@@ -249,7 +229,7 @@ namespace Workflow.API.Features.Activities
 #pragma warning disable SKEXP0110 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
                 await foreach (ChatMessageContent response in this.chat.InvokeAsync())
                 {
-                    fullMessage = response.AuthorName.ToUpperInvariant() + " " + response.Content;
+                    fullMessage = "[" + response.AuthorName.ToUpperInvariant() + "]" + " " + response.Content;
                     Console.WriteLine();
                     Console.WriteLine($"{response.AuthorName.ToUpperInvariant()}:{Environment.NewLine}{response.Content}");
                 }

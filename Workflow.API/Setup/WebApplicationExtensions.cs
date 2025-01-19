@@ -39,7 +39,7 @@ public static class WebApplicationExtensions
         .Produces(StatusCodes.Status403Forbidden);
     }
 
-    private static async Task<Chat> TaskChat(IMediator mediator, [FromBody] ConversationHandlerRequest req) => await mediator.Send(req);
+    private static async Task<Chat> TaskChat(IMediator mediator, [FromBody] TaskChatHandlerRequest req) => await mediator.Send(req);
 
     private static async Task<Chat> GroupChatInitializer(IMediator mediator, [FromBody] GroupChatHandlerRequest req) => await mediator.Send(req);
 

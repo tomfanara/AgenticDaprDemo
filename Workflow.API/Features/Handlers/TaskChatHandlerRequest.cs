@@ -4,7 +4,7 @@
     using Workflow.API.Models.Response;
     using MediatR;
 
-    public record ConversationHandlerRequest : Message, IRequest<Chat>
+    public record TaskChatHandlerRequest : Message, IRequest<Chat>
     {
     }
 }
