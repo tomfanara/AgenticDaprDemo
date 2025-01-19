@@ -200,7 +200,7 @@ namespace Workflow.API.Features.Activities
             if (input.Equals("EXIT", StringComparison.OrdinalIgnoreCase))
             {
                 isComplete = true;
-                //return await Task.FromResult("EXIT");
+                return await Task.FromResult("EXIT");
 
             }
 
