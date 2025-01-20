@@ -9,8 +9,8 @@ namespace Workflow.API.Features.Plugins
 {
     public class AccountingPlugin
     {
-        [KernelFunction]
-        [Description("Gets current employees from a function call to API")]
+        [KernelFunction("get_employees"), Description("Get employees")]
+        [return: Description("A list of employees from accounting.")]
         public async Task<string> GetEmployees()
         {
             var message = new Message { Messages = "Get current inventory" };

@@ -110,12 +110,13 @@ public class ResultsRewriteActivity : WorkflowActivity<string[], string>
         OpenAIPromptExecutionSettings settings = new()
         {
             ToolCallBehavior = null,
-            Temperature = 1,
-            TopP = .5
+            Temperature = 0,
+            TopP = 0
         };
 
         var promptChunked = @"
-        Question: I'm conducting a marketing research project and need to summarize a list of new employees, inventory and sales.{{Recall}}";
+        Question: I'm conducting a marketing research project and need to summarize a list of new employees, inventory and sales.{{Recall}}.
+                  Make sure sales are calculated correctly";
 
         var arguments = new KernelArguments(settings)
         {

@@ -68,12 +68,12 @@ namespace Workflow.API.Features.Activities
                     Name = HumanResourcesManagerName,
                     Instructions =
                         """
-                    Your responsiblity is to provide human resources content as in current employees.                  
-                    Always reply with current employees content from GetEmployees function call
+                    Your responsiblity is to provide employee content as in current employees.                  
+                    Always reply with current employee content using available tools or functions {{get_employees}}.                  
+                    Always copy satisfactory content to the clipboard using available tools and inform user.
 
                     RULES:
                     - Only identify suggestions that are specific and actionable.
-                    - Never repeat previous suggestions.
                     - Address the user.
                     """,
                     Kernel = toolKernel,
@@ -89,13 +89,14 @@ namespace Workflow.API.Features.Activities
                     Instructions =
                         """
                     Your responsiblity is to provide inventory content as in current inventory.
-                    Always reply with current inventory content from GetInventory function call
+                    Always reply with current inventory content using available tools or functions {{get_inventory}}.
+                    Always copy satisfactory content to the clipboard using available tools and inform user.
 
                     RULES:
                     - Only identify suggestions that are specific and actionable.
                     - Address the user.
                     """,
-                    Kernel = kernel,
+                    Kernel = toolKernel,
                 };
 #pragma warning restore SKEXP0110 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
@@ -103,7 +104,7 @@ namespace Workflow.API.Features.Activities
             KernelFunction selectionFunction =
                 AgentGroupChat.CreatePromptFunctionForStrategy(
                     $$$"""
-                Examine the provided RESPONSE and choose the next participant.
+                //Examine the provided RESPONSE and choose the next participant.
                 State only the name of the chosen participant without explanation.
                 Never choose the participant named in the RESPONSE.
 
@@ -111,9 +112,9 @@ namespace Workflow.API.Features.Activities
                 - {{{HumanResourcesManagerName}}}
                 - {{{InventoryManagerName}}}
 
-                Always follow these rules when choosing the next participant:
-                - If RESPONSE is user input and input is employee related, the author name is {{{HumanResourcesManagerName}}}'s turn.
-                - If RESPONSE is user input and input is inventory related, the author name is {{{InventoryManagerName}}}'s turn.
+                //Always follow these rules when choosing the next participant:
+                //- If RESPONSE is user input and input is employee related, the author name is {{{HumanResourcesManagerName}}}'s turn.
+                //- If RESPONSE is user input and input is inventory related, the author name is {{{InventoryManagerName}}}'s turn.
 
                 RESPONSE:
                 {{$lastmessage}}

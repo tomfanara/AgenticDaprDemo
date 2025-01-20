@@ -9,8 +9,8 @@ namespace Workflow.API.Features.Plugins
 {
     public class InventoryPlugin
     {
-        [KernelFunction]
-        [Description("Gets current inventory from a function call to her API")]
+        [KernelFunction("get_inventory"), Description("Get current inventory")]
+        [return: Description("A list of current inventory.")]
         public async Task<string> GetInventory()
         {
             var message = new Message { Messages = "Get current inventory" };

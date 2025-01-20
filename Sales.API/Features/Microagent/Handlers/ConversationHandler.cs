@@ -107,12 +107,12 @@ public class ConversationHandler()
         OpenAIPromptExecutionSettings settings = new()
         {
             ToolCallBehavior = null,
-            Temperature = 1,
-            TopP = 1,
+            Temperature = 0,
+            TopP = 0,
         };
 
         var promptChunked = @"
-        Question: what are current sales and please calculate total sales?
+        Question: what are current sales and please calculate total sales correctly
         Answer the question using the memory content: {{Recall}}";
 
         var arguments = new KernelArguments(settings)
@@ -121,7 +121,7 @@ public class ConversationHandler()
             { "collection", MemoryCollectionNameChunked }
         };
 
-        Console.WriteLine($"Phi-3 response (using semantic memory and document chunking).");
+        Console.WriteLine($"llama3 response (using semantic memory and document chunking).");
 
         string fullMessage = "";
         var response = kernel.InvokePromptStreamingAsync(promptChunked, arguments);
