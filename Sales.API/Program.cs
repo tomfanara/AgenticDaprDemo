@@ -24,6 +24,8 @@ app.UseCloudEvents();
 
 app.Run();
 
+
+
 [JsonSerializable(typeof(Chat))]
 [JsonSerializable(typeof(Message))]
 [JsonSerializable(typeof(Sales.API.Features.Microagent.Handlers.ConversationHandlerRequest))]

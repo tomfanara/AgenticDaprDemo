@@ -37,18 +37,26 @@ public class ConversationHandler()
         builder.AddLocalTextEmbeddingGeneration();
         Kernel kernel = builder.Build();
 
-        //Console.WriteLine($"Phi-3 response (no memory).");
-        //var response = kernel.InvokePromptStreamingAsync(question);
-        //await foreach (var result in response)
-        //{
-        //    Console.Write(result);
-        //}
+        //create a persona Khloe
+        Persona persona = new Persona
+        {
+            Name = "Carlos",
+            Tone = "friendly",
+            Style = "efficient",
+            Traits = new List<string> { "cool", "efficient", "approachable" }
+        };
 
-        // separator
+        var personaSettings = new PersonaSettings();
+        ApplyPersona(personaSettings, persona);
+
+        string greeting = personaSettings.GenerateResponse(request.Messages);
+
         Console.WriteLine("");
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("Carlos's prompt:");
+        Console.ResetColor();
         Console.WriteLine("");
-        Console.WriteLine("==============");
-        Console.WriteLine("");
+        Console.WriteLine(greeting);
 
         string filePath = "./data/sales.txt";
 
