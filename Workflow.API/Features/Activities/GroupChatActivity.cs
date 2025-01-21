@@ -52,7 +52,7 @@ namespace Workflow.API.Features.Activities
             Kernel kernel = builder.Build();
 
             Kernel toolKernel = kernel.Clone();
-            toolKernel.Plugins.AddFromType<ClipboardAccess>();
+            toolKernel.Plugins.AddFromType<ClipboardAccessPlugin>();
             toolKernel.Plugins.AddFromType<InventoryPlugin>();
             toolKernel.Plugins.AddFromType<AccountingPlugin>();
 
