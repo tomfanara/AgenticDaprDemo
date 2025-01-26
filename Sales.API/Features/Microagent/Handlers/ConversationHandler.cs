@@ -112,7 +112,7 @@ public class ConversationHandler()
         };
 
         var promptChunked = @"
-        Question: what are current sales and please calculate total sales correctly
+        Question: calculate total revenue per item and give a grand total. 
         Answer the question using the memory content: {{Recall}}";
 
         var arguments = new KernelArguments(settings)

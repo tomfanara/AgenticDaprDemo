@@ -42,7 +42,7 @@ public class ResultsRewriteActivity : WorkflowActivity<string[], string>
                                endpoint: new Uri("http://localhost:11434"));
         builder.AddLocalTextEmbeddingGeneration();
         Kernel kernel = builder.Build();
-         
+
         Console.WriteLine($"Phi-3 response (no memory).");
 
         string fullMessage = "";
@@ -128,7 +128,7 @@ public class ResultsRewriteActivity : WorkflowActivity<string[], string>
 
         //var response = kernel.InvokePromptStreamingAsync(promptChunked, arguments);
 
-        
+
         await foreach (var responses in kernel.InvokePromptStreamingAsync(promptChunked, arguments))
         {
             //Console.Write(result);

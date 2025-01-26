@@ -6,19 +6,9 @@
 #pragma warning disable SKEXP0052
 #pragma warning disable SKEXP0070
 
-using Microsoft.Extensions.DependencyInjection;
+
 using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.Connectors.OpenAI;
-using Microsoft.SemanticKernel.Embeddings;
-using Microsoft.SemanticKernel.Memory;
-using Microsoft.SemanticKernel.Plugins.Memory;
-using Microsoft.SemanticKernel.Text;
 using Dapr.Workflow;
-using System.Reactive;
-using System.Threading.Tasks;
-using static Workflow.API.Models.TaskChainingModels;
-using Workflow.API.Models.Response;
-using Dapr.Client;
 using System.ComponentModel;
 using System.Diagnostics;
 using Microsoft.SemanticKernel.Agents.History;
@@ -68,7 +58,8 @@ namespace Workflow.API.Features.Activities
                     Name = HumanResourcesManagerName,
                     Instructions =
                         """
-                    Your responsiblity is to provide employee content as in current employees.                  
+                    Your responsiblity is to provide employee content as in current employees.  
+                    Return information that has nouns with a synonym of employees.
                     Always reply with current employee content using available tools or functions {{get_employees}}.                  
                     Always copy satisfactory content to the clipboard using available tools and inform user.
 
@@ -89,6 +80,7 @@ namespace Workflow.API.Features.Activities
                     Instructions =
                         """
                     Your responsiblity is to provide inventory content as in current inventory.
+                    Return information that has nouns with a synonym of inventory.
                     Always reply with current inventory content using available tools or functions {{get_inventory}}.
                     Always copy satisfactory content to the clipboard using available tools and inform user.
 
@@ -106,15 +98,15 @@ namespace Workflow.API.Features.Activities
                     $$$"""
                 //Examine the provided RESPONSE and choose the next participant.
                 State only the name of the chosen participant without explanation.
-                Never choose the participant named in the RESPONSE.
+                //Never choose the participant named in the RESPONSE.
 
                 Choose only from these participants:
                 - {{{HumanResourcesManagerName}}}
                 - {{{InventoryManagerName}}}
 
                 //Always follow these rules when choosing the next participant:
-                //- If RESPONSE is user input and input is employee related, the author name is {{{HumanResourcesManagerName}}}'s turn.
-                //- If RESPONSE is user input and input is inventory related, the author name is {{{InventoryManagerName}}}'s turn.
+                - If RESPONSE is user input and input is employee related, the author name is {{{HumanResourcesManagerName}}}'s turn.
+                - If RESPONSE is user input and input is inventory related, the author name is {{{InventoryManagerName}}}'s turn.
 
                 RESPONSE:
                 {{$lastmessage}}

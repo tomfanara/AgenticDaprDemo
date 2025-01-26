@@ -21,7 +21,6 @@ namespace Workflow.API.Features.Workflows;
                 maxRetryInterval: TimeSpan.FromHours(1),
                 maxNumberOfAttempts: 3),
             };
-
         
 
             var tasks = new List<Task<string>>();
@@ -30,22 +29,45 @@ namespace Workflow.API.Features.Workflows;
 
                 var prompts = await context.CallActivityAsync<string[]>("QueryRewriteActivity", prompt, retryOptions);
 
-                tasks.Add(context.CallActivityAsync<string>("AccountingActivity", prompts[1], retryOptions));
-                tasks.Add(context.CallActivityAsync<string>("InventoryActivity", prompts[2], retryOptions));
-                tasks.Add(context.CallActivityAsync<string>("SalesActivity", prompts[3], retryOptions));
+                if (prompts.Length > 0)
+                {
 
-                var messages = await Task.WhenAll(tasks);
-                //string result = "";
+                    List<string> domainList = prompts.ToList();
 
-                //foreach (string message in messages)
-                //{ 
-                //    result += message + " "; 
-                //}
+                foreach (var word in domainList)
+                {
 
-                var reWrite = await context.CallActivityAsync<string>("ResultsRewriteActivity", messages, retryOptions);
-                var chabback= await context.CallActivityAsync<bool>("ReplyToChatHubAcitivity", reWrite, retryOptions);
-                
-                return reWrite;
+                    if (word == "employees")
+                    {
+                        tasks.Add(context.CallActivityAsync<string>("AccountingActivity", "get current employees", retryOptions));
+                        continue;
+                    }
+
+                    if (word == "inventory")
+                    {
+                        tasks.Add(context.CallActivityAsync<string>("InventoryActivity", "get current inventory", retryOptions));
+                        continue;
+                    }
+                    if (word == "sales")
+                    {
+                        tasks.Add(context.CallActivityAsync<string>("SalesActivity", "get current sales", retryOptions));
+                        continue;
+                    }
+                }
+                    
+                    var messages = await Task.WhenAll(tasks);
+
+                    var reWrite = await context.CallActivityAsync<string>("ResultsRewriteActivity", messages, retryOptions);
+                    var chatback = await context.CallActivityAsync<bool>("ReplyToChatHubAcitivity", reWrite, retryOptions);
+
+                    return reWrite;
+                }
+                else 
+                {
+                    string clarify = "Hello, our agents respond better to messages that include employees, inventory or sales";
+                    var chatback = await context.CallActivityAsync<bool>("ReplyToChatHubAcitivity", clarify, retryOptions);
+                    return clarify; 
+                }
             }
             catch (TaskFailedException) // Task failures are surfaced as TaskFailedException
             {

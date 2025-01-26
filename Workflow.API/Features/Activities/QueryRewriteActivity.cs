@@ -25,7 +25,7 @@ public class QueryRewriteActivity : WorkflowActivity<string, string[]>
 {
     public async override Task<string[]> RunAsync(WorkflowActivityContext context, string input)
     {
-        var question = "I'm conducting a marketing research project and need to summarize a list of new employees, inventory and sales.";
+        var question = input;
 
         var builder = Kernel.CreateBuilder()
                               .AddOllamaChatCompletion(
@@ -37,8 +37,8 @@ public class QueryRewriteActivity : WorkflowActivity<string, string[]>
         string fullMessage = "";
 
         // Read the content of the file
-        string fileContent = "I'm conducting a marketing research project and need to summarize a list of new employees, inventory and sales.";
-        //string fileContent = input;
+        string fileContent = input; ;
+        
         // Split the text into lines
         var lines = new List<string> { fileContent };
 
@@ -96,14 +96,12 @@ public class QueryRewriteActivity : WorkflowActivity<string, string[]>
 
         var arguments = new KernelArguments(settings)
         {
-            { "input", question },
+            { "input", fileContent },
             { "collection", MemoryCollectionNameChunked }
         };
 
         //Console.WriteLine($"Phi-3 response (using semantic memory and document chunking).");
-
-        int messageIndex = 0;
-
+     
         //var response = kernel.InvokePromptStreamingAsync(promptChunked, arguments);
         await foreach (var result in kernel.InvokePromptStreamingAsync(promptChunked, arguments))
         {         
@@ -111,17 +109,34 @@ public class QueryRewriteActivity : WorkflowActivity<string, string[]>
                 fullMessage += result.ToString();           
         }
 
-        int index = fullMessage.IndexOf("CSV format:");
+        Console.Write("full message " + fullMessage);
 
-        string subQuestions = fullMessage.Substring(index + 17, 82);
+        string[] wordsToSearch = { "employees", "inventory", "sales" };
 
-        string[] questions = subQuestions.Split(new char[] { ',' });
+        var foundWords = wordsToSearch.Where(word => fullMessage.Contains(word)).ToList();
 
-        Console.Write(subQuestions);
+        //string words = "";
 
-        //Console.Write(questions[4]);
+        List<string> words = new List<string>();
 
-        return questions;
+        if (foundWords.Any())
+        {
+            Console.WriteLine("Found words:");
+            foreach (var word in foundWords)
+            {
+                words.Add(word);
+                Console.WriteLine(word);
+            }
+
+        }
+        else
+        {
+            Console.WriteLine("No words found.");
+        }
+
+        string[] wordArray = words.ToArray();
+
+        return wordArray;
 
     }
 }
