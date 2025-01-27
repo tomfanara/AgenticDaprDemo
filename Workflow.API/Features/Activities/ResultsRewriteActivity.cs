@@ -93,7 +93,7 @@ public class ResultsRewriteActivity : WorkflowActivity<string[], string>
         var embeddingGeneratorChunked = kernel.Services.GetRequiredService<ITextEmbeddingGenerationService>();
         var memoryChunked = new SemanticTextMemory(new VolatileMemoryStore(), embeddingGeneratorChunked);
 
-        const string MemoryCollectionNameChunked = "fanFactsChunked";
+        const string MemoryCollectionNameChunked = "resultsChunked";
 
         int i = 0;
         foreach (var chunk in chunks)
@@ -115,7 +115,7 @@ public class ResultsRewriteActivity : WorkflowActivity<string[], string>
         };
 
         var promptChunked = @"
-        Question: I'm conducting a marketing research project and need to summarize a list of new employees, inventory and sales.{{Recall}}.
+        Question: Please summarize the results based on separate categories. Do not mix information{{Recall}}.
                   Make sure sales are calculated correctly";
 
         var arguments = new KernelArguments(settings)
