@@ -32,7 +32,7 @@ public class ConversationHandler()
 
         var builder = Kernel.CreateBuilder()
                               .AddOllamaChatCompletion(
-                               modelId: "phi3",
+                               modelId: "llama3",
                                endpoint: new Uri("http://localhost:11434"));
         builder.AddLocalTextEmbeddingGeneration();
         Kernel kernel = builder.Build();

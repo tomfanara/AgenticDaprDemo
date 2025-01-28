@@ -38,7 +38,7 @@ public class ResultsRewriteActivity : WorkflowActivity<string[], string>
 
         var builder = Kernel.CreateBuilder()
                               .AddOllamaChatCompletion(
-                               modelId: "llama3",
+                               modelId: "wizardlm2",
                                endpoint: new Uri("http://localhost:11434"));
         builder.AddLocalTextEmbeddingGeneration();
         Kernel kernel = builder.Build();
@@ -115,8 +115,7 @@ public class ResultsRewriteActivity : WorkflowActivity<string[], string>
         };
 
         var promptChunked = @"
-        Question: Please summarize the results based on separate categories. Do not mix information{{Recall}}.
-                  Make sure sales are calculated correctly";
+        Question: Please summarize the results based on separate categories. Do not mix information{{Recall}}.";
 
         var arguments = new KernelArguments(settings)
         {
