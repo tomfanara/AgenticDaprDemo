@@ -1,5 +1,5 @@
 # 1. Agentic Dapr Demo Application (summary)
-A demo application employing domain driven design, Dapr (Distributed Application Runtime) and an agentic architecture with micro agents. The system will use Dapr Workflows as the orchestrator in the agentic system. Each micro agent will have semantic memory, plugins, planners, personas (Khloe-supervisor, Jenny and Carlos) and memories. The micro agents will assist the human completion chat by responding to prompts with user, meta (personas) and system prompts. The micro agents will be feature extensions of microservices with in a bounded context. The bounded context will limit the behavior of the micro agents funtionality as virtual domain experts. 
+A demo application employing domain driven design, Dapr (Distributed Application Runtime) and an agentic architecture with micro agents. The system will use Dapr Workflows as the orchestrator and choreographer in the agentic system. Each micro agent will have semantic memory, plugins, planners, personas (Khloe-supervisor, Jenny and Carlos) and memories. The micro agents will assist the human completion chat by responding to prompts with user, meta (personas) and system prompts. The micro agents will be feature extensions of microservices with in a bounded context. The bounded context will limit the behavior of the micro agents funtionality as virtual domain experts. 
 ## 2. Purpose 
 This demo will serve as a means to observe, develop and improve how Dapr Workflows and components work with agentic architectures. Agentic architectures are still in early stages but natural language based development is growing at an incredible rate. Upon its completion it can be used to show case Dapr integration in agentic architectures. 
 
@@ -47,7 +47,7 @@ The following diagram illustrates the scope of the demo and overall architecture
 ![Alt text](agenticarchdemo2.png "agentic architecture image for demo")
 The following is the demo software design. The main app is a .NET console application with a console app write line prompts and read line outputs. It will also have 4 additional .NET Core APIs and microservices.
 
-- ClientApp - Console application. Main chat initiation and dialogue, starts workflow and keeps history.
+- ClientApp - Angular application. Main chat initiation and dialogue, starts workflows and keeps chat conversation.
 - AgenticWorkflow.API: Orchestrator pattern that maintains conversation state, app crash resilience and external calls.
 - Accounting.API: Contains a micro agent feature that acts on behalf of the domain. Its domain model is persisted uses an SQL database.
 - Inventory.API: Contains a micro agent feature that acts on behalf of the domain. Its domain model is persisted by a NoSQL database.
@@ -60,7 +60,7 @@ Its important to note that the workflow will first implement query rewriting as 
       - Visual Studio 2022 (with powershell tools extension)
       - Docker Desktop (latest)
       - Dapr Client and Runtime 1.14
-      - Ollama (install/run phi3, llava-phi3, llama3.1, llama3, orca-mini, wizardlm2, deepseek)
+      - Ollama (install/run phi3, llava-phi3, llama3.1, llama3, orca-mini, wizardlm2, deepseek-r1:1.5b)
 # 6. Usage
       - running the demo app
       - prompting the app (coming soon as UX)
