@@ -53,7 +53,7 @@ The following is the demo software design. The main app is a .NET console applic
 - Inventory.API: Contains a micro agent feature that acts on behalf of the domain. Its domain model is persisted by a NoSQL database.
 - Sales.API: Contains a micro agent feature that acts on behalf of the domain. Its domain model is persisted by a document corpus.
 ### Demo Software Design
-The above APIs will run in Docker Compose as container based apps with respective ports. The console app will start the workflow and setup Semantic Kernel SDK. It then implements a client console application that prompts AI. The prompts will make calls via the Dapr Output Bindings Chat Completion component to the work flow. Micro agent to micro agent chat completion will also be handled by chat completion output bindings. The micro agents contain their own plugins, personas, planners and memories. The Dapr wait for external call we be used to call back to the chat client from a micro agent downstream. Finally documents will be requested by the supervisor micro agent from the other agents and saved to a local folder.
+The above APIs will run in Dapr in Docker and dotnet core web applications with respective ports. The Angular chat app will start the workflows both orchestration and choreography. The prompts will make calls via the web socket hub microservice to the work flow asnd back to the chat. The micro agents contain their own plugins, personas, planners and memories. The Dapr wait for external call we be used to call back to the chat client from a micro agent downstream. Finally documents will be requested by the supervisor micro agent from the other agents and saved to a local folder.
 
 Its important to note that the workflow will first implement query rewriting as the basis of contacting and orchestrating micro agents. Finally at the end it will re-query the aggregated results and refine the prompt request.
 # 5. Installation
@@ -61,9 +61,13 @@ Its important to note that the workflow will first implement query rewriting as 
       - Docker Desktop (latest)
       - Dapr Client and Runtime 1.14
       - Ollama (install/run phi3, llava-phi3, llama3.1, llama3, orca-mini, wizardlm2, deepseek-r1:1.5b)
+      - NVM, NPM and Visual Studio Code. Download the chat app here. 
 # 6. Usage
-      - running the demo app
-      - prompting the app (coming soon as UX)
+      - run the demo app (backend) in Visual Studio 2022
+      - run the chat app from VS Code after building in NPM v20 (ng build)
+      - run ng serve
+      - make sure your chat app is connected to the hub
+      - you might have to adjust the ports on client and backend
 # 7. Contributing
 # 8. License
 # 9. Contact Information
