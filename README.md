@@ -61,7 +61,7 @@ Its important to note that the workflow will first implement query rewriting as 
       - Docker Desktop (latest)
       - Dapr Client and Runtime 1.14
       - Ollama (install/run phi3, llava-phi3, llama3.1, llama3, orca-mini, wizardlm2, deepseek-r1:1.5b)
-      - NVM, NPM and Visual Studio Code. Download the chat app here. 
+      - NVM, NPM and Visual Studio Code. Download the chat app here. https://github.com/koulyves288/crs-assist
 # 6. Usage
       - run the demo app (backend) in Visual Studio 2022
       - run the chat app from VS Code after building in NPM v20 (ng build)
