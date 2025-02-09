@@ -30,6 +30,9 @@ public class TaskChainingWorkflow : Workflow<string, string>
             var result2 = string.Empty;
             var result3 = string.Empty;
 
+            Thread.Sleep(4000);
+            var agentContactStatus = await context.CallActivityAsync<bool>("ReplyToChatHubAcitivity", "Contacting agents...", retryOptions);
+
             var prompts = await context.CallActivityAsync<string[]>("QueryRewriteActivity", prompt, retryOptions);
             int cnt = 0;
 
@@ -42,18 +45,22 @@ public class TaskChainingWorkflow : Workflow<string, string>
                 {
                     if (cnt == prompts.Length)
                     {
+                        
                         break;
                     }
 
                     if (domain == "employees")
                     {
+                        var chatStatusEmployees = await context.CallActivityAsync<bool>("ReplyToChatHubAcitivity", "Getting employee information...", retryOptions);
                         result1 = await context.CallActivityAsync<string>("AccountingActivity", "get current employees", retryOptions);
+                       
                         
                         continue;
                     }
 
                     if (domain == "inventory")
                     {
+                        var chatStatusInventory = await context.CallActivityAsync<bool>("ReplyToChatHubAcitivity", "Getting inventory information...", retryOptions);
                         result2 = await context.CallActivityAsync<string>("InventoryActivity", "get current inventory", retryOptions);
                         
                         continue;
@@ -61,16 +68,21 @@ public class TaskChainingWorkflow : Workflow<string, string>
                     }
                     if (domain == "sales")
                     {
+                        var chatbStatusSales = await context.CallActivityAsync<bool>("ReplyToChatHubAcitivity", "Getting sales information...", retryOptions);
                         result3 = await context.CallActivityAsync<string>("SalesActivity", "get current sales", retryOptions);
                         
                         continue;
                     }
+
+                    
 
                     cnt++;
 
                 }
 
                 string[] messages = { result1, result2, result3 };
+
+                var completionStatus = await context.CallActivityAsync<bool>("ReplyToChatHubAcitivity", "Completing your information, sending...", retryOptions);
 
                 var result4 = await context.CallActivityAsync<string>("ResultsRewriteActivity", messages, retryOptions);
                 var chatback = await context.CallActivityAsync<bool>("ReplyToChatHubAcitivity", result4, retryOptions);

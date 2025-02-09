@@ -26,7 +26,7 @@ public class AccountingPlugin
             }
 
             // Insert data into the table
-            string insertDataQuery = "INSERT INTO Employees (Name, Title, StartDate) VALUES ('Alice', 'manager', '02/05/2024'), ('Bobby', 'developer', '04/15/2023'), ('Carol', 'scrum master', '06/25/2021')";
+            string insertDataQuery = "INSERT INTO Employees (Name, Title, StartDate) VALUES ('Alice', 'Inventory manager', '02/05/2024'), ('Bobby', 'Accounting manager', '04/15/2023'), ('Carol', 'Sales manager', '06/25/2021')";
             using (var command = new SqliteCommand(insertDataQuery, connection)) // Fix: Corrected the class name to SqliteCommand
             {
                 command.ExecuteNonQuery();

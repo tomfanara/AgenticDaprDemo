@@ -27,7 +27,12 @@ public class MonitorWorkflow : Workflow<string, string>
                 eventName: "PromptMessage",
                 timeout: TimeSpan.FromSeconds(60));
 
+            Thread.Sleep(4000);
+            var agentStatus = await context.CallActivityAsync<bool>("ReplyToChatHubAcitivity", "Agent is getting information...", retryOptions);
+
             response = await context.CallActivityAsync<string>("GroupChatActivity", promptResult, retryOptions);
+            var completionStatus = await context.CallActivityAsync<bool>("ReplyToChatHubAcitivity", "Information has been reviewed, sending...", retryOptions);
+            Thread.Sleep(2000);
             Console.WriteLine("START ACTIVITY ReplyToChatHubAcitivity:");
             var rep= await context.CallActivityAsync<bool>("ReplyToChatHubAcitivity", response, retryOptions);
                 if (rep)

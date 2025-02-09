@@ -28,8 +28,17 @@ namespace Workflow.API.Features.Activities
                 {
                     Console.WriteLine("connection failed: " + ex.Message);
                 }
-                Console.WriteLine("SENDING MESSAGE BACK TO UI: " + input);
-                await connection.InvokeAsync("SendMessageToClient", input);
+                //Console.WriteLine("SENDING MESSAGE BACK TO UI: " + input);
+                //if (input.StartsWith("Stepper"))
+                //{
+                //    Console.WriteLine("SENDING MESSAGE BACK TO STEPPER UI: " + input);
+                //    await connection.InvokeAsync("SendMessageToStepper", input);
+                //}
+                //else
+                //{
+                    Console.WriteLine("SENDING MESSAGE BACK TO CHAT UI: " + input);
+                    await connection.InvokeAsync("SendMessageToClient", input);
+                //}
                 return true;
             }
             catch (Exception ex)

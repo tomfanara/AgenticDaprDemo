@@ -28,6 +28,10 @@ namespace ChatHub.Setup.Features
         {
             await Clients.All.SendAsync(WebSocketActions.CLIENT_MESSAGE_RECEIVED, message);
         }
+        public async Task SendMessageToStepper(string message)
+        {
+            await Clients.All.SendAsync(WebSocketActions.CSR_STEPPER_MESSAGE_RECEIVED, message);
+        }
     }
     public record HubMessage(string message, string mode) { }
     public struct WebSocketActions
@@ -36,5 +40,6 @@ namespace ChatHub.Setup.Features
         public static readonly string CLIENT_MESSAGE_RECEIVED = "ClientReceiveMessage";
         public static readonly string USER_LEFT = "userLeft";
         public static readonly string USER_JOINED = "userJoined";
+        public static readonly string CSR_STEPPER_MESSAGE_RECEIVED = "CSRStepperReceiveMessage";
     }
 }

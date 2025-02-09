@@ -38,7 +38,7 @@ public class ResultsRewriteActivity : WorkflowActivity<string[], string>
 
         var builder = Kernel.CreateBuilder()
                               .AddOllamaChatCompletion(
-                               modelId: "wizardlm2",
+                               modelId: "deepseek-r1:1.5b",
                                endpoint: new Uri("http://localhost:11434"));
         builder.AddLocalTextEmbeddingGeneration();
         Kernel kernel = builder.Build();
@@ -110,12 +110,13 @@ public class ResultsRewriteActivity : WorkflowActivity<string[], string>
         OpenAIPromptExecutionSettings settings = new()
         {
             ToolCallBehavior = null,
-            Temperature = 0,
+            Temperature = 1,
             TopP = 0
         };
 
-        var promptChunked = @"
-        Question: Please summarize the results based on separate categories. Do not mix information{{Recall}}.";
+        var promptChunked = @"""
+        Rules: Always summarize the results based on separate categories. Do not mix information! {{Recall}}. 
+               Always include employees, invedntory and sales when present""";
 
         var arguments = new KernelArguments(settings)
         {
