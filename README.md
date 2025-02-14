@@ -45,13 +45,15 @@ The following diagrams depict the overall architectural elements and information
 ### Agentic Architecture with MicroAgents
 The following diagram illustrates the scope of the demo and overall architecture. It is not a production worthy system as gateways, authorization, encryption and core business domains are omitted for purpose of clarity.
 ![Alt text](agenticarchdemo2.png "agentic architecture image for demo")
-The following is the demo software design. The main app is a .NET console application with a console app write line prompts and read line outputs. It will also have 4 additional .NET Core APIs and microservices.
+The following is the demo software design. The client app is a Angular Nubular chat famework application with a web sockets hub connection. It will also have 4 additional .NET Core APIs and microservices.
 
 - ClientApp - Angular application. Main chat initiation and dialogue, starts workflows and keeps chat conversation.
 - AgenticWorkflow.API: Orchestrator pattern that maintains conversation state, app crash resilience and external calls.
 - Accounting.API: Contains a micro agent feature that acts on behalf of the domain. Its domain model is persisted uses an SQL database.
 - Inventory.API: Contains a micro agent feature that acts on behalf of the domain. Its domain model is persisted by a NoSQL database.
 - Sales.API: Contains a micro agent feature that acts on behalf of the domain. Its domain model is persisted by a document corpus.
+- ChatHub.API: web sockets hub establishing communication channels with client app and agents.
+  
 ### Demo Software Design
 The above APIs will run in Dapr in Docker and dotnet core web applications with respective ports. The Angular chat app will start the workflows both orchestration and choreography. The prompts will make calls via the web socket hub microservice to the work flow asnd back to the chat. The micro agents contain their own plugins, personas, planners and memories. The Dapr wait for external call we be used to call back to the chat client from a micro agent downstream. Finally documents will be requested by the supervisor micro agent from the other agents and saved to a local folder.
 
