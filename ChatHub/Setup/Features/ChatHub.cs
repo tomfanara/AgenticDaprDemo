@@ -23,10 +23,12 @@ namespace ChatHub.Setup.Features
         public async Task SendMessageToCSRAssist(HubMessage message)
         {
             await Clients.All.SendAsync(WebSocketActions.CSR_MESSAGE_RECEIVED, message);
+            Console.WriteLine("sending message to chat...");
         }
         public async Task SendMessageToClient(string message)
         {
             await Clients.All.SendAsync(WebSocketActions.CLIENT_MESSAGE_RECEIVED, message);
+            Console.WriteLine("sending message to client...");
         }
         public async Task SendMessageToStepper(string message)
         {

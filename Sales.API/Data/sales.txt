@@ -1,3 +1,4 @@
-iPads - 200 items sold at 800 dollars each
-Laptop - 100 items sold at 1200 dollars each
-iPhone - 500 items sold at 1000 dollars each
+iPads - 200 items sold at 800 dollars each from 01/01/2025 to 02/01/2025
+Laptop - 100 items sold at 1200 dollars each 01/01/2025 to 02/01/2025
+iPhone - 500 items sold at 1000 dollars  01/01/2025 to 02/01/2025
+Tablet - 200 items sold at 900 dollars each 01/01/2025 to 02/01/2025

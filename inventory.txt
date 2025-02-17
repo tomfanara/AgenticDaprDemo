@@ -1,1 +1,1 @@
-Id: 1, Item: Laptop, Description: Dell Latitude, Quantity: 43Id: 2, Item: Mobile Phone, Description: iPhone, Quantity: 20Id: 3, Item: Tablet, Description: iPad, Quantity: 56
+Id: 1, Item: Laptop, Description: Dell Latitude, Quantity: 43Id: 2, Item: Mobile Phone, Description: iPhone, Quantity: 20Id: 3, Item: Tablet, Description: iPad, Quantity: 56Id: 4, Item: Tablet, Description: Samsung Galaxy, Quantity: 34

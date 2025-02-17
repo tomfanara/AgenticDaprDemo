@@ -43,4 +43,6 @@ app.UseAuthorization();
 app.UseCors();
 
 app.MapHub<ChatHub.Setup.Features.ChatHub>("/hub/chat");
+Console.WriteLine("hub starting...");
 app.Run();
+

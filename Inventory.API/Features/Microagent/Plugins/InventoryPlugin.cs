@@ -26,7 +26,7 @@ public class InventoryPlugin
             }
 
             // Insert data into the table
-            string insertDataQuery = "INSERT INTO Inventory (Item, Description, Quantity) VALUES ('Laptop', 'Dell Latitude', '43'), ('Mobile Phone', 'iPhone', '20' ), ('Tablet', 'iPad', '56')";
+            string insertDataQuery = "INSERT INTO Inventory (Item, Description, Quantity) VALUES ('Laptop', 'Dell Latitude', '43'), ('Mobile Phone', 'iPhone', '20' ), ('Tablet', 'iPad', '56'), ('Tablet', 'Samsung Galaxy', '34')";
             using (var command = new SqliteCommand(insertDataQuery, connection)) // Change SQLiteCommand to SqliteCommand
             {
                 command.ExecuteNonQuery();

@@ -31,10 +31,15 @@ public class MonitorWorkflow : Workflow<string, string>
             var agentStatus = await context.CallActivityAsync<bool>("ReplyToChatHubAcitivity", "Agent is getting information...", retryOptions);
 
             response = await context.CallActivityAsync<string>("GroupChatActivity", promptResult, retryOptions);
-            var completionStatus = await context.CallActivityAsync<bool>("ReplyToChatHubAcitivity", "Information has been reviewed, sending...", retryOptions);
+            
             Thread.Sleep(2000);
             Console.WriteLine("START ACTIVITY ReplyToChatHubAcitivity:");
-            var rep= await context.CallActivityAsync<bool>("ReplyToChatHubAcitivity", response, retryOptions);
+            var agentReviewStatus = await context.CallActivityAsync<bool>("ReplyToChatHubAcitivity", "Managing agent is reviewing information, sending...", retryOptions);
+
+            string[] messages = { response };
+
+            var completedMessage = await context.CallActivityAsync<string>("ResultsRewriteActivity", messages, retryOptions);
+            var rep= await context.CallActivityAsync<bool>("ReplyToChatHubAcitivity", completedMessage, retryOptions);
                 if (rep)
                 {
                     result = response;
