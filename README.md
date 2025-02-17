@@ -32,6 +32,7 @@ The Demo Domain Driven Design diagram below is a basic domain with its various b
   3. Inventory (Jenny) - Use SQL database for storage
   4. Shipping (Jenny) - Use a SQL database for data storage of shipped widgets.
   5. Receiving (Jenny) - Use a document corpus for storing received widget stock.
+  6. Management (Jimi and Janis) - Use Dapr workflows and agents to orchestrate interaction
 
 This is a very familiar and general domain model with its related contexts. The U/D denotes an upstream/downstream relationship between contexts. PL denotes a Published Language as in a Sales Force API. CS denotes Customer Supplier relationship and of course there is a Partnership relationship between Accounting and Inventory. The Xray icon denotes a Big Ball of Mudd or a legacy inventory system. We have many of the hybrid conditions found in most enterprises.
 
