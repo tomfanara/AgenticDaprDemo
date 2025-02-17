@@ -56,7 +56,7 @@ There's two branches to run the app from. 1. features/workflow and ABC-Wholesale
 - ChatHub.API(Notifications.API for ABC Wholesale): web sockets hub establishing communication channels with client app and agents.
   
 ### Demo Software Design
-The above APIs will run in Dapr in Docker and dotnet core web applications with respective ports. The Angular chat app will start the workflows both orchestration and choreography. The prompts will make calls via the web socket hub microservice to the work flow asnd back to the chat. The micro agents contain their own plugins, personas, planners and memories. The Dapr wait for external call we be used to call back to the chat client from a micro agent downstream. Finally documents will be requested by the supervisor micro agent from the other agents and saved to a local folder.
+The above APIs will run in Dapr in Docker and dotnet core web applications with respective ports. The Angular chat app will start the workflows both orchestration and choreography. The prompts will make calls via the web socket hub microservice to the work flow and back to the chat. The micro agents contain their own plugins, personas, planners and memories. The Dapr wait for external call we be used to call back to the chat client from a micro agent downstream. Finally documents will be requested by the supervisor micro agent from the other agents and saved to a local folder.
 
 Its important to note that the workflow will first implement query rewriting as the basis of contacting and orchestrating micro agents. Finally at the end it will re-query the aggregated results and refine the prompt request.
 # 5. Installation
