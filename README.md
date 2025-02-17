@@ -32,7 +32,7 @@ The Demo Domain Driven Design diagram below is a basic domain with its various b
   3. Inventory (Jenny) - Use SQL database for storage
   4. Shipping (Jenny) - Use a SQL database for data storage of shipped widgets.
   5. Receiving (Jenny) - Use a document corpus for storing received widget stock.
-  6. Management (Jimi and Janis) - Use Dapr workflows and agents to orchestrate interaction
+  6. Management (Jimi and Janis) - Use Dapr workflows and agents to orchestrate interaction.
 
 This is a very familiar and general domain model with its related contexts. The U/D denotes an upstream/downstream relationship between contexts. PL denotes a Published Language as in a Sales Force API. CS denotes Customer Supplier relationship and of course there is a Partnership relationship between Accounting and Inventory. The Xray icon denotes a Big Ball of Mudd or a legacy inventory system. We have many of the hybrid conditions found in most enterprises.
 
@@ -47,7 +47,7 @@ The following diagrams depict the overall architectural elements and information
 The following diagram illustrates the scope of the demo and overall architecture. It is not a production worthy system as gateways, authorization, encryption and core business domains are omitted for purpose of clarity.
 ![Alt text](agenticarchdemo2.png "agentic architecture image for demo")
 The following is the demo software design. The client app is a Angular Nubular chat famework application with a web sockets hub connection. It will also have 4 additional .NET Core APIs and microservices.
-There's two branches to run the app from. 1. features/workflow and ABC-Wholesale-Assist
+There's two branches to run the app from. 1. features/workflow and ABC-Wholesale-Assist. ABC Wholesale is a ficticious company with virtual assistants and human managers.
 
 - ClientApp - Angular application. Main chat initiation and dialogue, starts workflows and keeps chat conversation.
 - Workflow.API (Management.API for ABC Wholesale): Orchestrator pattern that maintains conversation state, app crash resilience and external calls.
