@@ -1,7 +1,7 @@
 apiVersion: dapr.io/v1alpha1
 kind: Configuration
 metadata:
-  name: delegatedAuth-config
+  name: config
 spec:
   features:
     - name: PubSub.Routing
